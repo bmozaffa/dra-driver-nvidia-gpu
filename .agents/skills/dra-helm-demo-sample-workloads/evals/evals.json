@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-helm-demo-sample-workloads",
+  "evals": [
+    {
+      "id": "dra-helm-demo-sample-workloads-explicit-001",
+      "question": "Use dra-helm-demo-sample-workloads to prepare a standalone Helm install plan for this checkout that enables GPU resources, renders first, and validates DeviceClasses and ResourceSlices.",
+      "prompt": "Use dra-helm-demo-sample-workloads to prepare a standalone Helm install plan for this checkout that enables GPU resources, renders first, and validates DeviceClasses and ResourceSlices.",
+      "expected_skill": "dra-helm-demo-sample-workloads",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent produces a version-aware Helm install runbook that records cluster and chart context, reviews values and templates, runs or recommends `make helm-lint` and `helm template`, lists affected objects, asks approval before mutation, and defines readiness, DeviceClass, ResourceSlice, claim, pod, and CDI verification.",
+      "expected_output": "The agent produces a version-aware Helm install runbook that records cluster and chart context, reviews values and templates, runs or recommends `make helm-lint` and `helm template`, lists affected objects, asks approval before mutation, and defines readiness, DeviceClass, ResourceSlice, claim, pod, and CDI verification.",
+      "expected_behavior": [
+        "The agent reads the dra-helm-demo-sample-workloads instructions before taking action.",
+        "The agent inspects `deployments/helm/dra-driver-nvidia-gpu/values.yaml`, `Chart.yaml`, and template validation before planning apply steps.",
+        "The agent distinguishes standalone chart flow from GPU Operator-managed deployment guidance.",
+        "The agent presents namespace, release name, affected objects, rollback or cleanup plan, and exact approval points before mutation.",
+        "The agent avoids printing kubeconfigs, tokens, registry credentials, or private cluster data."
+      ],
+      "assertions": [
+        "The agent reads the dra-helm-demo-sample-workloads instructions before taking action.",
+        "The agent inspects `deployments/helm/dra-driver-nvidia-gpu/values.yaml`, `Chart.yaml`, and template validation before planning apply steps.",
+        "The agent distinguishes standalone chart flow from GPU Operator-managed deployment guidance.",
+        "The agent presents namespace, release name, affected objects, rollback or cleanup plan, and exact approval points before mutation.",
+        "The agent avoids printing kubeconfigs, tokens, registry credentials, or private cluster data."
+      ]
+    },
+    {
+      "id": "dra-helm-demo-sample-workloads-contextual-001",
+      "question": "I want to run the basic GPU sharing sample from this repo on a local nvkind cluster. Give me the safest plan and success checks.",
+      "prompt": "I want to run the basic GPU sharing sample from this repo on a local nvkind cluster. Give me the safest plan and success checks.",
+      "expected_skill": "dra-helm-demo-sample-workloads",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent returns a local-demo procedure that uses the repository's nvkind or demo assets and release-matched sample manifests, confirms prerequisites and feature gates, sets a plan/apply boundary, and verifies claim allocation, pod readiness, shared claim references, and observed GPU UUIDs.",
+      "expected_output": "The agent returns a local-demo procedure that uses the repository's nvkind or demo assets and release-matched sample manifests, confirms prerequisites and feature gates, sets a plan/apply boundary, and verifies claim allocation, pod readiness, shared claim references, and observed GPU UUIDs.",
+      "expected_behavior": [
+        "The agent infers that the request belongs to DRA Helm, local demo, and sample workload workflow guidance.",
+        "The agent checks or references `demo/clusters/`, `demo/specs/`, chart values, and current docs rather than inventing manifests from another release.",
+        "The agent states whether the result is a local demo, experimental feature, or productized GPU Operator flow.",
+        "The agent asks approval before creating a cluster, running Helm or mutating kubectl commands, or cleaning up resources.",
+        "The agent's final response includes observable success criteria for ResourceClaims, pods, and GPU visibility."
+      ],
+      "assertions": [
+        "The agent infers that the request belongs to DRA Helm, local demo, and sample workload workflow guidance.",
+        "The agent checks or references `demo/clusters/`, `demo/specs/`, chart values, and current docs rather than inventing manifests from another release.",
+        "The agent states whether the result is a local demo, experimental feature, or productized GPU Operator flow.",
+        "The agent asks approval before creating a cluster, running Helm or mutating kubectl commands, or cleaning up resources.",
+        "The agent's final response includes observable success criteria for ResourceClaims, pods, and GPU visibility."
+      ]
+    },
+    {
+      "id": "dra-helm-demo-sample-workloads-adjacent-negative-001",
+      "question": "A deployed cluster already has a pod stuck Pending with no ResourceSlice inventory and repeated gpu-kubelet-plugin errors. Build a support triage report.",
+      "prompt": "A deployed cluster already has a pod stuck Pending with no ResourceSlice inventory and repeated gpu-kubelet-plugin errors. Build a support triage report.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent constructs a read-only operational triage report with versions, scope, events, logs, ResourceClaims, ResourceSlices, component boundary, hypotheses, and safe next checks.",
+      "expected_output": "The agent constructs a read-only operational triage report with versions, scope, events, logs, ResourceClaims, ResourceSlices, component boundary, hypotheses, and safe next checks.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-helm-demo-sample-workloads.",
+        "The agent routes the request to DRA operations, troubleshooting, and observability guidance.",
+        "The agent does not prescribe reinstalling the chart as root-cause analysis."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-helm-demo-sample-workloads.",
+        "The agent routes the request to DRA operations, troubleshooting, and observability guidance.",
+        "The agent does not prescribe reinstalling the chart as root-cause analysis."
+      ]
+    },
+    {
+      "id": "dra-helm-demo-sample-workloads-boundary-negative-001",
+      "question": "Draft a proposal for adding a new Helm value that controls IMEX isolation mode and explain upgrade risks.",
+      "prompt": "Draft a proposal for adding a new Helm value that controls IMEX isolation mode and explain upgrade risks.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent drafts a design-review or proposal plan covering user-facing surface, layer ownership, compatibility, feature-gate and upgrade considerations, test plan, risks, alternatives, and maintainer questions.",
+      "expected_output": "The agent drafts a design-review or proposal plan covering user-facing surface, layer ownership, compatibility, feature-gate and upgrade considerations, test plan, risks, alternatives, and maintainer questions.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-helm-demo-sample-workloads.",
+        "The agent routes the request to proposal/design review or API/contract change guidance.",
+        "The agent does not render or apply Helm resources for a design proposal request."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-helm-demo-sample-workloads.",
+        "The agent routes the request to proposal/design review or API/contract change guidance.",
+        "The agent does not render or apply Helm resources for a design proposal request."
+      ]
+    }
+  ]
+}

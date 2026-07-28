@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-gpu-allocation-workflows",
+  "evals": [
+    {
+      "id": "dra-gpu-allocation-workflows-explicit-001",
+      "question": "Use dra-gpu-allocation-workflows to trace a dynamic MIG ResourceClaim from DeviceClass selection to CDI injection and teardown.",
+      "prompt": "Use dra-gpu-allocation-workflows to trace a dynamic MIG ResourceClaim from DeviceClass selection to CDI injection and teardown.",
+      "expected_skill": "dra-gpu-allocation-workflows",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent explains the dynamic MIG allocation path from ResourceClaim intent through scheduler matching, ResourceSlice capacity, kubelet prepare, partition creation, checkpoint persistence, CDI device return, runtime consumption, and unprepare teardown.",
+      "expected_output": "The agent explains the dynamic MIG allocation path from ResourceClaim intent through scheduler matching, ResourceSlice capacity, kubelet prepare, partition creation, checkpoint persistence, CDI device return, runtime consumption, and unprepare teardown.",
+      "expected_behavior": [
+        "The agent reads the dra-gpu-allocation-workflows instructions before taking action.",
+        "The agent classifies the request as `mig.nvidia.com` and validates relevant feature gates and dependencies against code and docs.",
+        "The agent distinguishes static MIG, dynamic MIG, full GPU, VFIO, time-slicing, and MPS semantics.",
+        "The agent identifies evidence at DeviceClass, ResourceSlice, ResourceClaim, scheduler, gpu-kubelet-plugin prepare, checkpoint, CDI, runtime, and unprepare boundaries.",
+        "The agent asks approval before changing MIG or VFIO state, restarting plugins, deleting checkpoints, or running invasive tests."
+      ],
+      "assertions": [
+        "The agent reads the dra-gpu-allocation-workflows instructions before taking action.",
+        "The agent classifies the request as `mig.nvidia.com` and validates relevant feature gates and dependencies against code and docs.",
+        "The agent distinguishes static MIG, dynamic MIG, full GPU, VFIO, time-slicing, and MPS semantics.",
+        "The agent identifies evidence at DeviceClass, ResourceSlice, ResourceClaim, scheduler, gpu-kubelet-plugin prepare, checkpoint, CDI, runtime, and unprepare boundaries.",
+        "The agent asks approval before changing MIG or VFIO state, restarting plugins, deleting checkpoints, or running invasive tests."
+      ]
+    },
+    {
+      "id": "dra-gpu-allocation-workflows-contextual-001",
+      "question": "A pod requests two time-sliced GPUs and both containers share the same claim, but only one container sees a GPU UUID. Build a bounded triage checklist.",
+      "prompt": "A pod requests two time-sliced GPUs and both containers share the same claim, but only one container sees a GPU UUID. Build a bounded triage checklist.",
+      "expected_skill": "dra-gpu-allocation-workflows",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent creates a GPU-sharing triage checklist that verifies DeviceClass and opaque config, ResourceSlice inventory, claim allocation and node assignment, gpu-kubelet-plugin prepare output, checkpoint and CDI specs, runtime CDI support, and container-visible UUID evidence while distinguishing time-slicing from MIG isolation.",
+      "expected_output": "The agent creates a GPU-sharing triage checklist that verifies DeviceClass and opaque config, ResourceSlice inventory, claim allocation and node assignment, gpu-kubelet-plugin prepare output, checkpoint and CDI specs, runtime CDI support, and container-visible UUID evidence while distinguishing time-slicing from MIG isolation.",
+      "expected_behavior": [
+        "The agent infers that the request concerns GPU sharing, ResourceClaims, prepare, CDI, and container-visible devices.",
+        "The agent reads or references GPU allocation docs, API types, ResourceSlice attributes, feature gates, and `cmd/gpu-kubelet-plugin/`.",
+        "The agent separates DRA driver behavior from scheduler, GPU Operator, NVIDIA driver, runtime/CDI, and hardware configuration.",
+        "The agent preserves active workloads and claims when suggesting recovery.",
+        "The agent does not leak kubeconfigs, credentials, or sensitive workload details."
+      ],
+      "assertions": [
+        "The agent infers that the request concerns GPU sharing, ResourceClaims, prepare, CDI, and container-visible devices.",
+        "The agent reads or references GPU allocation docs, API types, ResourceSlice attributes, feature gates, and `cmd/gpu-kubelet-plugin/`.",
+        "The agent separates DRA driver behavior from scheduler, GPU Operator, NVIDIA driver, runtime/CDI, and hardware configuration.",
+        "The agent preserves active workloads and claims when suggesting recovery.",
+        "The agent does not leak kubeconfigs, credentials, or sensitive workload details."
+      ]
+    },
+    {
+      "id": "dra-gpu-allocation-workflows-adjacent-negative-001",
+      "question": "My ComputeDomainClique objects are missing readiness for one GB300 node and the IMEX host service is running. What should I inspect next?",
+      "prompt": "My ComputeDomainClique objects are missing readiness for one GB300 node and the IMEX host service is running. What should I inspect next?",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent provides a ComputeDomain and IMEX troubleshooting path covering clique labels, host service ownership, daemon readiness, controller objects, channel claims, and injection evidence.",
+      "expected_output": "The agent provides a ComputeDomain and IMEX troubleshooting path covering clique labels, host service ownership, daemon readiness, controller objects, channel claims, and injection evidence.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-gpu-allocation-workflows.",
+        "The agent routes the request to ComputeDomain/IMEX workflow or operational troubleshooting guidance.",
+        "The agent does not frame the symptom as a GPU ResourceClaim or CDI-only problem."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-gpu-allocation-workflows.",
+        "The agent routes the request to ComputeDomain/IMEX workflow or operational troubleshooting guidance.",
+        "The agent does not frame the symptom as a GPU ResourceClaim or CDI-only problem."
+      ]
+    },
+    {
+      "id": "dra-gpu-allocation-workflows-boundary-negative-001",
+      "question": "Render the Helm chart for a standalone DRA install with only the default GPU resources enabled, but do not apply anything.",
+      "prompt": "Render the Helm chart for a standalone DRA install with only the default GPU resources enabled, but do not apply anything.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent prepares a render-first Helm review plan, inspects chart values and templates, and produces or describes non-mutating render validation without performing cluster changes.",
+      "expected_output": "The agent prepares a render-first Helm review plan, inspects chart values and templates, and produces or describes non-mutating render validation without performing cluster changes.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-gpu-allocation-workflows.",
+        "The agent routes the task to Helm deployment and demo workflow guidance.",
+        "The agent does not diagnose allocation or prepare failures when the user only asked for chart rendering."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-gpu-allocation-workflows.",
+        "The agent routes the task to Helm deployment and demo workflow guidance.",
+        "The agent does not diagnose allocation or prepare failures when the user only asked for chart rendering."
+      ]
+    }
+  ]
+}

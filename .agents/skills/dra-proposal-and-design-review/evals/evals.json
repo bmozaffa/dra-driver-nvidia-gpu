@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-proposal-and-design-review",
+  "evals": [
+    {
+      "id": "dra-proposal-and-design-review-explicit-001",
+      "question": "Use dra-proposal-and-design-review to draft a provisional proposal for a new ResourceSlice attribute behind a feature gate.",
+      "prompt": "Use dra-proposal-and-design-review to draft a provisional proposal for a new ResourceSlice attribute behind a feature gate.",
+      "expected_skill": "dra-proposal-and-design-review",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent drafts a maintainer-ready provisional proposal plan from the repository template, covering summary, motivation, goals, non-goals, layer rationale, user example, authoritative state owner, feature-gate stage, default, dependencies, CEL-facing attribute naming, compatibility, upgrade and downgrade behavior, test plan, risks, alternatives, drawbacks, and open maintainer questions.",
+      "expected_output": "The agent drafts a maintainer-ready provisional proposal plan from the repository template, covering summary, motivation, goals, non-goals, layer rationale, user example, authoritative state owner, feature-gate stage, default, dependencies, CEL-facing attribute naming, compatibility, upgrade and downgrade behavior, test plan, risks, alternatives, drawbacks, and open maintainer questions.",
+      "expected_behavior": [
+        "The agent reads the dra-proposal-and-design-review instructions before taking action.",
+        "The agent reads `site/content/contribute/proposals/_index.md` and `site/content/contribute/proposals/NNNN-template.md` completely before drafting.",
+        "The agent inspects existing proposal files before choosing a next proposal number and keeps status provisional until maintainers agree.",
+        "The agent labels public repository and internal supplemental sources and flags code, docs, or release assumption contradictions.",
+        "The agent does not modify clusters, external services, issues, PRs, releases, or secrets without explicit approval."
+      ],
+      "assertions": [
+        "The agent reads the dra-proposal-and-design-review instructions before taking action.",
+        "The agent reads `site/content/contribute/proposals/_index.md` and `site/content/contribute/proposals/NNNN-template.md` completely before drafting.",
+        "The agent inspects existing proposal files before choosing a next proposal number and keeps status provisional until maintainers agree.",
+        "The agent labels public repository and internal supplemental sources and flags code, docs, or release assumption contradictions.",
+        "The agent does not modify clusters, external services, issues, PRs, releases, or secrets without explicit approval."
+      ]
+    },
+    {
+      "id": "dra-proposal-and-design-review-contextual-001",
+      "question": "We need to decide whether host-managed IMEX isolation mode belongs in this driver, GPU Operator, or upstream Kubernetes. Write the design review.",
+      "prompt": "We need to decide whether host-managed IMEX isolation mode belongs in this driver, GPU Operator, or upstream Kubernetes. Write the design review.",
+      "expected_skill": "dra-proposal-and-design-review",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent produces a layer-boundary design review that compares driver, GPU Operator, upstream Kubernetes, runtime, and external tool ownership, analyzes user-facing configuration, compatibility, failure modes, testability, alternatives, and unresolved maintainer decisions.",
+      "expected_output": "The agent produces a layer-boundary design review that compares driver, GPU Operator, upstream Kubernetes, runtime, and external tool ownership, analyzes user-facing configuration, compatibility, failure modes, testability, alternatives, and unresolved maintainer decisions.",
+      "expected_behavior": [
+        "The agent infers that the request needs proposal and design review because it affects multi-node ComputeDomain and IMEX behavior and ownership boundaries.",
+        "The agent verifies current code, repository docs, Kubernetes DRA docs, GPU Operator docs, and release assumptions before making claims.",
+        "The agent defines measurable goals, non-goals, smallest valuable slice, affected components, and a single authoritative owner for new state.",
+        "The agent includes failure modes such as prepare/unprepare races, force deletion, reboot, restart, checkpoint migration, leader election, partitions, privilege, mounts, and fail-fast behavior as relevant.",
+        "The agent does not claim an unreviewed proposal is implemented or supportable."
+      ],
+      "assertions": [
+        "The agent infers that the request needs proposal and design review because it affects multi-node ComputeDomain and IMEX behavior and ownership boundaries.",
+        "The agent verifies current code, repository docs, Kubernetes DRA docs, GPU Operator docs, and release assumptions before making claims.",
+        "The agent defines measurable goals, non-goals, smallest valuable slice, affected components, and a single authoritative owner for new state.",
+        "The agent includes failure modes such as prepare/unprepare races, force deletion, reboot, restart, checkpoint migration, leader election, partitions, privilege, mounts, and fail-fast behavior as relevant.",
+        "The agent does not claim an unreviewed proposal is implemented or supportable."
+      ]
+    },
+    {
+      "id": "dra-proposal-and-design-review-adjacent-negative-001",
+      "question": "Implement the optional `GpuConfig` field and regenerate CRDs, clients, docs, and tests.",
+      "prompt": "Implement the optional `GpuConfig` field and regenerate CRDs, clients, docs, and tests.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent performs or plans the API and CRD contract implementation workflow by editing handwritten sources first, regenerating artifacts through repository workflows, updating docs and tests, and reporting compatibility and validation evidence.",
+      "expected_output": "The agent performs or plans the API and CRD contract implementation workflow by editing handwritten sources first, regenerating artifacts through repository workflows, updating docs and tests, and reporting compatibility and validation evidence.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-proposal-and-design-review unless design approval is explicitly missing or requested.",
+        "The agent routes the concrete implementation request to API, CRD, feature-gate, and compatibility change guidance.",
+        "The agent preserves unrelated worktree changes and does not hand-edit generated files as the source of truth."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-proposal-and-design-review unless design approval is explicitly missing or requested.",
+        "The agent routes the concrete implementation request to API, CRD, feature-gate, and compatibility change guidance.",
+        "The agent preserves unrelated worktree changes and does not hand-edit generated files as the source of truth."
+      ]
+    },
+    {
+      "id": "dra-proposal-and-design-review-boundary-negative-001",
+      "question": "Which CI checks should I run for a docs-only change under `site/content/docs/guides/gpu-allocation/`?",
+      "prompt": "Which CI checks should I run for a docs-only change under `site/content/docs/guides/gpu-allocation/`?",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent maps a docs-only change to appropriate documentation and repository validation checks, names skipped code and hardware gates, and explains the smallest credible pre-PR evidence.",
+      "expected_output": "The agent maps a docs-only change to appropriate documentation and repository validation checks, names skipped code and hardware gates, and explains the smallest credible pre-PR evidence.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-proposal-and-design-review.",
+        "The agent routes the request to build, test, code-generation, and CI guidance.",
+        "The agent does not draft a proposal for a validation-matrix question."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-proposal-and-design-review.",
+        "The agent routes the request to build, test, code-generation, and CI guidance.",
+        "The agent does not draft a proposal for a validation-matrix question."
+      ]
+    }
+  ]
+}

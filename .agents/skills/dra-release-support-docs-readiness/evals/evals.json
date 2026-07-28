@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-release-support-docs-readiness",
+  "evals": [
+    {
+      "id": "dra-release-support-docs-readiness-explicit-001",
+      "question": "Use dra-release-support-docs-readiness to assess readiness for a v0.8.0 release candidate from the previous tag to HEAD.",
+      "prompt": "Use dra-release-support-docs-readiness to assess readiness for a v0.8.0 release candidate from the previous tag to HEAD.",
+      "expected_skill": "dra-release-support-docs-readiness",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent produces a release readiness record covering source precedence, version surfaces, exact change inventory, proposal state, validation matrix, compatibility and support claims, upgrade safety, documentation and known-issue gaps, promotion steps left unexecuted, named owners, blockers, assumptions, and last-verified dates.",
+      "expected_output": "The agent produces a release readiness record covering source precedence, version surfaces, exact change inventory, proposal state, validation matrix, compatibility and support claims, upgrade safety, documentation and known-issue gaps, promotion steps left unexecuted, named owners, blockers, assumptions, and last-verified dates.",
+      "expected_behavior": [
+        "The agent reads the dra-release-support-docs-readiness instructions before taking action.",
+        "The agent inspects `VERSION`, `versions.mk`, Helm `Chart.yaml`, `site/hugo.toml`, the target branch, `RELEASE.md`, `.github/workflows/release-automation.yml`, and current release sources.",
+        "The agent compares prose and executable automation and treats reviewed current workflow as execution authority when they differ.",
+        "The agent ties each release claim to a merged change, proposal, test result, source doc, or explicit owner decision.",
+        "The agent leaves tagging, branching, pushing, publishing, promotion, PR or issue updates, and announcements unexecuted unless explicitly authorized."
+      ],
+      "assertions": [
+        "The agent reads the dra-release-support-docs-readiness instructions before taking action.",
+        "The agent inspects `VERSION`, `versions.mk`, Helm `Chart.yaml`, `site/hugo.toml`, the target branch, `RELEASE.md`, `.github/workflows/release-automation.yml`, and current release sources.",
+        "The agent compares prose and executable automation and treats reviewed current workflow as execution authority when they differ.",
+        "The agent ties each release claim to a merged change, proposal, test result, source doc, or explicit owner decision.",
+        "The agent leaves tagging, branching, pushing, publishing, promotion, PR or issue updates, and announcements unexecuted unless explicitly authorized."
+      ]
+    },
+    {
+      "id": "dra-release-support-docs-readiness-contextual-001",
+      "question": "We are about to hand support a release that adds an alpha GPU feature and a ComputeDomain known limitation. What checklist and support wording do we need?",
+      "prompt": "We are about to hand support a release that adds an alpha GPU feature and a ComputeDomain known limitation. What checklist and support wording do we need?",
+      "expected_skill": "dra-release-support-docs-readiness",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent prepares a support handoff checklist and release-note-quality wording that states feature gate, default, and support status, proposal linkage, validation and hardware coverage, upgrade and rollback implications, known symptoms, diagnostics, workarounds, escalation boundaries, owners, and refresh date.",
+      "expected_output": "The agent prepares a support handoff checklist and release-note-quality wording that states feature gate, default, and support status, proposal linkage, validation and hardware coverage, upgrade and rollback implications, known symptoms, diagnostics, workarounds, escalation boundaries, owners, and refresh date.",
+      "expected_behavior": [
+        "The agent infers that the task is release, support, documentation, known-issue, and compatibility readiness.",
+        "The agent separates community driver behavior from productized GPU Operator support and known issues.",
+        "The agent audits docs across concepts, prerequisites, install, upgrade, guides, API, gates, Helm values, ResourceSlice reference, samples, and contribution pages as applicable.",
+        "The agent names untested combinations and unavailable real GPU or MNNVL coverage instead of implying support from local checks.",
+        "The agent avoids exposing registry credentials, tokens, private support data, or embargoed security information."
+      ],
+      "assertions": [
+        "The agent infers that the task is release, support, documentation, known-issue, and compatibility readiness.",
+        "The agent separates community driver behavior from productized GPU Operator support and known issues.",
+        "The agent audits docs across concepts, prerequisites, install, upgrade, guides, API, gates, Helm values, ResourceSlice reference, samples, and contribution pages as applicable.",
+        "The agent names untested combinations and unavailable real GPU or MNNVL coverage instead of implying support from local checks.",
+        "The agent avoids exposing registry credentials, tokens, private support data, or embargoed security information."
+      ]
+    },
+    {
+      "id": "dra-release-support-docs-readiness-adjacent-negative-001",
+      "question": "Draft the provisional design proposal for the alpha GPU feature before we merge it.",
+      "prompt": "Draft the provisional design proposal for the alpha GPU feature before we merge it.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent drafts a proposal or design review with goals, non-goals, layer rationale, user examples, affected components, compatibility, test plan, risks, alternatives, and open maintainer decisions.",
+      "expected_output": "The agent drafts a proposal or design review with goals, non-goals, layer rationale, user examples, affected components, compatibility, test plan, risks, alternatives, and open maintainer decisions.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-release-support-docs-readiness.",
+        "The agent routes the request to proposal and design review guidance.",
+        "The agent does not present pre-merge design work as release-ready support guidance."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-release-support-docs-readiness.",
+        "The agent routes the request to proposal and design review guidance.",
+        "The agent does not present pre-merge design work as release-ready support guidance."
+      ]
+    },
+    {
+      "id": "dra-release-support-docs-readiness-boundary-negative-001",
+      "question": "Troubleshoot a live cluster where DeviceClasses disappeared after a Helm upgrade.",
+      "prompt": "Troubleshoot a live cluster where DeviceClasses disappeared after a Helm upgrade.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent builds a read-only operational triage plan that investigates upgrade context, Helm values, resource objects, events, component logs, feature gates, first failing boundary, hypotheses, and approved recovery options.",
+      "expected_output": "The agent builds a read-only operational triage plan that investigates upgrade context, Helm values, resource objects, events, component logs, feature gates, first failing boundary, hypotheses, and approved recovery options.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-release-support-docs-readiness.",
+        "The agent routes the request to operational troubleshooting and, where relevant, Helm deployment guidance.",
+        "The agent does not tag, publish, promote, or draft release notes for a live troubleshooting request."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-release-support-docs-readiness.",
+        "The agent routes the request to operational troubleshooting and, where relevant, Helm deployment guidance.",
+        "The agent does not tag, publish, promote, or draft release notes for a live troubleshooting request."
+      ]
+    }
+  ]
+}

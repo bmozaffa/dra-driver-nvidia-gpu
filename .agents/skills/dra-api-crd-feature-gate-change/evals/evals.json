@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-api-crd-feature-gate-change",
+  "evals": [
+    {
+      "id": "dra-api-crd-feature-gate-change-explicit-001",
+      "question": "Use dra-api-crd-feature-gate-change to plan adding an optional `driverRoot` field to `GpuConfig` for v0.8.0. Include source files, generated artifacts, compatibility, docs, and validation.",
+      "prompt": "Use dra-api-crd-feature-gate-change to plan adding an optional `driverRoot` field to `GpuConfig` for v0.8.0. Include source files, generated artifacts, compatibility, docs, and validation.",
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent produces a contract-change plan that starts from handwritten API sources, traces the optional `GpuConfig.driverRoot` field through validation, generated CRDs and clients, Helm, docs, samples, and tests, and reports compatibility, generated-file, validation, release-note, and risk items.",
+      "expected_output": "The agent produces a contract-change plan that starts from handwritten API sources, traces the optional `GpuConfig.driverRoot` field through validation, generated CRDs and clients, Helm, docs, samples, and tests, and reports compatibility, generated-file, validation, release-note, and risk items.",
+      "expected_behavior": [
+        "The agent reads the dra-api-crd-feature-gate-change instructions before taking action.",
+        "The agent checks `git status --short`, `VERSION`, `go.mod`, and `deployments/helm/dra-driver-nvidia-gpu/Chart.yaml` before proposing edits.",
+        "The agent identifies `api/nvidia.com/resource/v1beta1/`, generated outputs, `cmd/webhook/`, Helm values/templates, and `site/content/docs/reference/` as contract surfaces.",
+        "The agent requires repository generation and checks such as `make generate`, `make check-generate`, focused unit tests, `make test`, `make check`, and `make helm-lint` where applicable.",
+        "The agent does not leak secrets, discard unrelated changes, or run live-cluster tests without explicit approval."
+      ],
+      "assertions": [
+        "The agent reads the dra-api-crd-feature-gate-change instructions before taking action.",
+        "The agent checks `git status --short`, `VERSION`, `go.mod`, and `deployments/helm/dra-driver-nvidia-gpu/Chart.yaml` before proposing edits.",
+        "The agent identifies `api/nvidia.com/resource/v1beta1/`, generated outputs, `cmd/webhook/`, Helm values/templates, and `site/content/docs/reference/` as contract surfaces.",
+        "The agent requires repository generation and checks such as `make generate`, `make check-generate`, focused unit tests, `make test`, `make check`, and `make helm-lint` where applicable.",
+        "The agent does not leak secrets, discard unrelated changes, or run live-cluster tests without explicit approval."
+      ]
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change-contextual-001",
+      "question": "A new ResourceSlice attribute is needed so DeviceClasses can select H100 SXM GPUs by NVLink fabric generation. Sketch the safe implementation and review checklist for this repository.",
+      "prompt": "A new ResourceSlice attribute is needed so DeviceClasses can select H100 SXM GPUs by NVLink fabric generation. Sketch the safe implementation and review checklist for this repository.",
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent delivers a safe implementation and review checklist for adding a public ResourceSlice attribute, including authoritative source ownership, CEL-facing naming, docs and reference updates, compatibility with supported Kubernetes DRA versions, generated artifact review, and tests.",
+      "expected_output": "The agent delivers a safe implementation and review checklist for adding a public ResourceSlice attribute, including authoritative source ownership, CEL-facing naming, docs and reference updates, compatibility with supported Kubernetes DRA versions, generated artifact review, and tests.",
+      "expected_behavior": [
+        "The agent infers that the request belongs to DRA API, CRD, feature-gate, and compatibility change handling.",
+        "The agent treats ResourceSlice attribute names and CEL access paths as public contracts.",
+        "The agent searches or plans to search readers, writers, validators, docs, samples, tests, and generated artifacts before editing.",
+        "The agent calls out design alignment and maintainer review for the user-visible API surface.",
+        "The agent avoids exposing secrets or normalizing unrelated drift outside the requested scope."
+      ],
+      "assertions": [
+        "The agent infers that the request belongs to DRA API, CRD, feature-gate, and compatibility change handling.",
+        "The agent treats ResourceSlice attribute names and CEL access paths as public contracts.",
+        "The agent searches or plans to search readers, writers, validators, docs, samples, tests, and generated artifacts before editing.",
+        "The agent calls out design alignment and maintainer review for the user-visible API surface.",
+        "The agent avoids exposing secrets or normalizing unrelated drift outside the requested scope."
+      ]
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change-adjacent-negative-001",
+      "question": "CI failed on `make check-generate` after I touched generated client files. Help me identify the failing command and the minimum checks to rerun.",
+      "prompt": "CI failed on `make check-generate` after I touched generated client files. Help me identify the failing command and the minimum checks to rerun.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent diagnoses the CI and code-generation failure path by inspecting the diff and build/test workflow, naming the failing command, first actionable error, and smallest credible rerun set.",
+      "expected_output": "The agent diagnoses the CI and code-generation failure path by inspecting the diff and build/test workflow, naming the failing command, first actionable error, and smallest credible rerun set.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-api-crd-feature-gate-change.",
+        "The agent handles the request with build, test, code-generation, or CI guidance.",
+        "The agent preserves unrelated worktree changes and does not reset generated files as a shortcut."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-api-crd-feature-gate-change.",
+        "The agent handles the request with build, test, code-generation, or CI guidance.",
+        "The agent preserves unrelated worktree changes and does not reset generated files as a shortcut."
+      ]
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change-boundary-negative-001",
+      "question": "Explain at a high level what Kubernetes Dynamic Resource Allocation is and how it differs from legacy extended resources.",
+      "prompt": "Explain at a high level what Kubernetes Dynamic Resource Allocation is and how it differs from legacy extended resources.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent gives a general DRA explanation and comparison to legacy extended resources without producing a repository-specific API implementation plan.",
+      "expected_output": "The agent gives a general DRA explanation and comparison to legacy extended resources without producing a repository-specific API implementation plan.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-api-crd-feature-gate-change.",
+        "The agent answers with general knowledge or repository orientation only if exact project paths are requested.",
+        "The agent does not edit API, CRD, Helm, checkpoint, or generated files."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-api-crd-feature-gate-change.",
+        "The agent answers with general knowledge or repository orientation only if exact project paths are requested.",
+        "The agent does not edit API, CRD, Helm, checkpoint, or generated files."
+      ]
+    }
+  ]
+}

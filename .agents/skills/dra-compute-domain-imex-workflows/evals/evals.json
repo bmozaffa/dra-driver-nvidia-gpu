@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-compute-domain-imex-workflows",
+  "evals": [
+    {
+      "id": "dra-compute-domain-imex-workflows-explicit-001",
+      "question": "Use dra-compute-domain-imex-workflows to explain the driver-managed ComputeDomain path from CR creation to a workload seeing `/imexd` and channel devices.",
+      "prompt": "Use dra-compute-domain-imex-workflows to explain the driver-managed ComputeDomain path from CR creation to a workload seeing `/imexd` and channel devices.",
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent explains the source-backed sequence from `ComputeDomain` creation through controller reconciliation, per-domain daemon supervision, clique and readiness reporting, channel claim allocation, kubelet prepare, and runtime injection of `/imexd` and IMEX channel devices.",
+      "expected_output": "The agent explains the source-backed sequence from `ComputeDomain` creation through controller reconciliation, per-domain daemon supervision, clique and readiness reporting, channel claim allocation, kubelet prepare, and runtime injection of `/imexd` and IMEX channel devices.",
+      "expected_behavior": [
+        "The agent reads the dra-compute-domain-imex-workflows instructions before taking action.",
+        "The agent references `site/content/docs/concepts/compute-domains.md`, `site/content/docs/guides/compute-domain-workloads.md`, and the compute-domain command directories as source anchors.",
+        "The agent distinguishes driver-managed and host-managed IMEX lifecycle ownership.",
+        "The agent treats `ComputeDomain.status` as informational unless current code or docs define it as a gating contract.",
+        "The agent avoids exposing topology, kubeconfigs, credentials, or private node details."
+      ],
+      "assertions": [
+        "The agent reads the dra-compute-domain-imex-workflows instructions before taking action.",
+        "The agent references `site/content/docs/concepts/compute-domains.md`, `site/content/docs/guides/compute-domain-workloads.md`, and the compute-domain command directories as source anchors.",
+        "The agent distinguishes driver-managed and host-managed IMEX lifecycle ownership.",
+        "The agent treats `ComputeDomain.status` as informational unless current code or docs define it as a gating contract.",
+        "The agent avoids exposing topology, kubeconfigs, credentials, or private node details."
+      ]
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows-contextual-001",
+      "question": "On a GB200 cluster, a channel ResourceClaim is allocated but the pod never gets an IMEX channel device. Give me a layered, read-only triage plan using the objects and evidence I should collect.",
+      "prompt": "On a GB200 cluster, a channel ResourceClaim is allocated but the pod never gets an IMEX channel device. Give me a layered, read-only triage plan using the objects and evidence I should collect.",
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent produces a layered ComputeDomain incident plan that verifies MNNVL prerequisites, clique labels, controller objects, daemon or host service readiness, ResourceSlice and DeviceClass state, channel claim allocation, kubelet prepare logs, and injected device and mount evidence.",
+      "expected_output": "The agent produces a layered ComputeDomain incident plan that verifies MNNVL prerequisites, clique labels, controller objects, daemon or host service readiness, ResourceSlice and DeviceClass state, channel claim allocation, kubelet prepare logs, and injected device and mount evidence.",
+      "expected_behavior": [
+        "The agent infers that GB200, IMEX channels, and ComputeDomain evidence belong to dra-compute-domain-imex-workflows.",
+        "The agent asks for versions, topology, Helm values, feature gates, ComputeDomain objects, claims, pods, events, and redacted logs.",
+        "The agent separates driver defects from GFD labels, NVIDIA driver or IMEX package state, host service ownership, Kubernetes DRA, runtime, DNS, and hardware fabric issues.",
+        "The agent uses read-only inspection first and asks approval before changing IMEX service state, deleting objects, switching modes, or running MNNVL tests.",
+        "The agent's final response names the likely failure boundary and next safe checks."
+      ],
+      "assertions": [
+        "The agent infers that GB200, IMEX channels, and ComputeDomain evidence belong to dra-compute-domain-imex-workflows.",
+        "The agent asks for versions, topology, Helm values, feature gates, ComputeDomain objects, claims, pods, events, and redacted logs.",
+        "The agent separates driver defects from GFD labels, NVIDIA driver or IMEX package state, host service ownership, Kubernetes DRA, runtime, DNS, and hardware fabric issues.",
+        "The agent uses read-only inspection first and asks approval before changing IMEX service state, deleting objects, switching modes, or running MNNVL tests.",
+        "The agent's final response names the likely failure boundary and next safe checks."
+      ]
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows-adjacent-negative-001",
+      "question": "A GPU-only pod using a `gpu.nvidia.com` DeviceClass is Pending because its ResourceClaim is not allocated. Trace the likely allocation boundaries.",
+      "prompt": "A GPU-only pod using a `gpu.nvidia.com` DeviceClass is Pending because its ResourceClaim is not allocated. Trace the likely allocation boundaries.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent analyzes the GPU ResourceClaim path through DeviceClass selectors, ResourceSlices, scheduler allocation, node prepare, CDI, runtime, and hardware state.",
+      "expected_output": "The agent analyzes the GPU ResourceClaim path through DeviceClass selectors, ResourceSlices, scheduler allocation, node prepare, CDI, runtime, and hardware state.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-compute-domain-imex-workflows.",
+        "The agent routes the request to GPU allocation or operational troubleshooting guidance.",
+        "The agent does not discuss ComputeDomainClique, IMEX daemon lifecycle, or channel claims unless the user adds that evidence."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-compute-domain-imex-workflows.",
+        "The agent routes the request to GPU allocation or operational troubleshooting guidance.",
+        "The agent does not discuss ComputeDomainClique, IMEX daemon lifecycle, or channel claims unless the user adds that evidence."
+      ]
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows-boundary-negative-001",
+      "question": "Draft release-note wording for a release that includes a new alpha ComputeDomain feature gate and known MNNVL limitations.",
+      "prompt": "Draft release-note wording for a release that includes a new alpha ComputeDomain feature gate and known MNNVL limitations.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent drafts release-readiness or release-note material that ties support wording, feature-gate status, known limitations, validation coverage, and owner decisions to release evidence.",
+      "expected_output": "The agent drafts release-readiness or release-note material that ties support wording, feature-gate status, known limitations, validation coverage, and owner decisions to release evidence.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-compute-domain-imex-workflows.",
+        "The agent routes the task to release readiness or proposal/design review guidance.",
+        "The agent does not run cluster diagnostics or treat release-note drafting as a live ComputeDomain incident."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-compute-domain-imex-workflows.",
+        "The agent routes the task to release readiness or proposal/design review guidance.",
+        "The agent does not run cluster diagnostics or treat release-note drafting as a live ComputeDomain incident."
+      ]
+    }
+  ]
+}

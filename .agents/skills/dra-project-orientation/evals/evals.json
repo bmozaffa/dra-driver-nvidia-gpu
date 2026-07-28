@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-project-orientation",
+  "evals": [
+    {
+      "id": "dra-project-orientation-explicit-001",
+      "question": "Use dra-project-orientation to give a new reviewer a component map of this repository, including both resource families and the five runtime binaries.",
+      "prompt": "Use dra-project-orientation to give a new reviewer a component map of this repository, including both resource families and the five runtime binaries.",
+      "expected_skill": "dra-project-orientation",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent returns a source-backed repository map that identifies the `gpu.nvidia.com` and `compute-domain.nvidia.com` resource families, the five runtime binaries and their responsibilities, API, generated, and CRD paths, deployment and demo locations, validation areas, docs organization, ownership, checkout version, and source types.",
+      "expected_output": "The agent returns a source-backed repository map that identifies the `gpu.nvidia.com` and `compute-domain.nvidia.com` resource families, the five runtime binaries and their responsibilities, API, generated, and CRD paths, deployment and demo locations, validation areas, docs organization, ownership, checkout version, and source types.",
+      "expected_behavior": [
+        "The agent reads the dra-project-orientation instructions before taking action.",
+        "The agent checks `git status`, current branch, `VERSION`, `go.mod`, and Helm `Chart.yaml` for checkout context.",
+        "The agent reads `README.md` and `site/content/docs/concepts/architecture.md` before describing the project.",
+        "The agent verifies named paths exist and separates handwritten APIs, generated clients, and CRDs.",
+        "The agent uses read-only inspection and avoids exposing secrets, tokens, kubeconfigs, or customer-sensitive data."
+      ],
+      "assertions": [
+        "The agent reads the dra-project-orientation instructions before taking action.",
+        "The agent checks `git status`, current branch, `VERSION`, `go.mod`, and Helm `Chart.yaml` for checkout context.",
+        "The agent reads `README.md` and `site/content/docs/concepts/architecture.md` before describing the project.",
+        "The agent verifies named paths exist and separates handwritten APIs, generated clients, and CRDs.",
+        "The agent uses read-only inspection and avoids exposing secrets, tokens, kubeconfigs, or customer-sensitive data."
+      ]
+    },
+    {
+      "id": "dra-project-orientation-contextual-001",
+      "question": "I'm onboarding to this repo and need to know where a GPU ResourceClaim becomes a runtime device, where ComputeDomain channels are prepared, and who reviews the code.",
+      "prompt": "I'm onboarding to this repo and need to know where a GPU ResourceClaim becomes a runtime device, where ComputeDomain channels are prepared, and who reviews the code.",
+      "expected_skill": "dra-project-orientation",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent gives an onboarding answer that routes GPU prepare to `cmd/gpu-kubelet-plugin/`, ComputeDomain channel prepare to `cmd/compute-domain-kubelet-plugin/`, controller and daemon responsibilities to their command directories, ownership to `OWNERS`, and relevant docs and tests to repository paths.",
+      "expected_output": "The agent gives an onboarding answer that routes GPU prepare to `cmd/gpu-kubelet-plugin/`, ComputeDomain channel prepare to `cmd/compute-domain-kubelet-plugin/`, controller and daemon responsibilities to their command directories, ownership to `OWNERS`, and relevant docs and tests to repository paths.",
+      "expected_behavior": [
+        "The agent infers that the request is repository orientation rather than implementation or troubleshooting.",
+        "The agent separates GPU and ComputeDomain resource families without merging their responsibilities.",
+        "The agent does not claim the ComputeDomain controller performs GPU allocation or CDI injection for GPU claims.",
+        "The agent labels sources as public repository material or internal supplemental material when relevant.",
+        "The agent does not edit files, run tests, mutate clusters, or open external issues for an onboarding question."
+      ],
+      "assertions": [
+        "The agent infers that the request is repository orientation rather than implementation or troubleshooting.",
+        "The agent separates GPU and ComputeDomain resource families without merging their responsibilities.",
+        "The agent does not claim the ComputeDomain controller performs GPU allocation or CDI injection for GPU claims.",
+        "The agent labels sources as public repository material or internal supplemental material when relevant.",
+        "The agent does not edit files, run tests, mutate clusters, or open external issues for an onboarding question."
+      ]
+    },
+    {
+      "id": "dra-project-orientation-adjacent-negative-001",
+      "question": "A local unit test in `cmd/webhook` fails after my validation change. Pick the right checks to run and interpret the first actionable error.",
+      "prompt": "A local unit test in `cmd/webhook` fails after my validation change. Pick the right checks to run and interpret the first actionable error.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent selects and interprets focused test and validation commands for a webhook and API change, records command evidence, handles generated or formatting diffs carefully, and reports skipped broader gates.",
+      "expected_output": "The agent selects and interprets focused test and validation commands for a webhook and API change, records command evidence, handles generated or formatting diffs carefully, and reports skipped broader gates.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-project-orientation.",
+        "The agent routes the request to build, test, code-generation, and CI guidance.",
+        "The agent does not stop at a component map when the user needs command evidence."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-project-orientation.",
+        "The agent routes the request to build, test, code-generation, and CI guidance.",
+        "The agent does not stop at a component map when the user needs command evidence."
+      ]
+    },
+    {
+      "id": "dra-project-orientation-boundary-negative-001",
+      "question": "Prepare a release support handoff for v0.8.0 with known issues, version surfaces, and docs gaps.",
+      "prompt": "Prepare a release support handoff for v0.8.0 with known issues, version surfaces, and docs gaps.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent prepares a release readiness and support handoff checklist that ties version surfaces, changelog items, validation evidence, compatibility, docs gaps, known issues, owners, and blockers to release sources.",
+      "expected_output": "The agent prepares a release readiness and support handoff checklist that ties version surfaces, changelog items, validation evidence, compatibility, docs gaps, known issues, owners, and blockers to release sources.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-project-orientation.",
+        "The agent routes the request to release, support, and docs readiness guidance.",
+        "The agent does not provide only a repository map for a release handoff request."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-project-orientation.",
+        "The agent routes the request to release, support, and docs readiness guidance.",
+        "The agent does not provide only a repository map for a release handoff request."
+      ]
+    }
+  ]
+}

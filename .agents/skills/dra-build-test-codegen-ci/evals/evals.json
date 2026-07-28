@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-build-test-codegen-ci",
+  "evals": [
+    {
+      "id": "dra-build-test-codegen-ci-explicit-001",
+      "question": "Use dra-build-test-codegen-ci to choose and run the right validation for a patch that changed `cmd/gpu-kubelet-plugin/` and `api/nvidia.com/resource/v1beta1/`.",
+      "prompt": "Use dra-build-test-codegen-ci to choose and run the right validation for a patch that changed `cmd/gpu-kubelet-plugin/` and `api/nvidia.com/resource/v1beta1/`.",
+      "expected_skill": "dra-build-test-codegen-ci",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent maps the mixed GPU plugin and API change to focused package tests, code generation and generated-diff checks, `make check-generate`, unit, build, and check gates, Helm or docs checks where applicable, and reports passes, failures, skipped real-hardware coverage, and any tool-created diff.",
+      "expected_output": "The agent maps the mixed GPU plugin and API change to focused package tests, code generation and generated-diff checks, `make check-generate`, unit, build, and check gates, Helm or docs checks where applicable, and reports passes, failures, skipped real-hardware coverage, and any tool-created diff.",
+      "expected_behavior": [
+        "The agent reads the dra-build-test-codegen-ci instructions before taking action.",
+        "The agent inspects `git status --short`, the relevant diff, `Makefile`, `site/content/contribute/development.md`, `.github/workflows/`, and the PR checklist.",
+        "The agent starts with focused safe checks before broader repository gates.",
+        "The agent treats `make generate`, `make check-generate`, `make check`, and module or formatting targets as potentially worktree-modifying and inspects the post-run diff.",
+        "The agent asks for explicit approval before BATS, e2e, cluster creation, chart mutation, or hardware-dependent tests."
+      ],
+      "assertions": [
+        "The agent reads the dra-build-test-codegen-ci instructions before taking action.",
+        "The agent inspects `git status --short`, the relevant diff, `Makefile`, `site/content/contribute/development.md`, `.github/workflows/`, and the PR checklist.",
+        "The agent starts with focused safe checks before broader repository gates.",
+        "The agent treats `make generate`, `make check-generate`, `make check`, and module or formatting targets as potentially worktree-modifying and inspects the post-run diff.",
+        "The agent asks for explicit approval before BATS, e2e, cluster creation, chart mutation, or hardware-dependent tests."
+      ]
+    },
+    {
+      "id": "dra-build-test-codegen-ci-contextual-001",
+      "question": "`go.mod` and `deployments/helm/dra-driver-nvidia-gpu/templates/` changed in my branch. What is the smallest credible pre-PR validation set, and which checks are expensive or require approval?",
+      "prompt": "`go.mod` and `deployments/helm/dra-driver-nvidia-gpu/templates/` changed in my branch. What is the smallest credible pre-PR validation set, and which checks are expensive or require approval?",
+      "expected_skill": "dra-build-test-codegen-ci",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent returns a change-to-test matrix covering module checks, Helm lint and template validation, relevant unit or build checks, and explicitly separates safe local checks from invasive cluster, BATS, e2e, or hardware validation.",
+      "expected_output": "The agent returns a change-to-test matrix covering module checks, Helm lint and template validation, relevant unit or build checks, and explicitly separates safe local checks from invasive cluster, BATS, e2e, or hardware validation.",
+      "expected_behavior": [
+        "The agent infers that the request is about selecting DRA build, module, Helm, and CI validation.",
+        "The agent confirms selected commands exist in the current checkout before recommending or running them.",
+        "The agent names every skipped gate and explains why it is skipped.",
+        "The agent does not claim unit or mock-NVML success as real GPU or MNNVL coverage.",
+        "The agent protects secrets, kubeconfigs, and unrelated worktree changes."
+      ],
+      "assertions": [
+        "The agent infers that the request is about selecting DRA build, module, Helm, and CI validation.",
+        "The agent confirms selected commands exist in the current checkout before recommending or running them.",
+        "The agent names every skipped gate and explains why it is skipped.",
+        "The agent does not claim unit or mock-NVML success as real GPU or MNNVL coverage.",
+        "The agent protects secrets, kubeconfigs, and unrelated worktree changes."
+      ]
+    },
+    {
+      "id": "dra-build-test-codegen-ci-adjacent-negative-001",
+      "question": "Install the DRA Helm chart into my current cluster with GPU Operator-managed settings and run the basic sample workload.",
+      "prompt": "Install the DRA Helm chart into my current cluster with GPU Operator-managed settings and run the basic sample workload.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent prepares a render-first deployment and sample workload plan, shows cluster mutation boundaries, and asks for approval before Helm or kubectl changes.",
+      "expected_output": "The agent prepares a render-first deployment and sample workload plan, shows cluster mutation boundaries, and asks for approval before Helm or kubectl changes.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-build-test-codegen-ci.",
+        "The agent routes the request to Helm, demo, and sample workload planning.",
+        "The agent does not mutate the cluster or run invasive tests without explicit approval."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-build-test-codegen-ci.",
+        "The agent routes the request to Helm, demo, and sample workload planning.",
+        "The agent does not mutate the cluster or run invasive tests without explicit approval."
+      ]
+    },
+    {
+      "id": "dra-build-test-codegen-ci-boundary-negative-001",
+      "question": "Where in the repository does kubelet prepare turn a GPU ResourceClaim into a CDI device?",
+      "prompt": "Where in the repository does kubelet prepare turn a GPU ResourceClaim into a CDI device?",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent traces the repository paths for scheduler allocation, `cmd/gpu-kubelet-plugin/` prepare, checkpoint and CDI handling, and container runtime injection as a source-backed orientation answer.",
+      "expected_output": "The agent traces the repository paths for scheduler allocation, `cmd/gpu-kubelet-plugin/` prepare, checkpoint and CDI handling, and container runtime injection as a source-backed orientation answer.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-build-test-codegen-ci.",
+        "The agent answers with project orientation or GPU allocation workflow guidance rather than selecting tests.",
+        "The agent does not run build, test, lint, or code-generation commands for a location question."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-build-test-codegen-ci.",
+        "The agent answers with project orientation or GPU allocation workflow guidance rather than selecting tests.",
+        "The agent does not run build, test, lint, or code-generation commands for a location question."
+      ]
+    }
+  ]
+}

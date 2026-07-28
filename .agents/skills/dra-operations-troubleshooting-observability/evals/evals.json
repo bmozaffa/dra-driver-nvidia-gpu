@@ -1,0 +1,93 @@
+{
+  "skill_name": "dra-operations-troubleshooting-observability",
+  "evals": [
+    {
+      "id": "dra-operations-troubleshooting-observability-explicit-001",
+      "question": "Use dra-operations-troubleshooting-observability to triage an incident: after upgrade, GPU claims allocate but pods fail during prepare with CDI errors on two nodes.",
+      "prompt": "Use dra-operations-troubleshooting-observability to triage an incident: after upgrade, GPU claims allocate but pods fail during prepare with CDI errors on two nodes.",
+      "expected_skill": "dra-operations-troubleshooting-observability",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent produces a bounded read-only triage report that captures versions, scope, recent upgrade context, claim and pod evidence, events, gpu-kubelet-plugin logs, checkpoint and CDI state, runtime support, first failing boundary, hypotheses, and safe recovery options requiring approval.",
+      "expected_output": "The agent produces a bounded read-only triage report that captures versions, scope, recent upgrade context, claim and pod evidence, events, gpu-kubelet-plugin logs, checkpoint and CDI state, runtime support, first failing boundary, hypotheses, and safe recovery options requiring approval.",
+      "expected_behavior": [
+        "The agent reads the dra-operations-troubleshooting-observability instructions before taking action.",
+        "The agent defines affected resource family, namespaces, nodes, claims, workloads, time window, deployment mode, and recent changes before collecting data.",
+        "The agent correlates claim UID, pod, node, component, operation, event, log, metric, and retry evidence around the first failure.",
+        "The agent separates DRA driver behavior from Kubernetes scheduler, GPU Operator, runtime/CDI, NVIDIA driver, IMEX, and hardware boundaries.",
+        "The agent asks approval before restart, reinstall, claim deletion, host changes, checkpoint manipulation, upgrade, cleanup, or external support upload."
+      ],
+      "assertions": [
+        "The agent reads the dra-operations-troubleshooting-observability instructions before taking action.",
+        "The agent defines affected resource family, namespaces, nodes, claims, workloads, time window, deployment mode, and recent changes before collecting data.",
+        "The agent correlates claim UID, pod, node, component, operation, event, log, metric, and retry evidence around the first failure.",
+        "The agent separates DRA driver behavior from Kubernetes scheduler, GPU Operator, runtime/CDI, NVIDIA driver, IMEX, and hardware boundaries.",
+        "The agent asks approval before restart, reinstall, claim deletion, host changes, checkpoint manipulation, upgrade, cleanup, or external support upload."
+      ]
+    },
+    {
+      "id": "dra-operations-troubleshooting-observability-contextual-001",
+      "question": "Support escalated a ComputeDomain workload failure on GB200: channel claim allocated, daemonset pods are ready, but `/imexd` is missing inside the container. What evidence bundle should we ask for?",
+      "prompt": "Support escalated a ComputeDomain workload failure on GB200: channel claim allocated, daemonset pods are ready, but `/imexd` is missing inside the container. What evidence bundle should we ask for?",
+      "expected_skill": "dra-operations-troubleshooting-observability",
+      "expected_script": null,
+      "should_trigger": true,
+      "ground_truth": "The agent prepares a redacted support evidence bundle covering deployment mode, versions, topology, clique labels, ComputeDomain and clique objects, daemon or host service readiness, channel claim allocation, kubelet prepare evidence, injected mounts and devices, events, logs, metrics, hypotheses, and remaining unknowns.",
+      "expected_output": "The agent prepares a redacted support evidence bundle covering deployment mode, versions, topology, clique labels, ComputeDomain and clique objects, daemon or host service readiness, channel claim allocation, kubelet prepare evidence, injected mounts and devices, events, logs, metrics, hypotheses, and remaining unknowns.",
+      "expected_behavior": [
+        "The agent infers that the request is an operations and support escalation involving ComputeDomain and IMEX evidence.",
+        "The agent asks for redacted snippets and avoids collecting kubeconfigs, tokens, secrets, private keys, or customer-identifying bundles.",
+        "The agent includes ComputeDomain-specific boundaries such as clique labels, controller objects, daemon or host readiness, channel claim, and injection evidence.",
+        "The agent marks confirmed facts, hypotheses, attempted mutations, and remaining unknowns separately.",
+        "The agent does not prescribe a generic restart as root-cause analysis."
+      ],
+      "assertions": [
+        "The agent infers that the request is an operations and support escalation involving ComputeDomain and IMEX evidence.",
+        "The agent asks for redacted snippets and avoids collecting kubeconfigs, tokens, secrets, private keys, or customer-identifying bundles.",
+        "The agent includes ComputeDomain-specific boundaries such as clique labels, controller objects, daemon or host readiness, channel claim, and injection evidence.",
+        "The agent marks confirmed facts, hypotheses, attempted mutations, and remaining unknowns separately.",
+        "The agent does not prescribe a generic restart as root-cause analysis."
+      ]
+    },
+    {
+      "id": "dra-operations-troubleshooting-observability-adjacent-negative-001",
+      "question": "Create a maintainer-ready design proposal for a new ResourceSlice attribute used by CEL selectors.",
+      "prompt": "Create a maintainer-ready design proposal for a new ResourceSlice attribute used by CEL selectors.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent drafts or outlines a proposal that covers necessity, public contract naming, feature-gate stage and default, compatibility, docs, tests, alternatives, drawbacks, and open maintainer decisions.",
+      "expected_output": "The agent drafts or outlines a proposal that covers necessity, public contract naming, feature-gate stage and default, compatibility, docs, tests, alternatives, drawbacks, and open maintainer decisions.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-operations-troubleshooting-observability.",
+        "The agent routes the request to proposal/design review or API contract guidance.",
+        "The agent does not gather cluster logs or operational evidence for a design proposal task."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-operations-troubleshooting-observability.",
+        "The agent routes the request to proposal/design review or API contract guidance.",
+        "The agent does not gather cluster logs or operational evidence for a design proposal task."
+      ]
+    },
+    {
+      "id": "dra-operations-troubleshooting-observability-boundary-negative-001",
+      "question": "Show me how to render the chart and run a basic sample workload on a fresh kind cluster.",
+      "prompt": "Show me how to render the chart and run a basic sample workload on a fresh kind cluster.",
+      "expected_skill": null,
+      "expected_script": null,
+      "should_trigger": false,
+      "ground_truth": "The agent gives a deployment and demo runbook with render-first chart validation, sample selection, mutation approval points, verification steps, and cleanup boundaries.",
+      "expected_output": "The agent gives a deployment and demo runbook with render-first chart validation, sample selection, mutation approval points, verification steps, and cleanup boundaries.",
+      "expected_behavior": [
+        "The agent does not read or activate dra-operations-troubleshooting-observability.",
+        "The agent routes the request to Helm, demo, and sample workload guidance.",
+        "The agent does not treat a fresh demo setup as an incident triage or support escalation."
+      ],
+      "assertions": [
+        "The agent does not read or activate dra-operations-troubleshooting-observability.",
+        "The agent routes the request to Helm, demo, and sample workload guidance.",
+        "The agent does not treat a fresh demo setup as an incident triage or support escalation."
+      ]
+    }
+  ]
+}
