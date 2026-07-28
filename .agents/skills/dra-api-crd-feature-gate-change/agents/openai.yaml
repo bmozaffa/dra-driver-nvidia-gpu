@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA API, CRD, and Feature Gate Changes"
+  short_description: "Plan safe DRA API and compatibility changes"
+  default_prompt: "Use $dra-api-crd-feature-gate-change to plan and validate this API, CRD, Helm, checkpoint, or feature-gate change."

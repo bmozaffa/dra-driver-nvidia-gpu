@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA Release, Support, and Docs Readiness"
+  short_description: "Prepare DRA releases and support handoffs"
+  default_prompt: "Use $dra-release-support-docs-readiness to assess release, support, and documentation readiness for this DRA change."

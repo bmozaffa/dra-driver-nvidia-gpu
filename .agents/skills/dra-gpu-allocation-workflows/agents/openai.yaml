@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA GPU Allocation Workflows"
+  short_description: "Reason about GPU, MIG, VFIO, claims, and CDI"
+  default_prompt: "Use $dra-gpu-allocation-workflows to explain or troubleshoot this GPU allocation request flow."

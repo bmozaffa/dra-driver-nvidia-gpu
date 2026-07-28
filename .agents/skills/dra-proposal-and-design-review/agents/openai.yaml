@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA Proposal and Design Review"
+  short_description: "Draft and review maintainer-ready DRA designs"
+  default_prompt: "Use $dra-proposal-and-design-review to draft or review a proposal for this DRA driver."

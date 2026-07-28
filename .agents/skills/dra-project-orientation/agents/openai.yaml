@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA Project Orientation"
+  short_description: "Navigate DRA components, docs, and ownership"
+  default_prompt: "Use $dra-project-orientation to explain this DRA driver repository and locate the relevant components."
