@@ -1,0 +1,56 @@
+{
+  "skill_name": "dra-gpu-allocation-workflows",
+  "evals": [
+    {
+      "id": "dra-gpu-allocation-workflows.explicit-positive.v1",
+      "prompt": "Use the dra-gpu-allocation-workflows skill to explain, for this driver version, how a GPU ResourceClaim moves from pod intent through DeviceClass and ResourceSlice matching, scheduler allocation, kubelet Prepare, plugin checkpoint and CDI spec creation, runtime injection, and eventual Unprepare. Include evidence at every boundary.",
+      "expected_skill": "dra-gpu-allocation-workflows",
+      "expected_output": "A source-backed request-to-injection sequence that distinguishes Kubernetes scheduler work, GPU plugin preparation, driver-owned state, CDI/runtime consumption, and cleanup, with versioned prerequisites and observable evidence.",
+      "assertions": [
+        "The dra-gpu-allocation-workflows skill is selected.",
+        "The sequence covers Pod and ResourceClaim intent, DeviceClass and CEL selection, ResourceSlice inventory, scheduler allocation and node choice, kubelet Prepare, GPU plugin validation and setup, checkpoint state, CDI spec and returned device names, runtime consumption, and Unprepare.",
+        "The answer names claim status, ResourceSlice data, events, plugin logs or state, CDI evidence, and container-visible devices as boundary evidence.",
+        "The ComputeDomain controller is not described as performing GPU allocation.",
+        "Public repository sources are identified and any internal supplemental material is labeled separately.",
+        "No cluster or host mutation is performed."
+      ]
+    },
+    {
+      "id": "dra-gpu-allocation-workflows.implicit-positive.v1",
+      "prompt": "My pod is Pending, the ResourceClaim exists, and no GPU appears in the container. Walk me through the GPU-specific boundaries in the right order so I can tell scheduling from Prepare or CDI failure.",
+      "expected_skill": "dra-gpu-allocation-workflows",
+      "expected_output": "A bounded GPU allocation triage path ordered from DeviceClass and ResourceSlice inventory through claim allocation, scheduler events, node assignment, plugin Prepare, checkpoint/CDI, runtime, and container evidence.",
+      "assertions": [
+        "The skill triggers without being named.",
+        "The answer distinguishes absent inventory, selector mismatch, unallocated claim, scheduler failure, node Prepare failure, CDI/runtime failure, and NVIDIA driver or hardware failure.",
+        "Conclusions are tied to specific objects, events, logs, state, or container evidence.",
+        "The answer separates DRA driver behavior from Kubernetes, GPU Operator, runtime/CDI, NVIDIA driver, and hardware prerequisites.",
+        "Read-only evidence is requested before any recovery action."
+      ]
+    },
+    {
+      "id": "dra-gpu-allocation-workflows.privileged-modes.v1",
+      "prompt": "Compare dynamic MIG and VFIO allocation for this checkout, including gates, advertised capacity, Prepare and cleanup behavior, checkpoint recovery, and the safe checks needed before changing host state.",
+      "expected_skill": "dra-gpu-allocation-workflows",
+      "expected_output": "A version-aware comparison that distinguishes dynamic MIG partition lifecycle from VFIO/IOMMU binding, states gate and platform requirements, and separates read-only validation from approval-gated host or cluster mutation.",
+      "assertions": [
+        "Dynamic MIG verifies partitionable capacity, Kubernetes gate and version requirements, on-demand creation, actual partition evidence, teardown, and checkpoint recovery.",
+        "VFIO verifies IOMMU, driver binding, feature gates, runtime expectations, and processes holding the GPU.",
+        "The answer does not equate MIG, time-slicing, MPS, or VFIO isolation semantics.",
+        "Changing MIG or VFIO state, restarting plugins, editing host drivers, or manipulating checkpoints is explicitly approval-gated.",
+        "Active workloads and claims are protected in any recovery plan."
+      ]
+    },
+    {
+      "id": "dra-gpu-allocation-workflows.negative-adjacent.v1",
+      "prompt": "A ComputeDomainClique is not ready and the workload never receives its IMEX channel or /imexd mount. Trace the controller and daemon path.",
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_output": "The agent routes the ComputeDomain and IMEX problem to dra-compute-domain-imex-workflows rather than treating it as a GPU allocation workflow.",
+      "assertions": [
+        "dra-gpu-allocation-workflows is not selected as the primary skill.",
+        "The request is routed to dra-compute-domain-imex-workflows.",
+        "The answer recognizes ComputeDomainClique, IMEX channel, and /imexd as the adjacent resource-family path."
+      ]
+    }
+  ]
+}

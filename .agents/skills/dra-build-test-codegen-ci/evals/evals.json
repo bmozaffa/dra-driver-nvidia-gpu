@@ -1,0 +1,57 @@
+{
+  "skill_name": "dra-build-test-codegen-ci",
+  "evals": [
+    {
+      "id": "dra-build-test-codegen-ci.explicit-positive.v1",
+      "prompt": "Use the dra-build-test-codegen-ci skill to map a change under api/nvidia.com/resource/v1beta1 to the required local checks and CI coverage. Inspect the current Makefile and development docs, and tell me which generated, unit, lint, Helm, BATS, and e2e checks are required or conditional. Do not run cluster tests.",
+      "expected_skill": "dra-build-test-codegen-ci",
+      "expected_output": "A checkout-specific change-to-test matrix that includes code generation and generated-diff inspection, focused validation tests, broader local gates, conditional Helm and hardware coverage, and explicit reasons for every skipped suite.",
+      "assertions": [
+        "The dra-build-test-codegen-ci skill is selected.",
+        "Every recommended command or target is verified in the current checkout.",
+        "The API change requires make generate, make check-generate, focused validation tests, unit tests, and applicable check and documentation or Helm validation.",
+        "BATS and real-GPU e2e are classified as conditional, invasive, and approval-gated.",
+        "The output separates local, GitHub Actions, external CI, mock-NVML, and real-hardware evidence.",
+        "The answer labels public repository or official public sources and any internal supplemental material separately.",
+        "No cluster mutation is performed."
+      ]
+    },
+    {
+      "id": "dra-build-test-codegen-ci.implicit-positive.v1",
+      "prompt": "I changed only ComputeDomain controller reconciliation code. What is the smallest credible validation set before review, and what coverage must I avoid claiming?",
+      "expected_skill": "dra-build-test-codegen-ci",
+      "expected_output": "A focused validation plan for the controller change, followed by justified broader gates, with explicit limits around unrun MNNVL, IMEX, BATS, and GPU allocation e2e coverage.",
+      "assertions": [
+        "The skill triggers without being named.",
+        "Focused controller or package tests are selected before broad repository checks.",
+        "The answer includes applicable build, unit, and lint or check gates from the current checkout.",
+        "The answer does not claim GPU allocation, MNNVL, IMEX, or real-hardware coverage unless those paths were exercised.",
+        "Skipped gates and environment limits are explicit."
+      ]
+    },
+    {
+      "id": "dra-build-test-codegen-ci.failure-diagnosis.v1",
+      "prompt": "CI says generated files are dirty after my CRD edit. Diagnose the likely cause from this checkout and give me the safest reproduction sequence. I have unrelated local changes that must not be lost.",
+      "expected_skill": "dra-build-test-codegen-ci",
+      "expected_output": "A non-destructive diagnosis that records the existing diff, uses the repository's pinned generation workflow, identifies the first actionable mismatch, and inspects only expected post-generation changes.",
+      "assertions": [
+        "The worktree and full diff are inspected before any modifying target is proposed.",
+        "The repository workflow and pinned tool installation path are used rather than invented tool versions.",
+        "Generated outputs are not hand-edited as the fix.",
+        "Unrelated local changes are preserved and no reset, clean, or overwrite is proposed.",
+        "The report distinguishes the failing command, first actionable error, and expected generated diff."
+      ]
+    },
+    {
+      "id": "dra-build-test-codegen-ci.negative-adjacent.v1",
+      "prompt": "Create a kind cluster, install the chart, and run the basic GPU sharing sample so I can see the allocated claim and devices.",
+      "expected_skill": "dra-helm-demo-sample-workloads",
+      "expected_output": "The agent routes the deployment and sample execution workflow to dra-helm-demo-sample-workloads and requires an explicit mutation approval before creating or changing cluster resources.",
+      "assertions": [
+        "dra-build-test-codegen-ci is not selected as the primary skill.",
+        "The request is routed to dra-helm-demo-sample-workloads.",
+        "The answer identifies cluster creation, Helm operations, and workload application as approval-gated mutations."
+      ]
+    }
+  ]
+}

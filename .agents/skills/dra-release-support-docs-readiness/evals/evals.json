@@ -1,0 +1,57 @@
+{
+  "skill_name": "dra-release-support-docs-readiness",
+  "evals": [
+    {
+      "id": "dra-release-support-docs-readiness.explicit-positive.v1",
+      "prompt": "Use the dra-release-support-docs-readiness skill to prepare a readiness checklist for a release that introduces a new alpha GPU feature. Include proposal state, feature-gate and support wording, upgrade and compatibility impact, chart/docs/samples, validation, known limitations, support escalation, owners, and refresh dates. Do not tag, publish, promote, or contact external services.",
+      "expected_skill": "dra-release-support-docs-readiness",
+      "expected_output": "A release-scoped readiness record with evidence, owners, status, blockers, assumptions, and last-verified dates across design, versions, compatibility, validation, docs, known issues, support, and publication gates.",
+      "assertions": [
+        "The dra-release-support-docs-readiness skill is selected.",
+        "The alpha feature entry covers gate stage and default, support wording, proposal status, upgrade and rollback impact, compatibility floor, chart and samples, docs and release notes, tests, known limitations, escalation, and refresh date.",
+        "Every release claim is tied to a merged change, proposal, test result, source document, or explicit owner decision.",
+        "DRA engineering, QA, docs, release, and support approvals are named.",
+        "Community driver behavior is separated from GPU Operator productized support.",
+        "The answer labels public repository or official public sources and any internal supplemental material separately.",
+        "No tag, branch, push, release, image or chart promotion, issue or PR update, or announcement is performed."
+      ]
+    },
+    {
+      "id": "dra-release-support-docs-readiness.implicit-positive.v1",
+      "prompt": "Before we cut the next version, check whether VERSION, versions.mk, Chart.yaml, Hugo release parameters, automation, upgrade docs, and GPU Operator guidance agree. Turn any drift into a release blocker or an owned follow-up.",
+      "expected_skill": "dra-release-support-docs-readiness",
+      "expected_output": "A version and source-drift audit that identifies authoritative executable and prose surfaces, records contradictions, and assigns each mismatch an owner, evidence, status, and release disposition.",
+      "assertions": [
+        "The skill triggers without being named.",
+        "VERSION, versions.mk, Helm chart version and appVersion, image defaults, site release parameters, release automation, examples, manifests, upgrade pages, and hard-coded release links are checked.",
+        "Current official GPU Operator support and known-issue sources are verified for the release date.",
+        "Contradictions are reported rather than silently normalized.",
+        "Intentional staging values are distinguished from errors."
+      ]
+    },
+    {
+      "id": "dra-release-support-docs-readiness.support-handoff.v1",
+      "prompt": "Create a support and docs handoff for a release that changes a checkpoint and a Helm default. Call out upgrade risks, symptoms, diagnostics, workarounds, untested combinations, known issues, escalation boundaries, and source refresh dates.",
+      "expected_skill": "dra-release-support-docs-readiness",
+      "expected_output": "A reviewable support and documentation handoff that traces both user-facing changes through upgrade guidance, validation evidence, known limitations, diagnostics, safe workarounds, escalation ownership, and dated source verification.",
+      "assertions": [
+        "Checkpoint compatibility, active claims, rolling components, forward and rollback behavior, Helm values, and CRD or chart ordering are addressed as applicable.",
+        "Validation distinguishes generated-code, unit, lint, Helm, mock, BATS, e2e, upgrade, real-GPU, and MNNVL coverage and names untested combinations.",
+        "Concepts, prerequisites, install, upgrade, task guides, reference docs, samples, release notes, and known issues are assessed for impact.",
+        "Workarounds are not presented as support promises without owner approval.",
+        "Sensitive support data and credentials are excluded."
+      ]
+    },
+    {
+      "id": "dra-release-support-docs-readiness.negative-adjacent.v1",
+      "prompt": "The release scope is unchanged. One CI job fails because generated CRDs are dirty after an API edit. Reproduce it locally and tell me the required checks.",
+      "expected_skill": "dra-build-test-codegen-ci",
+      "expected_output": "The agent routes the concrete code-generation and CI failure to dra-build-test-codegen-ci instead of expanding it into release-readiness work.",
+      "assertions": [
+        "dra-release-support-docs-readiness is not selected as the primary skill.",
+        "The request is routed to dra-build-test-codegen-ci.",
+        "The answer keeps the work scoped to the failing generated-artifact and validation workflow."
+      ]
+    }
+  ]
+}

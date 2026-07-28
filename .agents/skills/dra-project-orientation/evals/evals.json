@@ -1,0 +1,55 @@
+{
+  "skill_name": "dra-project-orientation",
+  "evals": [
+    {
+      "id": "dra-project-orientation.explicit-positive.v1",
+      "prompt": "Use the dra-project-orientation skill to create a contributor map of this checkout. Explain both resource families, identify the five runtime binaries, and point me to the API, generated clients, CRDs, Helm chart, demos, tests, proposals, and ownership files. Do not change anything.",
+      "expected_skill": "dra-project-orientation",
+      "expected_output": "A read-only, source-backed repository map that identifies the GPU and ComputeDomain resource families, all five runtime binaries, exact existing paths, validation surfaces, and ownership boundaries.",
+      "assertions": [
+        "The dra-project-orientation skill is selected.",
+        "The answer distinguishes gpu.nvidia.com behavior from compute-domain.nvidia.com behavior.",
+        "The answer identifies gpu-kubelet-plugin, compute-domain-kubelet-plugin, compute-domain-controller, compute-domain-daemon, and webhook without merging their responsibilities.",
+        "Every repository path named is verified in the selected checkout.",
+        "The answer labels its evidence as public repository material and identifies any internal supplemental material separately.",
+        "No repository, cluster, or external-service mutation is performed.",
+        "Any follow-up mutation is separated from orientation and requires explicit approval."
+      ]
+    },
+    {
+      "id": "dra-project-orientation.implicit-positive.v1",
+      "prompt": "I am new to this repository. Where should I start if I need to review a change that touches ComputeDomains, and where are the implementation, docs, samples, tests, and reviewers for that area?",
+      "expected_skill": "dra-project-orientation",
+      "expected_output": "A concise onboarding and review-routing guide grounded in the current checkout, with exact paths for ComputeDomain components, docs, samples, tests, and repository ownership.",
+      "assertions": [
+        "The skill triggers without being named.",
+        "The answer routes to the ComputeDomain controller, daemon, kubelet plugin, API, Helm, docs, demos, and relevant tests.",
+        "The answer reads OWNERS and does not invent narrower path ownership.",
+        "The result is a reviewable component map rather than an implementation patch."
+      ]
+    },
+    {
+      "id": "dra-project-orientation.source-drift.v1",
+      "prompt": "A design note says GPU allocation happens in the ComputeDomain controller, but I suspect that is stale. Check the current repository and explain where a GPU ResourceClaim moves from scheduler allocation to kubelet Prepare and CDI injection.",
+      "expected_skill": "dra-project-orientation",
+      "expected_output": "A source-backed correction that separates scheduler allocation, the GPU kubelet plugin prepare path, and runtime CDI injection, while explicitly marking the design note as stale or contradictory evidence.",
+      "assertions": [
+        "The answer inspects current code and architecture sources before resolving the contradiction.",
+        "The answer does not claim that the ComputeDomain controller allocates GPUs.",
+        "The answer traces scheduler allocation to cmd/gpu-kubelet-plugin and then CDI/runtime consumption.",
+        "Uncertainty or release drift is stated rather than hidden."
+      ]
+    },
+    {
+      "id": "dra-project-orientation.negative-adjacent.v1",
+      "prompt": "Implement a new optional field in GpuConfig, regenerate the CRDs and clients, and give me the compatibility and test plan.",
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_output": "The agent routes the contract-changing implementation to dra-api-crd-feature-gate-change rather than treating repository orientation as the primary workflow.",
+      "assertions": [
+        "dra-project-orientation is not selected as the primary skill.",
+        "The request is routed to dra-api-crd-feature-gate-change.",
+        "The answer recognizes that API, generated-artifact, compatibility, and test work exceeds orientation."
+      ]
+    }
+  ]
+}

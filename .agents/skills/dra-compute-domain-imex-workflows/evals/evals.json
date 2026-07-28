@@ -1,0 +1,56 @@
+{
+  "skill_name": "dra-compute-domain-imex-workflows",
+  "evals": [
+    {
+      "id": "dra-compute-domain-imex-workflows.explicit-positive.v1",
+      "prompt": "Use the dra-compute-domain-imex-workflows skill to explain the driver-managed path from creating a ComputeDomain through controller reconciliation, the per-domain DaemonSet, IMEX daemon supervision, clique readiness, channel claim allocation, kubelet Prepare, and injection of the channel device and /imexd into the workload.",
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_output": "A source-backed end-to-end ComputeDomain sequence that identifies each controller, daemon, Kubernetes DRA, kubelet plugin, CDI/runtime, and workload boundary with observable evidence.",
+      "assertions": [
+        "The dra-compute-domain-imex-workflows skill is selected.",
+        "The sequence covers ComputeDomain creation, controller reconciliation, per-domain DaemonSet and claim templates, compute-domain-daemon supervision of nvidia-imex, ComputeDomainClique membership and readiness, channel ResourceClaim allocation, compute-domain-kubelet-plugin Prepare, and workload-visible device plus /imexd.",
+        "The answer distinguishes driver-managed from host-managed IMEX ownership.",
+        "ComputeDomain status is not treated as the only workload-readiness gate unless current sources define that contract.",
+        "The answer identifies public sources and clearly labels any internal supplemental material.",
+        "No ComputeDomain, service, or cluster resource is changed."
+      ]
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows.implicit-positive.v1",
+      "prompt": "The ComputeDomain object exists, but one clique is unready and the channel claim never prepares on a GB200 cluster. Give me a layered triage path that tells controller, IMEX, Kubernetes DRA, runtime, and fabric failures apart.",
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_output": "A bounded multi-node triage path from chart enablement and clique topology through reconciliation, daemon or host-service readiness, ResourceSlice and claim allocation, plugin Prepare, injection, and hardware fabric evidence.",
+      "assertions": [
+        "The skill triggers without being named.",
+        "The answer checks chart and feature gates, nvidia.com/gpu.clique labels, controller objects and ownership, per-domain DaemonSet or host service, ComputeDomainClique readiness, DeviceClass and ResourceSlice, claim allocation, Prepare, and injected device or mount.",
+        "Driver defects are separated from GFD labels, NVIDIA driver and IMEX package, host service, Kubernetes DRA, DNS, runtime, and MNNVL fabric.",
+        "Facts, hypotheses, and missing evidence are kept distinct.",
+        "Read-only inspection precedes any restart, deletion, or service change."
+      ]
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows.mode-transition.v1",
+      "prompt": "Plan a transition from driver-managed IMEX to host-managed mode while ComputeDomain workloads currently exist. Identify the current gate and readiness contracts, risks, drain requirements, rollback, and what needs operator approval.",
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_output": "A conservative migration plan that establishes current code and documentation contracts, protects active domains and claims, assigns IMEX service ownership, and makes drain, rollback, validation, and approval boundaries explicit.",
+      "assertions": [
+        "The current feature-gate dependencies, mode, isolation, socket, nvidia-imex-ctl, and readiness contracts are verified from code and docs.",
+        "Active ComputeDomains and claims are inventoried and protected.",
+        "The plan addresses daemon ownership, checkpoint or persisted state, drain sequencing, rollback, and per-node readiness evidence.",
+        "Mode switching, host service changes, restarts, and MNNVL tests require explicit approval.",
+        "The output does not claim supportability beyond current release sources."
+      ]
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows.negative-adjacent.v1",
+      "prompt": "A dynamic MIG claim allocates to a node, but the MIG partition is never created and no CDI device reaches the container.",
+      "expected_skill": "dra-gpu-allocation-workflows",
+      "expected_output": "The agent routes the dynamic MIG and CDI problem to dra-gpu-allocation-workflows instead of forcing the ComputeDomain and IMEX workflow.",
+      "assertions": [
+        "dra-compute-domain-imex-workflows is not selected as the primary skill.",
+        "The request is routed to dra-gpu-allocation-workflows.",
+        "The answer recognizes dynamic MIG and GPU CDI as the GPU resource-family path."
+      ]
+    }
+  ]
+}

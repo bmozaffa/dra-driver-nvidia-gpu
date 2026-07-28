@@ -1,0 +1,56 @@
+{
+  "skill_name": "dra-proposal-and-design-review",
+  "evals": [
+    {
+      "id": "dra-proposal-and-design-review.explicit-positive.v1",
+      "prompt": "Use the dra-proposal-and-design-review skill to draft a provisional proposal for adding a CEL-visible ResourceSlice attribute behind a new alpha feature gate. Base it on this checkout and make it ready for maintainer review, but do not implement it or create an issue or PR.",
+      "expected_skill": "dra-proposal-and-design-review",
+      "expected_output": "A provisional, maintainer-reviewable proposal that follows the repository template and covers scope, user surface, ownership, compatibility, gate lifecycle, alternatives, upgrade impact, validation, documentation, release, and unresolved decisions.",
+      "assertions": [
+        "The dra-proposal-and-design-review skill is selected.",
+        "The proposal process and current proposal template are inspected before drafting.",
+        "The artifact includes status, summary, motivation, goals, non-goals, layer rationale, user-facing example, state owner, smallest slice, design, upgrade and downgrade behavior, environment floor, risks, alternatives, drawbacks, test plan, and open questions.",
+        "CEL-facing naming, feature-gate stage/default/dependencies, scheduler-version compatibility, code generation, docs, release notes, and unit plus e2e coverage are addressed.",
+        "The artifact labels public sources and keeps any internal supplemental facts out of upstream-ready prose.",
+        "No implementation, issue, PR, or external-service mutation is performed."
+      ]
+    },
+    {
+      "id": "dra-proposal-and-design-review.implicit-positive.v1",
+      "prompt": "Review this idea as if you were a DRA maintainer: persist new prepared-device state in the GPU plugin checkpoint and expose a Helm switch for it. Tell me whether it needs a proposal and what is missing before it can be implementable.",
+      "expected_skill": "dra-proposal-and-design-review",
+      "expected_output": "A design-review finding set that requires proposal alignment for the public and persisted contracts and identifies missing ownership, migration, rollback, failure-mode, test, documentation, and release details.",
+      "assertions": [
+        "The skill triggers without being named.",
+        "The answer explains why the checkpoint and Helm changes require proposal alignment.",
+        "Upgrade, downgrade, restart, in-flight claim, rollback, state ownership, and failure behavior are examined.",
+        "The answer does not call an unreviewed design implementable.",
+        "The output is a reviewable finding set with unresolved maintainer decisions."
+      ]
+    },
+    {
+      "id": "dra-proposal-and-design-review.internal-boundary.v1",
+      "prompt": "Draft an upstream-ready ADR for a ComputeDomain change. My notes include an internal customer cluster name and an unannounced support commitment. Use the technical idea, but keep private details out and show me what needs an internal decision.",
+      "expected_skill": "dra-proposal-and-design-review",
+      "expected_output": "An upstream-ready design artifact that uses public evidence, omits customer-sensitive and unannounced support details, and lists the internal-only decisions separately for authorized reviewers.",
+      "assertions": [
+        "Public repository and official public documentation are the default source of truth.",
+        "Customer identity, private cluster data, and unannounced support commitments do not appear in the upstream-ready artifact.",
+        "Internal supplemental material is clearly labeled and separated.",
+        "The artifact identifies the relevant DRA engineering, docs, release, support, and maintainer review roles.",
+        "No external publication or service change occurs."
+      ]
+    },
+    {
+      "id": "dra-proposal-and-design-review.negative-adjacent.v1",
+      "prompt": "The design is already approved. I only need the minimum local commands and CI jobs that validate a controller-only Go change.",
+      "expected_skill": "dra-build-test-codegen-ci",
+      "expected_output": "The agent routes the validation-selection request to dra-build-test-codegen-ci instead of reopening proposal and design review.",
+      "assertions": [
+        "dra-proposal-and-design-review is not selected as the primary skill.",
+        "The request is routed to dra-build-test-codegen-ci.",
+        "The answer preserves the user's statement that design approval is already complete."
+      ]
+    }
+  ]
+}

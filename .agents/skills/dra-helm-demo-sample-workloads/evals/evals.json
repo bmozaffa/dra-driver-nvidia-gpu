@@ -1,0 +1,57 @@
+{
+  "skill_name": "dra-helm-demo-sample-workloads",
+  "evals": [
+    {
+      "id": "dra-helm-demo-sample-workloads.explicit-positive.v1",
+      "prompt": "Use the dra-helm-demo-sample-workloads skill to prepare a plan for the basic GPU sharing sample on a local demo cluster. Render and review the intended chart and sample, list prerequisites and success signals, and stop before any cluster mutation until I approve.",
+      "expected_skill": "dra-helm-demo-sample-workloads",
+      "expected_output": "A version-aware plan/apply runbook that selects the local-demo flow, validates prerequisites, pins and renders the chart, identifies exact mutations and rollback, and defines claim, pod, ResourceSlice, and container-device success evidence.",
+      "assertions": [
+        "The dra-helm-demo-sample-workloads skill is selected.",
+        "The answer records cluster context, Kubernetes, chart, driver, runtime/CDI, hardware, and feature-gate assumptions.",
+        "The plan uses current chart values and templates, runs or proposes make helm-lint and exact helm template rendering, and inspects the rendered objects.",
+        "The basic sharing validation checks one allocated claim, a running pod, both intended container claim references, and observed GPU UUID behavior.",
+        "The answer labels this as a local demo rather than productized GPU Operator support.",
+        "The answer labels public repository or official public sources and any internal supplemental material separately.",
+        "The workflow stops before cluster creation, Helm, or kubectl mutation and asks for explicit approval."
+      ]
+    },
+    {
+      "id": "dra-helm-demo-sample-workloads.implicit-positive.v1",
+      "prompt": "I have an MNNVL lab and want to try the maintained ComputeDomain sample. Which chart mode, values, objects, and verification steps should I use before and after applying it?",
+      "expected_skill": "dra-helm-demo-sample-workloads",
+      "expected_output": "A ComputeDomain sample runbook that verifies MNNVL and IMEX prerequisites, renders the selected deployment mode, identifies controller and daemon objects, and validates clique, channel-claim, and workload injection evidence.",
+      "assertions": [
+        "The skill triggers without being named.",
+        "The answer distinguishes GPU Operator-managed, standalone, and local-development flows before choosing one.",
+        "Clique labels, ComputeDomain and controller objects, daemon readiness, channel claim allocation, injected channel device, and /imexd are included as success signals.",
+        "Current release-matched manifests and Kubernetes DRA API versions are selected.",
+        "Mutation and cleanup require explicit approval and exact targets."
+      ]
+    },
+    {
+      "id": "dra-helm-demo-sample-workloads.productized-boundary.v1",
+      "prompt": "Our cluster already uses GPU Operator. Give me the supported way to enable the DRA driver and its prerequisites for this release; do not substitute the repository's standalone demo defaults.",
+      "expected_skill": "dra-helm-demo-sample-workloads",
+      "expected_output": "A productized-deployment plan grounded in current GPU Operator documentation and the selected release, with prerequisites, supported values, known issues, and a clear separation from standalone chart and demo behavior.",
+      "assertions": [
+        "The GPU Operator DRA guide is treated as the primary external source for the productized flow.",
+        "Online prerequisites, feature gates, CDI, Kubernetes, driver, and known-issue details are verified for the requested release.",
+        "Standalone or local-demo defaults are not presented as supported GPU Operator configuration.",
+        "The answer identifies a render/review gate and an explicit approval point before mutation.",
+        "No secret, token, registry credential, or kubeconfig content is requested."
+      ]
+    },
+    {
+      "id": "dra-helm-demo-sample-workloads.negative-adjacent.v1",
+      "prompt": "Do not deploy anything. Explain how an already-created GPU ResourceClaim goes through scheduler binding, kubelet Prepare, and CDI injection.",
+      "expected_skill": "dra-gpu-allocation-workflows",
+      "expected_output": "The agent routes the conceptual GPU allocation request to dra-gpu-allocation-workflows rather than forcing a Helm or demo workflow.",
+      "assertions": [
+        "dra-helm-demo-sample-workloads is not selected as the primary skill.",
+        "The request is routed to dra-gpu-allocation-workflows.",
+        "No deployment or cluster mutation is proposed merely to answer the explanation question."
+      ]
+    }
+  ]
+}

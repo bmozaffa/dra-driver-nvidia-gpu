@@ -1,0 +1,57 @@
+{
+  "skill_name": "dra-api-crd-feature-gate-change",
+  "evals": [
+    {
+      "id": "dra-api-crd-feature-gate-change.explicit-positive.v1",
+      "prompt": "Use the dra-api-crd-feature-gate-change skill to plan an optional field addition to GpuConfig. Trace every handwritten and generated surface it affects, including validation, webhook decoding, plugin consumption, CRDs and clients, docs, samples, compatibility, tests, and release notes. Do not edit files yet.",
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_output": "A source-backed contract-change plan that starts from handwritten APIs, traces all readers and generated outputs, defines compatibility and migration behavior, and ends with a reviewable validation and release-impact matrix.",
+      "assertions": [
+        "The dra-api-crd-feature-gate-change skill is selected.",
+        "The plan identifies api/nvidia.com/resource/v1beta1 as handwritten authority and does not treat generated files as the edit source.",
+        "Validation, webhook decoding, plugin consumption, generated deepcopy/clients/listers/informers/CRDs, Helm or samples, reference docs, tests, and release notes are covered as applicable.",
+        "Old-object acceptance, safe zero-value behavior, upgrade, rollback, restart, and in-flight claim behavior are explicit.",
+        "The answer requires proposal alignment for the user-facing contract change.",
+        "The answer labels public repository or official public sources and any internal supplemental material separately.",
+        "No files or cluster resources are changed."
+      ]
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change.implicit-positive.v1",
+      "prompt": "We want to publish a new gpu.nvidia.com ResourceSlice attribute that users can select with CEL, but only when an alpha gate is enabled. What has to change, and how do we avoid breaking older Kubernetes releases?",
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_output": "A compatibility-aware change plan covering serialized attribute naming, CEL access, feature-gate lifecycle and dependencies, supported Kubernetes DRA APIs, code and docs alignment, generation, validation, and release handling.",
+      "assertions": [
+        "The skill triggers without being named.",
+        "The answer treats the serialized ResourceSlice key and CEL access path as public contracts.",
+        "Gate stage, default, introduction version, dependencies or exclusions, graduation evidence, and removal plan are addressed.",
+        "Supported Kubernetes minor and DRA API differences are analyzed rather than guessed.",
+        "Code and feature-gate documentation drift is reported if found."
+      ]
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change.persisted-state.v1",
+      "prompt": "A checkpoint struct in the GPU kubelet plugin needs a new field. Give me a safe migration and validation plan that supports mixed old and new binaries and protects active claims. Do not suggest deleting checkpoint files.",
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_output": "A persisted-state migration plan using additive optional semantics where possible, with explicit old/new read-write behavior, restart and rollback cases, active-claim protection, negative tests, and release documentation.",
+      "assertions": [
+        "The authoritative checkpoint readers and writers are located in the current checkout.",
+        "The plan specifies old-reader/new-writer and new-reader/old-writer behavior.",
+        "Restart, rollback, corrupt or partial state, and active prepared claims are covered.",
+        "Checkpoint deletion is not used as a shortcut.",
+        "The output marks live-cluster validation as approval-gated."
+      ]
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change.negative-adjacent.v1",
+      "prompt": "No API or configuration is changing. A pod is Pending and its existing ResourceClaim is unallocated after a cluster upgrade. Help me triage the failure.",
+      "expected_skill": "dra-operations-troubleshooting-observability",
+      "expected_output": "The agent routes the operational incident to dra-operations-troubleshooting-observability rather than forcing an API-change workflow.",
+      "assertions": [
+        "dra-api-crd-feature-gate-change is not selected as the primary skill.",
+        "The request is routed to dra-operations-troubleshooting-observability.",
+        "The answer does not infer that an API change is needed from an allocation symptom alone."
+      ]
+    }
+  ]
+}
