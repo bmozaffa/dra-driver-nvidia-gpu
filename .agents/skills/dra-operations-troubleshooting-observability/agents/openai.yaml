@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA Operations and Troubleshooting"
+  short_description: "Triage DRA failures with bounded evidence"
+  default_prompt: "Use $dra-operations-troubleshooting-observability to produce a safe, evidence-backed triage report for this DRA failure."

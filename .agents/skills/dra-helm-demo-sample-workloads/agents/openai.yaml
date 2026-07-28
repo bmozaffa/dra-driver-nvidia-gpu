@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA Helm, Demos, and Sample Workloads"
+  short_description: "Install and validate DRA workflows safely"
+  default_prompt: "Use $dra-helm-demo-sample-workloads to prepare a safe DRA install, demo, or sample-workload procedure."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA Build, Test, Codegen, and CI"
+  short_description: "Map DRA changes to the right validation gates"
+  default_prompt: "Use $dra-build-test-codegen-ci to choose and run the right checks for this DRA driver change."

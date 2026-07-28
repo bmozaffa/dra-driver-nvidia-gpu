@@ -1,0 +1,4 @@
+interface:
+  display_name: "DRA ComputeDomain and IMEX Workflows"
+  short_description: "Reason about ComputeDomains, IMEX, and MNNVL"
+  default_prompt: "Use $dra-compute-domain-imex-workflows to explain or troubleshoot this ComputeDomain and IMEX flow."
