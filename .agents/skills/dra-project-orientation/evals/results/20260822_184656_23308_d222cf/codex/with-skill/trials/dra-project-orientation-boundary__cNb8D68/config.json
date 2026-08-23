@@ -1,0 +1,64 @@
+{
+  "task": {
+    "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/evals/results/20260822_184656_23308_d222cf/_harbor-tasks/dra-project-orientation-boundary-negative-001",
+    "git_url": null,
+    "git_commit_id": null,
+    "name": null,
+    "ref": null,
+    "overwrite": false,
+    "download_dir": null,
+    "source": "_harbor-tasks"
+  },
+  "trial_name": "dra-project-orientation-boundary__cNb8D68",
+  "trials_dir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/evals/results/20260822_184656_23308_d222cf/_harbor-jobs/dra-project-orientation-codex-with",
+  "timeout_multiplier": 2.0,
+  "agent_timeout_multiplier": null,
+  "verifier_timeout_multiplier": null,
+  "agent_setup_timeout_multiplier": null,
+  "environment_build_timeout_multiplier": null,
+  "agent": {
+    "name": null,
+    "import_path": "layer2.harbor.local_agents:AcesLocalCodex",
+    "model_name": "openai/openai/gpt-5.4",
+    "skills": [],
+    "override_timeout_sec": null,
+    "override_setup_timeout_sec": null,
+    "max_timeout_sec": null,
+    "extra_allowed_hosts": [],
+    "kwargs": {},
+    "env": {
+      "ANTHROPIC_BASE_URL": "https://inference-api.nvidia.com",
+      "OPENAI_BASE_URL": "https://inference-api.nvidia.com/v1"
+    },
+    "mcp_servers": []
+  },
+  "environment": {
+    "type": null,
+    "import_path": "layer2.harbor.local_environment:AcesLocalEnvironment",
+    "force_build": false,
+    "delete": true,
+    "cpu_enforcement_policy": "auto",
+    "memory_enforcement_policy": "auto",
+    "override_cpus": null,
+    "override_memory_mb": null,
+    "override_storage_mb": null,
+    "override_gpus": null,
+    "override_tpu": null,
+    "mounts": null,
+    "extra_docker_compose": [],
+    "env": {},
+    "kwargs": {
+      "runtime_root": "/Users/bmozaffari/.local/share/astra-skill-eval/runtimes"
+    },
+    "extra_allowed_hosts": []
+  },
+  "verifier": {
+    "override_timeout_sec": null,
+    "max_timeout_sec": null,
+    "env": {},
+    "disable": false
+  },
+  "artifacts": [],
+  "extra_instruction_paths": [],
+  "job_id": "766c619a-4a79-4581-a627-1dadba502c14"
+}

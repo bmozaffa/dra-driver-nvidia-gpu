@@ -1,0 +1,274 @@
+{
+  "security": 1.0,
+  "skill_execution": 1.0,
+  "skill_efficiency": 1.0,
+  "accuracy": 0.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 0.6667,
+  "overall": 0.7778,
+  "validity": "valid",
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-helm-demo-sample-workloads-boundary-negative-001",
+  "has_skill": false,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "message": "Negative case, no skill identified"
+    },
+    "skill_efficiency": {
+      "message": "Skipped (negative or no expected_skill)"
+    },
+    "accuracy": {
+      "score": 0.0,
+      "status": "ok",
+      "reason": "The response shows only failed shell commands and 'Plan updated' messages with no actual proposal content. There is no design review, no discussion of user-facing surface, layer ownership, compatibility, feature-gate, upgrade considerations, test plan, risks, or alternatives. The task was not addressed in any meaningful way.",
+      "criteria": {
+        "SKILL_IDENTIFIED": false,
+        "ACTION_CORRECT": false,
+        "FACTUALLY_ACCURATE": false,
+        "TASK_ADDRESSED": false,
+        "ACTIONABLE": false
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent drafts a design-review or proposal plan covering user-facing surface, layer ownership, compatibility, feature-gate and upgrade considerations, test plan, risks, alternatives, and maintainer questions."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/15",
+          "excerpt": "**Proposal Draft**\n\nTitle: Add a Helm value to control IMEX isolation mode\n\nStatus: Provisional\n\nSummary:\n- Add a new Helm value that lets operators choose the IMEX isolation mode used by\n...[truncated]...\nbute/proposals/NNNN-template.md` once you point me at the repo checkout or paste the template."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "low-relevance sections dropped to fit budget"
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent's final response is a thorough design-review/proposal plan that covers all the expected elements: user-facing surface, layer ownership, compatibility, feature-gate and upgrade considerations, test plan, risks, alternatives, and maintainer questions. It directly addresses the user's request to draft a proposal for a new Helm value controlling IMEX isolation mode and explains upgrade risks in detail.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent drafts a design-review or proposal plan covering user-facing surface, layer ownership, compatibility, feature-gate and upgrade considerations, test plan, risks, alternatives, and maintainer questions."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-\n...[truncated]...\nskills/dra-helm-demo-sample-workloads/SKILL.md'",
+          "json_pointer": "/steps/4/tool_calls/0",
+          "excerpt": "cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md' && printf '\\n---SKILL2---\\n' && cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/6/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"in_progress\", \"step\": \"Inspect proposal and Helm sources\"}, {\"status\": \"pending\", \"step\": \"Locate current IMEX settings\"}, {\"status\": \"pending\", \"step\": \"Draft proposal with risks\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'site/content/contribute/proposals/*' -g 'de\n...[truncated]...\n/content docs demo/specs pkg cmd api internal .",
+          "json_pointer": "/steps/7/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'site/content/contribute/proposals/*' -g 'deployments/helm/dra-driver-nvidia-gpu/**' -g 'site/content/docs/**' -g 'demo/specs/**' . && printf '\\n---IND\n...[truncated]...\non\" deployments/helm/dra-driver-nvidia-gpu site/content docs demo/specs pkg cmd api internal ."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find .. -name AGENTS.md -print ; printf '\\n---ROOT---\\n' ; ls ; printf '\\n---PRO\n...[truncated]...\ne/content/contribute/proposals/NNNN-template.md",
+          "json_pointer": "/steps/9/tool_calls/0",
+          "excerpt": "find .. -name AGENTS.md -print ; printf '\\n---ROOT---\\n' ; ls ; printf '\\n---PROPOSALS---\\n' ; ls site/content/contribute/proposals ; printf '\\n---HELM---\\n' ; find deployments/helm/dra-d\n...[truncated]...\nintf '\\n---TEMPLATE---\\n' ; sed -n '1,260p' site/content/contribute/proposals/NNNN-template.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find .. -maxdepth 4 -type d \\( -name .git -o -name deployments -o -name site \\) -print | sed 's#/\\.git##' | sort -u | head -100",
+          "json_pointer": "/steps/11/tool_calls/0",
+          "excerpt": "find .. -maxdepth 4 -type d \\( -name .git -o -name deployments -o -name site \\) -print | sed 's#/\\.git##' | sort -u | head -100"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find . -maxdepth 3 -type f | sort | sed -n '1,200p' && printf '\\n---INPUT---\\n' \n...[truncated]...\ncho \"--- {} ---\"; sed -n \"1,220p\" \"$1\"' _ {} \\;",
+          "json_pointer": "/steps/13/tool_calls/0",
+          "excerpt": "find . -maxdepth 3 -type f | sort | sed -n '1,200p' && printf '\\n---INPUT---\\n' && find input -type f -maxdepth 3 -print -exec sh -c 'echo \"--- {} ---\"; sed -n \"1,220p\" \"$1\"' _ {} \\;"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/14/tool_calls/0",
+          "excerpt": "{\"explanation\": \"The actual repository sources are not present in this workspace, so I\\u2019m drafting a source-aware proposal from the skill instructions and clearly marking repo-specifi\n...[truncated]...\ncate current IMEX settings\"}, {\"status\": \"in_progress\", \"step\": \"Draft proposal with risks\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_78HGqmAQMCkVOJSeKqST4fdw",
+          "json_pointer": "/steps/4/observation/results/0",
+          "excerpt": "Chunk ID: 6f669f\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3262\nOutput:\nWarning: truncated output (original token count: 3262)\nTotal output lines: 221\n\n--\n...[truncated]...\nILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_xvTzmuw6MJaLXvkKj5rOnRDl",
+          "json_pointer": "/steps/6/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_mOia4RpCrohmVnruVUNkVWZI",
+          "json_pointer": "/steps/7/observation/results/0",
+          "excerpt": "Chunk ID: 1a7112\nWall time: 0.3162 seconds\nProcess exited with code 1\nOriginal token count: 69\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo\n...[truncated]...\n-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_XLytPxGrr1IJuUi0wlcK8C3D",
+          "json_pointer": "/steps/9/observation/results/0",
+          "excerpt": "Chunk ID: 67d589\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 99\nOutput:\n\n---ROOT---\ninput\nskills\n\n---PROPOSALS---\nls: site/content/contribute/proposals: No \n...[truncated]...\nTEMPLATE---\nsed: site/content/contribute/proposals/NNNN-template.md: No such file or directory"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_aYDqrhg6CZqOMb5JRIgdSxA8",
+          "json_pointer": "/steps/11/observation/results/0",
+          "excerpt": "Chunk ID: 20afa1\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 0\nOutput:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_gBM5WE8XBdyOcybValr4VvQd",
+          "json_pointer": "/steps/13/observation/results/0",
+          "excerpt": "Chunk ID: bd1bdc\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 4\nOutput:\n\n---INPUT---"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_OdUSm3XKH6EQpR8i6AFHpOft",
+          "json_pointer": "/steps/14/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/15",
+          "excerpt": "**Proposal Draft**\n\nTitle: Add a Helm value to control IMEX isolation mode\n\nStatus: Provisional\n\nSummary:\n- Add a new Helm value that lets operators choose the IMEX isolation mode used by\n...[truncated]...\nbute/proposals/NNNN-template.md` once you point me at the repo checkout or paste the template."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "behavior_check": {
+      "score": 0.6667,
+      "status": "ok",
+      "reason": "The agent correctly routed to proposal/design review and did not render Helm resources, but it did read the dra-helm-demo-sample-workloads skill file in its first command, violating the expectation that it not read or activate that skill.",
+      "results": [
+        {
+          "step": 1,
+          "passed": false,
+          "reason": "The agent read the dra-helm-demo-sample-workloads SKILL.md file in its first exec_command call (it concatenated both skill files together). While it didn't fully activate/use that skill's workflow, it did read its contents."
+        },
+        {
+          "step": 2,
+          "passed": true,
+          "reason": "The agent clearly routed the request to the proposal/design review skill, reading the dra-proposal-and-design-review SKILL.md and producing a maintainer-style proposal document with design rationale, goals, non-goals, and upgrade risks."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The agent did not render, template, or apply any Helm resources. It produced only a textual design proposal document without any helm template/install/upgrade commands."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-helm-demo-sample-workloads."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent routes the request to proposal/design review or API/contract change guidance."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not render or apply Helm resources for a design proposal request."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/15",
+          "excerpt": "**Proposal Draft**\n\nTitle: Add a Helm value to control IMEX isolation mode\n\nStatus: Provisional\n\nSummary:\n- Add a new Helm value that lets operators choose the IMEX isolation mode used by\n...[truncated]...\nbute/proposals/NNNN-template.md` once you point me at the repo checkout or paste the template."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    }
+  },
+  "agent": "codex",
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "harbor_viewer": {
+    "job_name": "dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4",
+    "job_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4",
+    "analysis_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4?tab=analysis",
+    "trial_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-helm-demo-sample-workloads-boundary-negative-001/trials/dra-helm-demo-sample-workloads-b__PoRmhE5",
+    "evidence_urls": [
+      {
+        "label": "accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-helm-demo-sample-workloads-boundary-negative-001/trials/dra-helm-demo-sample-workloads-b__PoRmhE5?step=5"
+      },
+      {
+        "label": "behavior_check",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-helm-demo-sample-workloads-boundary-negative-001/trials/dra-helm-demo-sample-workloads-b__PoRmhE5?step=5"
+      },
+      {
+        "label": "goal_accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-helm-demo-sample-workloads-boundary-negative-001/trials/dra-helm-demo-sample-workloads-b__PoRmhE5?step=5"
+      }
+    ]
+  }
+}

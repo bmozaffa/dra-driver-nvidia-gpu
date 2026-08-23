@@ -1,0 +1,274 @@
+{
+  "security": 1.0,
+  "skill_execution": 1.0,
+  "skill_efficiency": 1.0,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 1.0,
+  "overall": 1.0,
+  "validity": "valid",
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-helm-demo-sample-workloads-adjacent-negative-001",
+  "has_skill": false,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "message": "Negative case, no skill identified"
+    },
+    "skill_efficiency": {
+      "message": "Skipped (negative or no expected_skill)"
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response constructs a comprehensive read-only operational triage report covering versions/scope (escalation summary requests versions), events (kubectl get events command), logs (kubectl logs commands), ResourceClaims, ResourceSlices, component boundary analysis (gpu-kubelet-plugin boundary identified), hypotheses (H1-H5), and safe next checks. All elements from the expected answer are present and factually accurate.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent constructs a read-only operational triage report with versions, scope, events, logs, ResourceClaims, ResourceSlices, component boundary, hypotheses, and safe next checks."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/14",
+          "excerpt": "**Triage Report**\n- **Incident**: Existing cluster has at least one workload pod stuck `Pending`, no `ResourceSlice` inventory is visible, and `gpu-kubelet-plugin` is repeatedly erroring.\n...[truncated]...\na copy-paste support handoff template with exact command blocks and placeholders for findings."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "low-relevance sections dropped to fit budget"
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent constructed a thorough read-only operational triage report covering scope, events/logs collection commands, ResourceClaims, ResourceSlices, component boundary analysis, hypotheses, and safe next checks. It addresses all the expected elements: versions (requested from operator), scope (cluster-wide GPU DRA), events, logs, ResourceClaims, ResourceSlices, component boundary (node-plugin/kubelet-plugin), hypotheses (5 ranked), and safe next actions. The report is clearly read-only and operational in nature.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent constructs a read-only operational triage report with versions, scope, events, logs, ResourceClaims, ResourceSlices, component boundary, hypotheses, and safe next checks."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/3/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"in_progress\", \"step\": \"Inspect repo guidance files\"}, {\"status\": \"pending\", \"step\": \"Read relevant troubleshooting skill\"}, {\"status\": \"pending\", \"step\": \"Gather support evidence paths\"}, {\"status\": \"pending\", \"step\": \"Draft triage report\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'SKILL.md' . .. /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills | sed 's#^#- #'",
+          "json_pointer": "/steps/5/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'SKILL.md' . .. /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills | sed 's#^#- #'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-operations-troubleshooting-observability/SKILL.md",
+          "json_pointer": "/steps/7/tool_calls/0",
+          "excerpt": "cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-operations-troubleshooting-observability/SKILL.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/8/tool_calls/0",
+          "excerpt": "{\"explanation\": \"Loaded the troubleshooting workflow; now I\\u2019m grounding the report in repo docs and likely evidence points for this symptom.\", \"plan\": [{\"status\": \"completed\", \"step\"\n...[truncated]...\ntep\": \"Gather support evidence paths\"}, {\"status\": \"pending\", \"step\": \"Draft triage report\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: rg -n \"ResourceSlice|gpu-kubelet-plugin|DeviceClass|Pending|prepare|checkpoint|C\n...[truncated]...\ndra-driver-nvidia-gpu cmd pkg | sed -n '1,240p'",
+          "json_pointer": "/steps/10/tool_calls/0",
+          "excerpt": "rg -n \"ResourceSlice|gpu-kubelet-plugin|DeviceClass|Pending|prepare|checkpoint|CDI|metrics|helm|values.yaml\" site/content/docs deployments/helm/dra-driver-nvidia-gpu cmd pkg | sed -n '1,240p'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find . -maxdepth 3 -type f | sed -n '1,240p'",
+          "json_pointer": "/steps/12/tool_calls/0",
+          "excerpt": "find . -maxdepth 3 -type f | sed -n '1,240p'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/13/tool_calls/0",
+          "excerpt": "{\"explanation\": \"This workspace has no repo contents, so I\\u2019m producing a bounded support triage report from the troubleshooting skill and the concrete symptom pattern the user gave.\"\n...[truncated]...\n: \"Gather support evidence paths\"}, {\"status\": \"in_progress\", \"step\": \"Draft triage report\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_JPePna1R4euhM8WTlg7ZxF7U",
+          "json_pointer": "/steps/3/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_ENfJiV93xE85jF2yGI8EO0Bt",
+          "json_pointer": "/steps/5/observation/results/0",
+          "excerpt": "Chunk ID: 1a1b83\nWall time: 1.6380 seconds\nProcess exited with code 0\nOriginal token count: 913\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-dem\n...[truncated]...\norkloads-b__witeaFM/local-environment/workspace/skills/dra-helm-demo-sample-workloads/SKILL.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_NaDVKzoB14YGG7xlT1825fz9",
+          "json_pointer": "/steps/7/observation/results/0",
+          "excerpt": "Chunk ID: d37004\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1748\nOutput:\n---\nname: dra-operations-troubleshooting-observability\ndescription: Triage NVIDIA \n...[truncated]...\nILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_xCqjzsEU3uLLgWcrvXL5yTYT",
+          "json_pointer": "/steps/8/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_N5OK6ujKmILZs0x9uvfOprMN",
+          "json_pointer": "/steps/10/observation/results/0",
+          "excerpt": "Chunk ID: 350324\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 61\nOutput:\nrg: site/content/docs: No such file or directory (os error 2)\nrg: deployments/helm/d\n...[truncated]...\ng: cmd: No such file or directory (os error 2)\nrg: pkg: No such file or directory (os error 2)"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_z56JebNcIoQVSHdj9eVGASPr",
+          "json_pointer": "/steps/12/observation/results/0",
+          "excerpt": "Chunk ID: 2b68d3\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 0\nOutput:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_6AINfS6YyfmLPNjy72c2oo3r",
+          "json_pointer": "/steps/13/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/14",
+          "excerpt": "**Triage Report**\n- **Incident**: Existing cluster has at least one workload pod stuck `Pending`, no `ResourceSlice` inventory is visible, and `gpu-kubelet-plugin` is repeatedly erroring.\n...[truncated]...\na copy-paste support handoff template with exact command blocks and placeholders for findings."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "behavior_check": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "All three expected behaviors were observed: the agent avoided the demo-sample-workloads skill, correctly routed to the troubleshooting/observability skill, and did not prescribe chart reinstallation as root-cause analysis.",
+      "results": [
+        {
+          "step": 1,
+          "passed": true,
+          "reason": "The agent identified the dra-operations-troubleshooting-observability skill as the relevant one and read its SKILL.md. It did not read or activate the dra-helm-demo-sample-workloads skill content."
+        },
+        {
+          "step": 2,
+          "passed": true,
+          "reason": "The agent explicitly stated 'Using dra-operations-troubleshooting-observability; it matches a stuck workload triage' and read that skill's SKILL.md to guide its triage report."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The final triage report does not prescribe reinstalling the chart as a root cause fix. It focuses on diagnosing the issue (inventory publication failure, plugin health, driver access, RBAC, etc.) and asks for further evidence gathering rather than jumping to reinstallation."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-helm-demo-sample-workloads."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent routes the request to DRA operations, troubleshooting, and observability guidance."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not prescribe reinstalling the chart as root-cause analysis."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/14",
+          "excerpt": "**Triage Report**\n- **Incident**: Existing cluster has at least one workload pod stuck `Pending`, no `ResourceSlice` inventory is visible, and `gpu-kubelet-plugin` is repeatedly erroring.\n...[truncated]...\na copy-paste support handoff template with exact command blocks and placeholders for findings."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    }
+  },
+  "agent": "codex",
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "harbor_viewer": {
+    "job_name": "dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4",
+    "job_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4",
+    "analysis_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4?tab=analysis",
+    "trial_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-helm-demo-sample-workloads-adjacent-negative-001/trials/dra-helm-demo-sample-workloads-a__26uNtg6",
+    "evidence_urls": [
+      {
+        "label": "accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-helm-demo-sample-workloads-adjacent-negative-001/trials/dra-helm-demo-sample-workloads-a__26uNtg6?step=15"
+      },
+      {
+        "label": "behavior_check",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-helm-demo-sample-workloads-adjacent-negative-001/trials/dra-helm-demo-sample-workloads-a__26uNtg6?step=8"
+      },
+      {
+        "label": "goal_accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-helm-demo-sample-workloads-codex-without--20260822_184254_17626_e0d1c4/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-helm-demo-sample-workloads-adjacent-negative-001/trials/dra-helm-demo-sample-workloads-a__26uNtg6?step=8"
+      }
+    ]
+  }
+}

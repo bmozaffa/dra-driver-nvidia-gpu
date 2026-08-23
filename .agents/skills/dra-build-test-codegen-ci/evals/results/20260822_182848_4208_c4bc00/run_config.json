@@ -1,0 +1,120 @@
+{
+  "config_file": "none",
+  "harbor": {
+    "n_attempts": {
+      "value": 1,
+      "source": "ACES default"
+    },
+    "pass_threshold": {
+      "value": 0.5,
+      "source": "ACES default"
+    },
+    "stop_on_pass": {
+      "value": false,
+      "source": "ACES default"
+    },
+    "n_concurrent": {
+      "value": 4,
+      "source": "ACES default"
+    },
+    "max_agents": {
+      "value": null,
+      "source": "ACES default"
+    },
+    "timeout_multiplier": {
+      "value": null,
+      "source": "auto"
+    },
+    "agent_runtime_preflight": {
+      "value": false,
+      "source": "ACES default"
+    },
+    "agent_workdir": {
+      "value": null,
+      "source": "ACES default"
+    },
+    "resources": {
+      "cpus": {
+        "value": 2,
+        "source": "ACES default"
+      },
+      "memory_mb": {
+        "value": 4096,
+        "source": "ACES default"
+      },
+      "storage_mb": {
+        "value": 2048,
+        "source": "ACES default"
+      }
+    },
+    "custom_dockerfile_mode": {
+      "value": "rebase",
+      "source": "ACES default"
+    },
+    "base_image_mode": {
+      "value": "reuse",
+      "source": "ACES default"
+    },
+    "copy_repo": {
+      "value": false,
+      "source": "ACES default"
+    },
+    "base_image": {
+      "value": "skill-eval-base:4f1d268be065",
+      "action": "reused"
+    },
+    "env_mode": {
+      "value": "docker",
+      "source": "ACES default"
+    },
+    "image_builder": null,
+    "runtime_env": {
+      "value": [],
+      "source": "ACES default"
+    },
+    "pre_agent_setup": {
+      "count": 0,
+      "source": "ACES default"
+    },
+    "sandbox_templates": {},
+    "sandbox": {}
+  },
+  "task_source": "evals_json",
+  "task_source_source": "auto (evals.json)",
+  "grading": {
+    "mode": {
+      "value": "aces_default",
+      "source": "ACES default"
+    }
+  },
+  "skill_workspace": {
+    "mode": {
+      "value": "isolated",
+      "source": "ACES default"
+    },
+    "include": {
+      "value": [],
+      "source": "none"
+    },
+    "staged_skills": []
+  },
+  "agents": {
+    "codex": {
+      "agent": "codex",
+      "model": "openai/openai/gpt-5.4",
+      "source": "ACES default",
+      "occurrence": "1",
+      "requested_model": null
+    }
+  },
+  "skill_staging_paths": [
+    "/workspace/skills",
+    "/workspace/input",
+    "/root/.claude/skills",
+    "/root/.agents/skills",
+    "/root/.config/opencode/skills"
+  ],
+  "notes": [
+    "Claude Code may expose staged skills as slash commands during the run."
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "agent": "codex",
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "scores": {
+    "security": 1.0,
+    "skill_execution": 0.9531,
+    "skill_efficiency": 0.8714,
+    "accuracy": 0.75,
+    "goal_accuracy": 1.0,
+    "behavior_check": 0.7667
+  },
+  "custom_scores": {},
+  "metric_set": "aces-default-v2",
+  "metrics": [
+    "security",
+    "skill_execution",
+    "skill_efficiency",
+    "accuracy",
+    "goal_accuracy",
+    "behavior_check"
+  ],
+  "dimensions": {
+    "security": {
+      "score": 1.0,
+      "sources": {
+        "security": 1.0
+      }
+    },
+    "correctness": {
+      "score": 0.75,
+      "sources": {
+        "accuracy": 1.0
+      }
+    },
+    "discoverability": {
+      "score": 0.9531,
+      "sources": {
+        "skill_execution": 1.0
+      }
+    },
+    "effectiveness": {
+      "score": 0.8834,
+      "sources": {
+        "goal_accuracy": 0.5,
+        "behavior_check": 0.5
+      }
+    },
+    "efficiency": {
+      "score": 0.8714,
+      "sources": {
+        "skill_efficiency": 1.0
+      }
+    }
+  },
+  "num_trials": 4,
+  "pass_at_k": {
+    "k": 1,
+    "pass_threshold": 0.5,
+    "stop_on_pass": false,
+    "passed_cases": 4,
+    "failed_cases": 0,
+    "total_cases": 4,
+    "rate": 1.0,
+    "attempts_used": 4,
+    "max_attempts_possible": 4,
+    "avg_attempts_used": 1.0,
+    "extra_cases": [],
+    "cases": {
+      "dra-helm-demo-sample-workloads-explicit-001": {
+        "passed": true,
+        "first_pass_attempt": 1,
+        "attempts_used": 1,
+        "attempts_skipped": 0,
+        "attempts_missing": 0,
+        "best_score": 0.8625,
+        "attempts": [
+          {
+            "attempt": 1,
+            "trial": "dra-helm-demo-sample-workloads-e__xzyAsqN",
+            "score": 0.8625,
+            "passed": true
+          }
+        ]
+      },
+      "dra-helm-demo-sample-workloads-contextual-001": {
+        "passed": true,
+        "first_pass_attempt": 1,
+        "attempts_used": 1,
+        "attempts_skipped": 0,
+        "attempts_missing": 0,
+        "best_score": 0.9205,
+        "attempts": [
+          {
+            "attempt": 1,
+            "trial": "dra-helm-demo-sample-workloads-c__Piz7hXd",
+            "score": 0.9205,
+            "passed": true
+          }
+        ]
+      },
+      "dra-helm-demo-sample-workloads-adjacent-negative-001": {
+        "passed": true,
+        "first_pass_attempt": 1,
+        "attempts_used": 1,
+        "attempts_skipped": 0,
+        "attempts_missing": 0,
+        "best_score": 1.0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "trial": "dra-helm-demo-sample-workloads-a__26uNtg6",
+            "score": 1.0,
+            "passed": true
+          }
+        ]
+      },
+      "dra-helm-demo-sample-workloads-boundary-negative-001": {
+        "passed": true,
+        "first_pass_attempt": 1,
+        "attempts_used": 1,
+        "attempts_skipped": 0,
+        "attempts_missing": 0,
+        "best_score": 0.7778,
+        "attempts": [
+          {
+            "attempt": 1,
+            "trial": "dra-helm-demo-sample-workloads-b__PoRmhE5",
+            "score": 0.7778,
+            "passed": true
+          }
+        ]
+      }
+    }
+  }
+}

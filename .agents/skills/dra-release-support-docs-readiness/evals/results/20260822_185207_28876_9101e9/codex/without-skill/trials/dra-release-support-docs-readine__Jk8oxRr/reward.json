@@ -1,0 +1,325 @@
+{
+  "security": 1.0,
+  "skill_execution": 0.9375,
+  "skill_efficiency": 0.8,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 0.8,
+  "overall": 0.9229,
+  "validity": "valid",
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-release-support-docs-readiness-contextual-001",
+  "has_skill": false,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "activation": {
+        "passed": true,
+        "score": 0.75,
+        "reason": "Read SKILL.md via shell read command",
+        "details": {
+          "expected_skill": "dra-release-support-docs-readiness",
+          "acceptable_skills": [
+            "dra-release-support-docs-readiness"
+          ],
+          "acceptable_alternates": [],
+          "matched_skill": "dra-release-support-docs-readiness",
+          "match_type": "expected",
+          "score": 1.0,
+          "accepted_skills": [
+            "dra-release-support-docs-readiness"
+          ]
+        }
+      },
+      "script_execution": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "No specific script expected"
+      },
+      "workflow_order": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "Correct workflow order"
+      },
+      "error_recovery": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "All commands succeeded on first attempt",
+        "first_attempt_clean": true,
+        "corrections": [],
+        "skill_faults": 0,
+        "agent_faults": 0
+      }
+    },
+    "skill_efficiency": {
+      "routing": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "Agent correctly routed to dra-release-support-docs-readiness only",
+        "details": {
+          "expected_skill": "dra-release-support-docs-readiness",
+          "acceptable_skills": [
+            "dra-release-support-docs-readiness"
+          ],
+          "acceptable_alternates": [],
+          "skills_read": [
+            "cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-support-docs-readiness/SKILL.md' && printf '\\n---ROOT_AGENTS---\\n' && if [ -f AGENTS.md ]; then cat AGENTS.md; fi && printf '\\n---REPO_FILES---\\n' && rg --files -g 'AGENTS.md' -g 'README*' -g 'CHANGELOG*' -g 'docs/**' -g '.github/**' ."
+          ]
+        }
+      },
+      "tool_efficiency": {
+        "passed": true,
+        "score": 0.6,
+        "reason": "3/5 productive calls (60%)"
+      }
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response correctly identifies the release/support readiness skill, provides a comprehensive checklist and support wording covering feature gate, default status, support status, proposal linkage, validation/hardware coverage, upgrade/rollback implications, known symptoms, diagnostics, workarounds, escalation boundaries, owners, and refresh date. All expected elements are addressed with actionable templates and guidance.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent prepares a support handoff checklist and release-note-quality wording that states feature gate, default, and support status, proposal linkage, validation and hardware coverage, \n...[truncated]...\nns, known symptoms, diagnostics, workarounds, escalation boundaries, owners, and refresh date."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/11",
+          "excerpt": "Here\u2019s a support-ready package you can hand off as-is, with the main caveat that I could not inspect repo-local release docs because this workspace is empty.\n\n**Checklist**\n- **Release no\n...[truncated]...\nippet once you share the actual feature name, gate name, and ComputeDomain limitation details."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent's final response covers all the expected elements: feature gate and default status, support status (alpha/limited), proposal linkage (implied via documentation surfaces), validation and hardware coverage, upgrade and rollback implications, known symptoms and diagnostics, workarounds, escalation boundaries, owners (via escalation packet and handoff note), and refresh date (via recommended handoff note about consistent wording). While some items use placeholder names rather than specific values (which is appropriate since the agent wasn't given specific details), the structure and content comprehensively address all required aspects of the expected outcome.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent prepares a support handoff checklist and release-note-quality wording that states feature gate, default, and support status, proposal linkage, validation and hardware coverage, \n...[truncated]...\nns, known symptoms, diagnostics, workarounds, escalation boundaries, owners, and refresh date."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-\n...[truncated]...\n -g 'CHANGELOG*' -g 'docs/**' -g '.github/**' .",
+          "json_pointer": "/steps/4/tool_calls/0",
+          "excerpt": "cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-support-docs-readiness/SKILL.md' && printf '\\n---ROOT_AGENTS---\\n' && if [ -f AGENTS.md ]; then cat\n...[truncated]...\n--\\n' && rg --files -g 'AGENTS.md' -g 'README*' -g 'CHANGELOG*' -g 'docs/**' -g '.github/**' ."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/5/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"in_progress\", \"step\": \"Inspect release and support docs\"}, {\"status\": \"pending\", \"step\": \"Find alpha and ComputeDomain patterns\"}, {\"status\": \"pending\", \"step\": \"Draft checklist and wording\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && printf '\\n---top---\\n' && rg --files . | sed 's#^./##' | rg '^(RELEASE\\.m\n...[truncated]...\n deployments/helm .github/workflows 2>/dev/null",
+          "json_pointer": "/steps/7/tool_calls/0",
+          "excerpt": "pwd && printf '\\n---top---\\n' && rg --files . | sed 's#^./##' | rg '^(RELEASE\\.md|VERSION|versions\\.mk|deployments/helm/.*/Chart\\.yaml|site/hugo\\.toml|site/content/.+|docs/.+|README.*|CHA\n...[truncated]...\n|release notes|release\" RELEASE.md site/content deployments/helm .github/workflows 2>/dev/null"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find . -maxdepth 3 -type f | sed 's#^./##' | sort | head -200",
+          "json_pointer": "/steps/9/tool_calls/0",
+          "excerpt": "find . -maxdepth 3 -type f | sed 's#^./##' | sort | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/10/tool_calls/0",
+          "excerpt": "{\"explanation\": \"The workspace is empty, so I\\u2019m switching from repo-specific extraction to a release-ready checklist and support handoff template grounded in the skill\\u2019s require\n...[truncated]...\nd ComputeDomain patterns\"}, {\"status\": \"in_progress\", \"step\": \"Draft checklist and wording\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_aee5YKLpxgkXrOJ7eHMHJmVk",
+          "json_pointer": "/steps/4/observation/results/0",
+          "excerpt": "Chunk ID: 6fb2a7\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 1847\nOutput:\n---\nname: dra-release-support-docs-readiness\ndescription: Assess and prepare NVIDI\n...[truncated]...\n. Use `agents/openai.yaml` only as registration metadata.\n\n---ROOT_AGENTS---\n\n---REPO_FILES---"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_SxJ2BxiXsVYMwR1SdkrpsKCN",
+          "json_pointer": "/steps/5/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_Rr6JVmeUwxwKsCBu0iFTvKeH",
+          "json_pointer": "/steps/7/observation/results/0",
+          "excerpt": "Chunk ID: e9d5ca\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 73\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-s\n...[truncated]...\ncodex-without/dra-release-support-docs-readine__Jk8oxRr/local-environment/workspace\n\n---top---"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_SASxj8ilmjm9R3D9AYpvdEw0",
+          "json_pointer": "/steps/9/observation/results/0",
+          "excerpt": "Chunk ID: 1e4fe6\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 0\nOutput:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_1rdydl0BS8maJPuUUQhSRHiq",
+          "json_pointer": "/steps/10/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/11",
+          "excerpt": "Here\u2019s a support-ready package you can hand off as-is, with the main caveat that I could not inspect repo-local release docs because this workspace is empty.\n\n**Checklist**\n- **Release no\n...[truncated]...\nippet once you share the actual feature name, gate name, and ComputeDomain limitation details."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "behavior_check": {
+      "score": 0.8,
+      "status": "ok",
+      "reason": "The agent correctly identified the task scope, audited docs surfaces, named untested combinations, and avoided exposing sensitive data. However, it did not explicitly separate community driver behavior from productized GPU Operator support and known issues.",
+      "results": [
+        {
+          "step": 1,
+          "passed": true,
+          "reason": "The agent correctly identified the task as release, support, documentation, known-issue, and compatibility readiness. It loaded the 'dra-release-support-docs-readiness' skill and produced a checklist covering release notes, known limitations, support status, compatibility, upgrade guidance, docs surfaces, and validation evidence."
+        },
+        {
+          "step": 2,
+          "passed": false,
+          "reason": "The agent's final response does not explicitly separate community driver behavior from productized GPU Operator support. While it mentions 'GPU Operator' in the compatibility section, it does not draw a clear distinction between community/open-source driver behavior and productized support boundaries or known issues specific to each."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The agent's checklist item 'Docs surfaces' explicitly mentions ensuring wording appears in release notes, install docs, upgrade docs, feature-gate reference, sample manifests, and support handoff. It also attempted to find and audit repo docs (release, upgrade, known-issue patterns) but found the workspace empty."
+        },
+        {
+          "step": 4,
+          "passed": true,
+          "reason": "The agent explicitly names untested combinations and unavailable real GPU/MNNVL coverage in its checklist. The compatibility bullet says to 'explicitly name untested combinations' and the validation evidence bullet says to 'list gaps plainly.' The agent also acknowledged the workspace was empty rather than implying support from local checks."
+        },
+        {
+          "step": 5,
+          "passed": true,
+          "reason": "The agent did not expose any registry credentials, tokens, private support data, or embargoed security information in any of its outputs or tool calls."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent infers that the task is release, support, documentation, known-issue, and compatibility readiness."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent separates community driver behavior from productized GPU Operator support and known issues."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent audits docs across concepts, prerequisites, install, upgrade, guides, API, gates, Helm values, ResourceSlice reference, samples, and contribution pages as applicable."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 4",
+          "json_pointer": "/expected_behavior/3",
+          "excerpt": "The agent names untested combinations and unavailable real GPU or MNNVL coverage instead of implying support from local checks."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 5",
+          "json_pointer": "/expected_behavior/4",
+          "excerpt": "The agent avoids exposing registry credentials, tokens, private support data, or embargoed security information."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/11",
+          "excerpt": "Here\u2019s a support-ready package you can hand off as-is, with the main caveat that I could not inspect repo-local release docs because this workspace is empty.\n\n**Checklist**\n- **Release no\n...[truncated]...\nippet once you share the actual feature name, gate name, and ComputeDomain limitation details."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    }
+  },
+  "agent": "codex",
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "harbor_viewer": {
+    "job_name": "dra-release-support-docs-readiness-codex-without--20260822_185207_28876_9101e9",
+    "job_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-release-support-docs-readiness-codex-without--20260822_185207_28876_9101e9",
+    "analysis_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-release-support-docs-readiness-codex-without--20260822_185207_28876_9101e9?tab=analysis",
+    "trial_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-release-support-docs-readiness-codex-without--20260822_185207_28876_9101e9/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-release-support-docs-readiness-contextual-001/trials/dra-release-support-docs-readine__Jk8oxRr",
+    "evidence_urls": [
+      {
+        "label": "behavior_check",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-release-support-docs-readiness-codex-without--20260822_185207_28876_9101e9/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-release-support-docs-readiness-contextual-001/trials/dra-release-support-docs-readine__Jk8oxRr?step=5"
+      },
+      {
+        "label": "accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-release-support-docs-readiness-codex-without--20260822_185207_28876_9101e9/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-release-support-docs-readiness-contextual-001/trials/dra-release-support-docs-readine__Jk8oxRr?step=5"
+      },
+      {
+        "label": "goal_accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-release-support-docs-readiness-codex-without--20260822_185207_28876_9101e9/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-release-support-docs-readiness-contextual-001/trials/dra-release-support-docs-readine__Jk8oxRr?step=5"
+      }
+    ]
+  }
+}

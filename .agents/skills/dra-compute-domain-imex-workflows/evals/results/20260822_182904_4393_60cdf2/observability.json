@@ -1,0 +1,23 @@
+{
+  "service_name": "nv-aces",
+  "deployment_environment": "prd",
+  "env_mode": "docker",
+  "runner": "harbor",
+  "skill_name": "dra-compute-domain-imex-workflows",
+  "agents": {
+    "codex": {
+      "agent": "codex",
+      "model": "openai/openai/gpt-5.4",
+      "source": "ACES default",
+      "occurrence": "1",
+      "requested_model": null
+    }
+  },
+  "attributes": {
+    "aces.command": "evaluate",
+    "aces.layer": "agent_eval",
+    "aces.agent_eval.runner": "harbor",
+    "aces.env_mode": "docker",
+    "aces.skill.name": "dra-compute-domain-imex-workflows"
+  }
+}

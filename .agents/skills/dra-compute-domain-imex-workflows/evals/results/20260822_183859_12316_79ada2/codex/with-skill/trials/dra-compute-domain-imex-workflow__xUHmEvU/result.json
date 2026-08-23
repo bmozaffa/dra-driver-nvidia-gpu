@@ -1,0 +1,122 @@
+{
+  "id": "19a2d5a8-7924-4714-a657-8806834f02b1",
+  "task_name": "nvidia/skill-eval-dra-compute-domain-imex-workflows-adjacent-negative-001",
+  "trial_name": "dra-compute-domain-imex-workflow__xUHmEvU",
+  "trial_uri": "file:///Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/evals/results/20260822_183859_12316_79ada2/_harbor-jobs/dra-compute-domain-imex-workflows-codex-with/dra-compute-domain-imex-workflow__xUHmEvU",
+  "task_id": {
+    "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/evals/results/20260822_183859_12316_79ada2/_harbor-tasks/dra-compute-domain-imex-workflows-adjacent-negative-001"
+  },
+  "source": "_harbor-tasks",
+  "task_checksum": "4ff23657c0d11bad05b3a1e43ca2391580b6d260acab81a8a0b7a43a3723a561",
+  "config": {
+    "task": {
+      "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/evals/results/20260822_183859_12316_79ada2/_harbor-tasks/dra-compute-domain-imex-workflows-adjacent-negative-001",
+      "git_url": null,
+      "git_commit_id": null,
+      "name": null,
+      "ref": null,
+      "overwrite": false,
+      "download_dir": null,
+      "source": "_harbor-tasks"
+    },
+    "trial_name": "dra-compute-domain-imex-workflow__xUHmEvU",
+    "trials_dir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/evals/results/20260822_183859_12316_79ada2/_harbor-jobs/dra-compute-domain-imex-workflows-codex-with",
+    "timeout_multiplier": 2.0,
+    "agent_timeout_multiplier": null,
+    "verifier_timeout_multiplier": null,
+    "agent_setup_timeout_multiplier": null,
+    "environment_build_timeout_multiplier": null,
+    "agent": {
+      "name": null,
+      "import_path": "layer2.harbor.local_agents:AcesLocalCodex",
+      "model_name": "openai/openai/gpt-5.4",
+      "skills": [],
+      "override_timeout_sec": null,
+      "override_setup_timeout_sec": null,
+      "max_timeout_sec": null,
+      "extra_allowed_hosts": [],
+      "kwargs": {},
+      "env": {
+        "ANTHROPIC_BASE_URL": "https://inference-api.nvidia.com",
+        "OPENAI_BASE_URL": "https://inference-api.nvidia.com/v1"
+      },
+      "mcp_servers": []
+    },
+    "environment": {
+      "type": null,
+      "import_path": "layer2.harbor.local_environment:AcesLocalEnvironment",
+      "force_build": false,
+      "delete": true,
+      "cpu_enforcement_policy": "auto",
+      "memory_enforcement_policy": "auto",
+      "override_cpus": null,
+      "override_memory_mb": null,
+      "override_storage_mb": null,
+      "override_gpus": null,
+      "override_tpu": null,
+      "mounts": null,
+      "extra_docker_compose": [],
+      "env": {},
+      "kwargs": {
+        "runtime_root": "/Users/bmozaffari/.local/share/astra-skill-eval/runtimes"
+      },
+      "extra_allowed_hosts": []
+    },
+    "verifier": {
+      "override_timeout_sec": null,
+      "max_timeout_sec": null,
+      "env": {},
+      "disable": false
+    },
+    "artifacts": [],
+    "extra_instruction_paths": [],
+    "job_id": "7570dfca-09f5-45e4-9ac8-812aa98a4e05"
+  },
+  "agent_info": {
+    "name": "codex",
+    "version": "0.142.5",
+    "model_info": {
+      "name": "openai/gpt-5.4",
+      "provider": "openai"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 69086,
+    "n_cache_tokens": 60928,
+    "n_output_tokens": 898,
+    "cost_usd": null,
+    "rollout_details": null,
+    "metadata": null
+  },
+  "verifier_result": {
+    "rewards": {
+      "security": 1.0,
+      "skill_execution": 1.0,
+      "skill_efficiency": 1.0,
+      "accuracy": 1.0,
+      "goal_accuracy": 1.0,
+      "behavior_check": 0.6667,
+      "overall": 0.9444
+    }
+  },
+  "exception_info": null,
+  "started_at": "2026-08-23T01:39:04.474774Z",
+  "finished_at": "2026-08-23T01:39:52.176973Z",
+  "environment_setup": {
+    "started_at": "2026-08-23T01:39:04.532739Z",
+    "finished_at": "2026-08-23T01:39:04.553837Z"
+  },
+  "agent_setup": {
+    "started_at": "2026-08-23T01:39:04.553889Z",
+    "finished_at": "2026-08-23T01:39:04.724005Z"
+  },
+  "agent_execution": {
+    "started_at": "2026-08-23T01:39:04.724131Z",
+    "finished_at": "2026-08-23T01:39:37.117187Z"
+  },
+  "verifier": {
+    "started_at": "2026-08-23T01:39:37.128157Z",
+    "finished_at": "2026-08-23T01:39:52.124275Z"
+  },
+  "step_results": null
+}

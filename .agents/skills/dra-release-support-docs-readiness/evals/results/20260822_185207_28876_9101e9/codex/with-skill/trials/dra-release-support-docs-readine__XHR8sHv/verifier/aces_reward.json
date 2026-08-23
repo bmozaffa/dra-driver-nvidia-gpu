@@ -1,0 +1,362 @@
+{
+  "security": 1.0,
+  "skill_execution": 1.0,
+  "skill_efficiency": 1.0,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 1.0,
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-release-support-docs-readiness-boundary-negative-001",
+  "has_skill": true,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "message": "Negative case, no skill identified"
+    },
+    "skill_efficiency": {
+      "message": "Skipped (negative or no expected_skill)"
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response correctly identifies the troubleshooting skill needed, provides a comprehensive read-only operational triage plan that investigates upgrade context (Helm values, chart rendering conditions), resource objects (DeviceClasses, ResourceSlices), component health (pods), and provides hypotheses about why DeviceClasses disappeared (conditional rendering, value changes, upgrade path issues). It includes safe recovery options and cautions against destructive actions. This aligns well with the expected answer's description of a read-only operational triage plan covering upgrade context, Helm values, resource objects, events, component logs, feature gates, hypotheses, and approved recovery options.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent builds a read-only operational triage plan that investigates upgrade context, Helm values, resource objects, events, component logs, feature gates, first failing boundary, hypotheses, and approved recovery options."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/25",
+          "excerpt": "Most likely cause: the upgraded chart stopped rendering the `DeviceClass` manifests, not that Kubernetes \u201chid\u201d them. In this chart, `DeviceClass` objects are conditional:\n- GPU classes (`\n...[truncated]...\nist using your exact `helm status`, `helm get values`, and `kubectl get deviceclasses` output."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "low-relevance sections dropped to fit budget"
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent's response covers all the key elements expected: upgrade context investigation, Helm values analysis, resource object checks, events/logs inspection, feature gates (conditional rendering), identifying the first failing boundary, hypotheses for root cause, and safe/approved recovery options. It is structured as a read-only triage plan with clear diagnostic steps before any changes are made.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent builds a read-only operational triage plan that investigates upgrade context, Helm values, resource objects, events, component logs, feature gates, first failing boundary, hypotheses, and approved recovery options."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'SKILL.md' -g 'references/**' . .. ../../.. \n...[truncated]...\nskills/dra-helm-demo-sample-workloads/SKILL.md'",
+          "json_pointer": "/steps/4/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'SKILL.md' -g 'references/**' . .. ../../.. | sed 's#^#FILE #' | head -200 && echo '--- SKILL ---' && cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver\n...[truncated]...\nsupport-docs-readine__XHR8sHv/agent/codex-home/skills/dra-helm-demo-sample-workloads/SKILL.md'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find .. -name AGENTS.md -o -path '*dra-operations-troubleshooting-observability/\n...[truncated]...\nskills/dra-helm-demo-sample-workloads/SKILL.md'",
+          "json_pointer": "/steps/6/tool_calls/0",
+          "excerpt": "find .. -name AGENTS.md -o -path '*dra-operations-troubleshooting-observability/SKILL.md' -o -path '*dra-helm-demo-sample-workloads/SKILL.md' | sed 's#^#FOUND #' && echo '--- TROUBLESHOOT\n...[truncated]...\n/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/7/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"in_progress\", \"step\": \"Scope symptom and upgrade path\"}, {\"status\": \"pending\", \"step\": \"Check chart DeviceClass rendering\"}, {\"status\": \"pending\", \"step\": \"Inspect upgrade ownership behavior\"}, {\"status\": \"pending\", \"step\": \"Build triage and recovery runbook\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: rg -n \"DeviceClass|deviceclass|deviceclasses\" deployments/helm site/content/docs\n...[truncated]...\no echo \"--- $f ---\"; sed -n '1,220p' \"$f\"; done",
+          "json_pointer": "/steps/9/tool_calls/0",
+          "excerpt": "rg -n \"DeviceClass|deviceclass|deviceclasses\" deployments/helm site/content/docs demo -S && echo '--- upgrade doc ---' && sed -n '1,220p' site/content/docs/upgrade.md && echo '--- values \n...[truncated]...\nra-driver-nvidia-gpu/templates | tr '\n' ' '); do echo \"--- $f ---\"; sed -n '1,220p' \"$f\"; done"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: ls -la && find .. -maxdepth 4 -type d \\( -name deployments -o -name site -o -name demo -o -name .git \\) | sed 's#^#DIR #' | head -200",
+          "json_pointer": "/steps/11/tool_calls/0",
+          "excerpt": "ls -la && find .. -maxdepth 4 -type d \\( -name deployments -o -name site -o -name demo -o -name .git \\) | sed 's#^#DIR #' | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 3 \\( -typ\n...[truncated]...\nIA/dra-driver-nvidia-gpu -name AGENTS.md -print",
+          "json_pointer": "/steps/12/tool_calls/0",
+          "excerpt": "find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 3 \\( -type d -name deployments -o -type d -name site -o -type d -name demo -o -type d -name .git \\) | sed 's#^#DIR #\n...[truncated]...\nTS ---' && find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -name AGENTS.md -print"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && rg -n \"DeviceClass\n...[truncated]...\noyments/helm/dra-driver-nvidia-gpu/templates -S",
+          "json_pointer": "/steps/14/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && rg -n \"DeviceClass|deviceclass|deviceclasses\" deployments/helm site/content/docs demo -S && echo '--- upgrade doc ---' && sed\n...[truncated]...\n-n \"DeviceClass|deviceclass|deviceclasses\" deployments/helm/dra-driver-nvidia-gpu/templates -S"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && echo '--- helpers \n...[truncated]...\n30p' site/content/docs/reference/helm-values.md",
+          "json_pointer": "/steps/15/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && echo '--- helpers ---' && sed -n '1,280p' deployments/helm/dra-driver-nvidia-gpu/templates/_helpers.tpl && for f in deploymen\n...[truncated]...\n '--- reference helm values ---' && sed -n '1,130p' site/content/docs/reference/helm-values.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,120p' de\n...[truncated]...\nts/helm/dra-driver-nvidia-gpu/values.yaml -n -S",
+          "json_pointer": "/steps/16/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,120p' deployments/helm/dra-driver-nvidia-gpu/templates/deviceclass-gpu.yaml && echo '---' && sed -n '1,120p' deploy\n...[truncated]...\nver-nvidia-gpu/templates/_helpers.tpl deployments/helm/dra-driver-nvidia-gpu/values.yaml -n -S"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,120p' si\n...[truncated]...\nuResourcesEnabledOverride\" site/content/docs -S",
+          "json_pointer": "/steps/18/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,120p' site/content/docs/upgrade.md && echo '--- values around resources ---' && sed -n '1,90p' deployments/helm/dra\n...[truncated]...\nrst upgrade|preserve existing resource names|gpuResourcesEnabledOverride\" site/content/docs -S"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,80p' deployments/helm/dra-driver-nvidia-gpu/values.yaml",
+          "json_pointer": "/steps/19/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,80p' deployments/helm/dra-driver-nvidia-gpu/values.yaml"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '80,150p' deployments/helm/dra-driver-nvidia-gpu/values.yaml",
+          "json_pointer": "/steps/20/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '80,150p' deployments/helm/dra-driver-nvidia-gpu/values.yaml"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/21/tool_calls/0",
+          "excerpt": "{\"explanation\": \"The chart renders DeviceClasses only when the corresponding resource flags are enabled, and GPU DeviceClasses additionally depend on `gpuResourcesEnabledOverride=true`. N\n...[truncated]...\nade ownership behavior\"}, {\"status\": \"pending\", \"step\": \"Build triage and recovery runbook\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '110,170p' \n...[truncated]...\n&& sed -n '50,90p' site/content/docs/install.md",
+          "json_pointer": "/steps/23/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '110,170p' site/content/docs/upgrade.md && echo '--- install verify ---' && sed -n '50,90p' site/content/docs/install.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/24/tool_calls/0",
+          "excerpt": "{\"explanation\": \"I confirmed the main upgrade failure modes: losing `gpuResourcesEnabledOverride=true`, disabling one of the resource families, and first-upgrade naming drift from pre-v0.\n...[truncated]...\ne ownership behavior\"}, {\"status\": \"completed\", \"step\": \"Build triage and recovery runbook\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_ENWREVL5bh3ACfE4UbosBNBs",
+          "json_pointer": "/steps/4/observation/results/0",
+          "excerpt": "Chunk ID: 3aaa71\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 330\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-\n...[truncated]...\nx-home/skills/dra-operations-troubleshooting-observability/SKILL.md: No such file or directory"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_WWACIJ0leCBtF7F1veYz42VB",
+          "json_pointer": "/steps/6/observation/results/0",
+          "excerpt": "Chunk ID: 731ffe\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3461\nOutput:\nWarning: truncated output (original token count: 3461)\nTotal output lines: 238\n\n--\n...[truncated]...\nILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_o3XpQ76UnwxWct9NnecgCbhr",
+          "json_pointer": "/steps/7/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_IRD6s5QxWUUKxCj3osLORGFV",
+          "json_pointer": "/steps/9/observation/results/0",
+          "excerpt": "Chunk ID: 4fa04d\nWall time: 0.0000 seconds\nProcess exited with code 2\nOriginal token count: 43\nOutput:\nrg: deployments/helm: No such file or directory (os error 2)\nrg: site/content/docs: No such file or directory (os error 2)\nrg: demo: No such file or directory (os error 2)"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_BxGWxDISuoKt9G0Iz4WR8hS0",
+          "json_pointer": "/steps/11/observation/results/0",
+          "excerpt": "Chunk ID: 81ab46\nWall time: 0.2922 seconds\nProcess exited with code 0\nOriginal token count: 57\nOutput:\ntotal 0\ndrwxr-xr-x  4 bmozaffari  staff  128 Aug 22 18:52 .\ndrwxr-xr-x  8 bmozaffari\n...[truncated]...\naffari  staff   64 Aug 22 18:52 input\ndrwxr-xr-x  3 bmozaffari  staff   96 Aug 22 18:52 skills"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_y7IwStZncwAnrlx0YRYFPdgF",
+          "json_pointer": "/steps/12/observation/results/0",
+          "excerpt": "Chunk ID: f7e136\nWall time: 1.0013 seconds\nProcess running with session ID 30937\nOriginal token count: 72\nOutput:\nDIR /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/demo\nDIR /Use\n...[truncated]...\nit\nDIR /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/deployments\n--- root AGENTS ---"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_tVUqRzPLmO9uWlw9TIuNtRVQ",
+          "json_pointer": "/steps/14/observation/results/0",
+          "excerpt": "Chunk ID: 494d9f\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 7277\nOutput:\nWarning: truncated output (original token count: 7277)\nTotal output lines: 538\n\nde\n...[truncated]...\nlass\ndeployments/helm/dra-driver-nvidia-gpu/templates/deviceclass-gpu.yaml:5:kind: DeviceClass"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_CtDom4wNy9ycmzaxKI8gTxYE",
+          "json_pointer": "/steps/15/observation/results/0",
+          "excerpt": "Chunk ID: ea9dd8\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 5645\nOutput:\nWarning: truncated output (original token count: 5645)\nTotal output lines: 483\n\n--\n...[truncated]...\n|\n| `controller.metrics.enabled` | `true` | Expose Prometheus metrics on the controller pod. |"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_s3xlqBsPMW8BpicEe03s740P",
+          "json_pointer": "/steps/16/observation/results/0",
+          "excerpt": "Chunk ID: 538ce3\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 598\nOutput:\n{{- if .Values.resources.gpus.enabled }}\n{{- $resourceApiVersion := (include \"dra-d\n...[truncated]...\npu/templates/_helpers.tpl:203:rendering (omitting the compute-domain-daemon DeviceClass/RBAC)."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_2ai1N2c3bT06vvLuAuQbGNFM",
+          "json_pointer": "/steps/18/observation/results/0",
+          "excerpt": "Chunk ID: 087d8b\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3876\nOutput:\nWarning: truncated output (original token count: 3876)\nTotal output lines: 269\n\n--\n...[truncated]...\ncontent/docs/guides/gpu-allocation/time-slicing.md:44:  --set gpuResourcesEnabledOverride=true"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_QwKThzXdlBERhaWIGdDppM9Q",
+          "json_pointer": "/steps/19/observation/results/0",
+          "excerpt": "Chunk ID: 8e21d6\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 786\nOutput:\n# Copyright The Kubernetes Authors\n#\n# Licensed under the Apache License, Version 2\n...[truncated]...\ncreate is true, a name is generated using the fullname template\n  name: \"\"\n\nresources:\n  gpus:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_M8J4oeeFJn1kwES9mt2OOT1C",
+          "json_pointer": "/steps/20/observation/results/0",
+          "excerpt": "Chunk ID: 8bcafe\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 900\nOutput:\n  gpus:\n    enabled: true\n  computeDomains:\n    enabled: true\n    # Changing `imex.\n...[truncated]...\n update'\n#\n# Level 2:\n# - reflector.go informer state: \"Caches populated\"\n# - Kubelet plugins:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_pRVLMkkh7Ju1h3SCZzh8RTZP",
+          "json_pointer": "/steps/21/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_Lz7PdG3JTiRUiVA3hjl30sas",
+          "json_pointer": "/steps/23/observation/results/0",
+          "excerpt": "Chunk ID: 9a99c8\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1019\nOutput:\nUpdate the ComputeDomainsCliques CRD:\n\n```bash\nkubectl apply \\\n    -f https://raw.\n...[truncated]...\nig.nvidia.com                             1m\nvfio.gpu.nvidia.com                        1m\n```"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_iSJPwOQTKsXjWXxLubravu4r",
+          "json_pointer": "/steps/24/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/25",
+          "excerpt": "Most likely cause: the upgraded chart stopped rendering the `DeviceClass` manifests, not that Kubernetes \u201chid\u201d them. In this chart, `DeviceClass` objects are conditional:\n- GPU classes (`\n...[truncated]...\nist using your exact `helm status`, `helm get values`, and `kubectl get deviceclasses` output."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "older/low-relevance tool results dropped to fit budget"
+      }
+    },
+    "behavior_check": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "All expected behaviors were observed. The agent correctly avoided the release-support-docs-readiness skill, routed the request to operational troubleshooting with Helm guidance, and did not perform any release-related actions.",
+      "results": [
+        {
+          "step": 1,
+          "passed": true,
+          "reason": "The agent discovered the dra-release-support-docs-readiness skill path in its initial file search but never read its SKILL.md or activated it. Instead, it read and followed the dra-operations-troubleshooting-observability skill."
+        },
+        {
+          "step": 2,
+          "passed": true,
+          "reason": "The agent explicitly stated it was using the troubleshooting skill first, then Helm workflow guidance. It read the troubleshooting skill file, examined Helm chart templates (DeviceClass rendering conditions, values.yaml, upgrade docs), and produced operational troubleshooting guidance combined with Helm deployment details."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The agent did not perform any release actions such as tagging, publishing, promoting, or drafting release notes. It focused entirely on diagnosing the DeviceClass disappearance issue and providing triage steps."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-release-support-docs-readiness."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent routes the request to operational troubleshooting and, where relevant, Helm deployment guidance."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not tag, publish, promote, or draft release notes for a live troubleshooting request."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/25",
+          "excerpt": "Most likely cause: the upgraded chart stopped rendering the `DeviceClass` manifests, not that Kubernetes \u201chid\u201d them. In this chart, `DeviceClass` objects are conditional:\n- GPU classes (`\n...[truncated]...\nist using your exact `helm status`, `helm get values`, and `kubectl get deviceclasses` output."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "lower-priority behavior history truncated to fit budget"
+      }
+    }
+  },
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "validity": "valid"
+}

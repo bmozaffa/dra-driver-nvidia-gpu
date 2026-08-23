@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>dra-proposal-and-design-review — Eval Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--r:10px;--nv:#76b900}
+[data-theme="dark"]{--bg:#0c111b;--s1:#151d2e;--s2:#1e293b;--s3:#2a3650;--tx:#e2e8f0;--tx2:#94a3b8;--bdr:#334155;--chart-grid:#1e293b;--chart-tick:#94a3b8;--chart-label:#e2e8f0;--badge-pass-bg:#14532d;--badge-pass-tx:#bbf7d0;--badge-warn-bg:#713f12;--badge-warn-tx:#fef08a;--badge-fail-bg:#7f1d1d;--badge-fail-tx:#fecaca;--shadow:0 1px 3px #0005}
+[data-theme="light"]{--bg:#f8fafc;--s1:#ffffff;--s2:#f1f5f9;--s3:#e2e8f0;--tx:#0f172a;--tx2:#64748b;--bdr:#cbd5e1;--chart-grid:#e2e8f0;--chart-tick:#64748b;--chart-label:#0f172a;--badge-pass-bg:#dcfce7;--badge-pass-tx:#166534;--badge-warn-bg:#fef9c3;--badge-warn-tx:#854d0e;--badge-fail-bg:#fee2e2;--badge-fail-tx:#991b1b;--shadow:0 1px 4px #0001}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;transition:background .2s,color .2s}
+.wrap{max-width:1140px;margin:0 auto;padding:20px 24px}
+
+/* Header + Hero */
+.header{padding:28px 0 20px;border-bottom:1px solid var(--bdr);margin-bottom:28px}
+.header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.header h1{font-size:1.7em;color:var(--nv)}
+.header .meta{color:var(--tx2);font-size:.85em;margin-top:6px}
+.hero{display:flex;gap:20px;align-items:center;margin-top:16px;flex-wrap:wrap}
+.hero-score{font-size:3em;font-weight:800;line-height:1}
+.hero-detail{font-size:.85em;color:var(--tx2)}
+.hero-detail b{color:var(--tx)}
+.subtle{color:var(--tx2);font-size:.82em}
+
+/* Theme toggle */
+.theme-toggle{background:var(--s2);border:1px solid var(--bdr);border-radius:8px;padding:6px 14px;cursor:pointer;color:var(--tx);font-size:.85em;transition:.15s}
+.theme-toggle:hover{background:var(--s3)}
+
+/* Nav */
+.nav{display:flex;gap:2px;background:var(--s1);border-radius:var(--r);padding:4px;margin-bottom:24px;overflow-x:auto}
+.nav button{background:none;border:none;color:var(--tx2);padding:10px 20px;font-size:.9em;cursor:pointer;border-radius:8px;white-space:nowrap;transition:.15s}
+.nav button:hover{background:var(--s2);color:var(--tx)}
+.nav button.active{background:var(--s2);color:var(--tx);font-weight:600;box-shadow:0 1px 3px #0005}
+.page{display:none}.page.active{display:block}
+
+/* Agent overview cards */
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:20px 0}
+.agent-card{background:var(--s1);border-radius:var(--r);padding:18px;text-align:center}
+.agent-name{font-weight:600;font-size:.95em;margin-bottom:4px}
+.agent-score{font-size:2em;font-weight:700}
+.lift-chip{font-size:.85em;font-weight:600;margin-top:4px}
+.info-box{background:var(--s1);border:1px solid var(--bdr);border-radius:var(--r);padding:18px;margin:18px 0;box-shadow:var(--shadow)}
+.info-box h3{font-size:1em;margin-bottom:10px;color:var(--tx)}
+.attempt-policy{border-left:4px solid #8b5cf6}
+.run-config{border-left:4px solid #38bdf8}
+.harbor-analysis{border-left:4px solid var(--nv)}
+.policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:10px}
+.policy-grid div{background:var(--s2);border:1px solid var(--bdr);border-radius:8px;padding:10px}
+.policy-grid span{display:block;color:var(--tx2);font-size:.76em;text-transform:uppercase;letter-spacing:.4px}
+.policy-grid b{display:block;color:var(--tx);font-size:.95em;margin-top:3px}
+.policy-grid em{display:block;color:var(--tx2);font-size:.76em;font-style:normal;margin-top:2px}
+
+/* Charts */
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}
+.chart-box{background:var(--s1);border-radius:var(--r);padding:20px}
+.chart-box h3{font-size:.95em;color:var(--tx2);margin-bottom:12px}
+@media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+
+/* Tables */
+.table-wrap{overflow-x:auto;margin:16px 0}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--bdr)}
+th{background:var(--s2);font-size:.78em;text-transform:uppercase;letter-spacing:.5px;color:var(--tx2);font-weight:600}
+td{background:var(--s1)}
+.metric-name{font-weight:600;min-width:140px}
+.metric-hint{display:block;font-weight:400;font-size:.78em;color:var(--tx2)}
+.bar-cell{display:flex;align-items:center;gap:10px}
+.val{font-weight:700;min-width:36px}
+.mini-bar{width:80px;height:7px;background:var(--s3);border-radius:4px;overflow:hidden}
+.mini-bar div{height:100%;border-radius:4px}
+
+/* Agent detail tabs */
+.agent-tabs{display:flex;gap:2px;margin:16px 0 0;flex-wrap:wrap}
+.tab-btn{background:var(--s2);border:none;color:var(--tx2);padding:8px 18px;font-size:.85em;cursor:pointer;border-radius:8px 8px 0 0;transition:.15s}
+.tab-btn:hover{color:var(--tx)}
+.tab-btn.active{background:var(--s1);color:var(--tx);font-weight:600;border-bottom:2px solid var(--accent,var(--nv))}
+.tab-panel{background:var(--s1);border-radius:0 var(--r) var(--r) var(--r);padding:20px}
+
+/* Finding cards */
+.card{background:var(--s2);border-radius:8px;padding:14px 16px;margin:10px 0;border-left:4px solid var(--bdr)}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card-title{font-weight:600;font-size:.95em}
+.card-desc{display:block;color:var(--tx2);font-size:.78em;margin-top:1px}
+.card-score{text-align:right;white-space:nowrap}
+.score{font-size:1.3em;font-weight:700;margin-left:6px}
+.checks{list-style:none;margin:10px 0 0;padding:0}
+.checks li{padding:4px 0;font-size:.85em;border-bottom:1px solid var(--s3)}
+.checks li:last-child{border:none}
+.checks .sym{display:inline-block;width:18px;font-weight:700}
+.checks .ok .sym{color:#22c55e}
+.checks .err .sym{color:#ef4444}
+.checks .note{color:var(--tx2);font-style:italic;padding-left:18px}
+.checks .sub{padding-left:24px}
+
+	/* Badges */
+	.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.72em;font-weight:600;text-transform:uppercase;vertical-align:middle}
+	.pass{background:var(--badge-pass-bg);color:var(--badge-pass-tx)}.warn{background:var(--badge-warn-bg);color:var(--badge-warn-tx)}.fail{background:var(--badge-fail-bg);color:var(--badge-fail-tx)}
+	.attempt-list{display:flex;flex-wrap:wrap;gap:6px;min-width:180px}
+	.attempt-chip{display:inline-block;padding:3px 8px;border-radius:4px;font-size:.76em;font-weight:600;white-space:nowrap}
+	.attempt-chip.muted{background:var(--s2);color:var(--tx2);border:1px dashed var(--bdr)}
+
+	/* Dataset cards */
+.ds-card{background:var(--s2);border-radius:8px;padding:16px;margin:12px 0;border-left:4px solid var(--nv)}
+.ds-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ds-id{font-weight:700;font-size:1em;color:var(--nv);font-family:monospace}
+.ds-field{margin:8px 0}
+.ds-label{display:block;font-size:.72em;text-transform:uppercase;letter-spacing:.5px;color:var(--tx2);font-weight:600;margin-bottom:2px}
+.ds-value{font-size:.9em;line-height:1.5;white-space:pre-wrap}
+.ds-gt{color:var(--tx2);font-style:italic}
+.ds-meta{display:flex;gap:20px;font-size:.82em;color:var(--tx2);margin:8px 0;flex-wrap:wrap}
+.ds-behaviors{padding-left:18px;margin:4px 0;font-size:.85em}.ds-behaviors li{margin:3px 0}
+
+/* Suggestions */
+.sug-box{background:var(--s1);border-radius:var(--r);padding:20px;margin:20px 0}
+.sug-box h3{margin-bottom:10px}.sug-box ol{padding-left:20px}.sug-box li{margin:6px 0;font-size:.92em}
+.sug-pass{border-left:4px solid #22c55e}.sug-warn{border-left:4px solid #eab308}
+.evidence-link{display:inline-flex;align-items:center;gap:4px;margin-left:4px;font-size:.78em;font-weight:600;color:var(--nv);text-decoration:none;white-space:nowrap}
+.evidence-link:hover{text-decoration:underline}
+.evidence-link-icon{font-size:.95em;line-height:1}
+
+footer{margin-top:40px;padding:16px 0;border-top:1px solid var(--bdr);color:var(--tx2);font-size:.78em;text-align:center}
+</style></head>
+<body><div class="wrap">
+
+<div class="header">
+  <div class="header-top">
+    <h1>dra-proposal-and-design-review</h1>
+    <button class="theme-toggle" onclick="toggleTheme()">&#9788; / &#9790;</button>
+  </div>
+  <p class="meta">Astra Skill Evaluator &mdash; 20260822_182944_5159_d11551 &mdash; 1 agent(s): codex</p>
+  <div class="hero">
+    <div class="hero-score" style="color:#94a3b8">N/A</div>
+    <div class="hero-detail">
+      <div><b>Best performing agent/model combination for this skill:</b> not evaluated</div>
+      <div><b>Eligible trials:</b> 0 across 1 eligible agent(s)</div>
+      <div><b>Metrics:</b> 6 ACES evaluators (deterministic + LLM judge)</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="active" onclick="go(this,'p-overview')">Overview</button>
+  <button onclick="go(this,'p-trials')">Trials</button>
+  <button onclick="go(this,'p-detail')">Agent Details</button>
+  <button onclick="go(this,'p-dataset')">Dataset</button>
+  <button onclick="go(this,'p-suggest')">Suggestions</button>
+</div>
+
+<!-- ===== OVERVIEW ===== -->
+<div class="page active" id="p-overview">
+  <div class="agent-grid"><div class="agent-card" style="border-top:3px solid #ef4444;opacity:.6">
+  <div class="agent-name" style="color:#8b5cf6">codex</div>
+  <div class="agent-score" style="color:#ef4444">FAIL</div>
+  <div class="subtle">0 trials — agent did not produce results</div>
+</div></div>
+  
+  
+  
+  
+  
+  
+  
+  <div class="chart-row">
+    <div class="chart-box"><h3>Score Comparison (Radar)</h3><canvas id="cRadar"></canvas></div>
+    <div class="chart-box"><h3>Scores by Agent &amp; Metric</h3><canvas id="cBar"></canvas></div>
+  </div>
+  <h3>Scores by Metric</h3><div class="table-wrap"><table><thead><tr><th>Metric</th><th>codex</th></tr></thead><tbody><tr><td class="metric-name">Security<span class="metric-hint">Trace scan for unsafe operations, secret leakage, and unauthorized access</span></td><td><div class="bar-cell"><span class="val" style="color:#ef4444">0.00</span><div class="mini-bar"><div style="width:0%;background:#ef4444"></div></div></div></td></tr><tr><td class="metric-name">Skill Execution<span class="metric-hint">Activation, script run, workflow order, error recovery</span></td><td><div class="bar-cell"><span class="val" style="color:#ef4444">0.00</span><div class="mini-bar"><div style="width:0%;background:#ef4444"></div></div></div></td></tr><tr><td class="metric-name">Efficiency<span class="metric-hint">Routing correctness, workspace-aware skill reads, tool call productivity</span></td><td><div class="bar-cell"><span class="val" style="color:#ef4444">0.00</span><div class="mini-bar"><div style="width:0%;background:#ef4444"></div></div></div></td></tr><tr><td class="metric-name">Accuracy<span class="metric-hint">Factual correctness (5-criterion LLM rubric)</span></td><td><div class="bar-cell"><span class="val" style="color:#ef4444">0.00</span><div class="mini-bar"><div style="width:0%;background:#ef4444"></div></div></div></td></tr><tr><td class="metric-name">Goal Accuracy<span class="metric-hint">Did the agent achieve the user&#x27;s goal?</span></td><td><div class="bar-cell"><span class="val" style="color:#ef4444">0.00</span><div class="mini-bar"><div style="width:0%;background:#ef4444"></div></div></div></td></tr><tr><td class="metric-name">Behavior Check<span class="metric-hint">Adherence to expected workflow steps</span></td><td><div class="bar-cell"><span class="val" style="color:#ef4444">0.00</span><div class="mini-bar"><div style="width:0%;background:#ef4444"></div></div></div></td></tr></tbody></table></div>
+  <h3>Default Dimension Summary</h3><p class="subtle">Dimensions are report-only metric groups. Agent cells show dimension lift (with skill minus without skill). Custom metrics do not change these scores.</p><div class="table-wrap"><table><thead><tr><th>Dimension</th><th>codex</th></tr></thead><tbody><tr><td class="metric-name">Security<span class="metric-hint">Group: Security</span></td><td><span class="val" style="color:#94a3b8">0.00</span></td></tr><tr><td class="metric-name">Correctness<span class="metric-hint">Group: Accuracy</span></td><td><span class="val" style="color:#94a3b8">0.00</span></td></tr><tr><td class="metric-name">Discoverability<span class="metric-hint">Group: Skill Execution</span></td><td><span class="val" style="color:#94a3b8">0.00</span></td></tr><tr><td class="metric-name">Effectiveness<span class="metric-hint">Group: Goal Accuracy (50%) + Behavior Check (50%)</span></td><td><span class="val" style="color:#94a3b8">0.00</span></td></tr><tr><td class="metric-name">Efficiency<span class="metric-hint">Group: Efficiency</span></td><td><span class="val" style="color:#94a3b8">0.00</span></td></tr></tbody></table></div>
+  
+  
+  <h3>Skill Lift (with skill &minus; without)</h3>
+<div class="table-wrap"><table><thead><tr><th>Metric</th><th>codex</th></tr></thead><tbody><tr><td class="metric-name">Security</td><td><span class="subtle">0.00</span> &rarr; 0.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr><tr><td class="metric-name">Skill Execution</td><td><span class="subtle">0.00</span> &rarr; 0.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr><tr><td class="metric-name">Efficiency</td><td><span class="subtle">0.00</span> &rarr; 0.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr><tr><td class="metric-name">Accuracy</td><td><span class="subtle">0.00</span> &rarr; 0.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr><tr><td class="metric-name">Goal Accuracy</td><td><span class="subtle">0.00</span> &rarr; 0.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr><tr><td class="metric-name">Behavior Check</td><td><span class="subtle">0.00</span> &rarr; 0.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr></tbody></table></div>
+</div>
+
+<!-- ===== TRIALS ===== -->
+<div class="page" id="p-trials">
+  <h2>Score Heatmap</h2>
+  <p class="subtle">Overall score per eval case per agent (average of 6 ACES metrics).</p>
+  <div class="table-wrap"><table><thead><tr><th>Eval Case</th><th>codex</th></tr></thead><tbody></tbody></table></div>
+
+  <div class="chart-row">
+    <div class="chart-box"><h3>Token Usage by Agent (total across trials)</h3><canvas id="cTokens"></canvas></div>
+    <div class="chart-box"><h3>Steps per Eval Case</h3><canvas id="cSteps"></canvas></div>
+  </div>
+
+  <h3>Error Recovery</h3><p class="subtle">All commands succeeded on first attempt across all trials. No error-retry patterns detected.</p>
+
+  
+
+  
+
+  
+</div>
+
+<!-- ===== AGENT DETAILS ===== -->
+<div class="page" id="p-detail">
+  <div class="agent-tabs"><button class="tab-btn active" onclick='switchAgent(this,"codex")' style="--accent:#8b5cf6">codex</button></div>
+  <div class="tab-panel" id="agent-codex" style="display:block"><p class='subtle'>No trial data available.</p></div>
+</div>
+
+<!-- ===== DATASET ===== -->
+<div class="page" id="p-dataset">
+  <h2>AgentSkills Dataset</h2>
+  <p class="subtle">4 AgentSkills eval case(s) in dataset</p>
+<div class="ds-card">
+  <div class="ds-head">
+    <span class="ds-id">dra-proposal-and-design-review-explicit-001</span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Prompt</span><div class="ds-value">Use dra-proposal-and-design-review to draft a provisional proposal for a new ResourceSlice attribute behind a feature gate.</div></div>
+  <div class="ds-field"><span class="ds-label">Expected Output</span><div class="ds-value ds-gt">The agent drafts a maintainer-ready provisional proposal plan from the repository template, covering summary, motivation, goals, non-goals, layer rationale, user example, authoritative state owner, feature-gate stage, default, dependencies, CEL-facing attribute naming, compatibility, upgrade and downgrade behavior, test plan, risks, alternatives, drawbacks, and open maintainer questions.</div></div>
+  <div class="ds-meta">
+    <span>Expected skill: <b>dra-proposal-and-design-review</b></span>
+    <span>Expected script: <b>none</b></span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Assertions</span><ol class="ds-behaviors"><li>The agent reads the dra-proposal-and-design-review instructions before taking action.</li><li>The agent reads `site/content/contribute/proposals/_index.md` and `site/content/contribute/proposals/NNNN-template.md` completely before drafting.</li><li>The agent inspects existing proposal files before choosing a next proposal number and keeps status provisional until maintainers agree.</li><li>The agent labels public repository and internal supplemental sources and flags code, docs, or release assumption contradictions.</li><li>The agent does not modify clusters, external services, issues, PRs, releases, or secrets without explicit approval.</li></ol></div>
+</div>
+<div class="ds-card">
+  <div class="ds-head">
+    <span class="ds-id">dra-proposal-and-design-review-contextual-001</span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Prompt</span><div class="ds-value">We need to decide whether host-managed IMEX isolation mode belongs in this driver, GPU Operator, or upstream Kubernetes. Write the design review.</div></div>
+  <div class="ds-field"><span class="ds-label">Expected Output</span><div class="ds-value ds-gt">The agent produces a layer-boundary design review that compares driver, GPU Operator, upstream Kubernetes, runtime, and external tool ownership, analyzes user-facing configuration, compatibility, failure modes, testability, alternatives, and unresolved maintainer decisions.</div></div>
+  <div class="ds-meta">
+    <span>Expected skill: <b>dra-proposal-and-design-review</b></span>
+    <span>Expected script: <b>none</b></span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Assertions</span><ol class="ds-behaviors"><li>The agent infers that the request needs proposal and design review because it affects multi-node ComputeDomain and IMEX behavior and ownership boundar</li><li>The agent verifies current code, repository docs, Kubernetes DRA docs, GPU Operator docs, and release assumptions before making claims.</li><li>The agent defines measurable goals, non-goals, smallest valuable slice, affected components, and a single authoritative owner for new state.</li><li>The agent includes failure modes such as prepare/unprepare races, force deletion, reboot, restart, checkpoint migration, leader election, partitions, </li><li>The agent does not claim an unreviewed proposal is implemented or supportable.</li></ol></div>
+</div>
+<div class="ds-card">
+  <div class="ds-head">
+    <span class="ds-id">dra-proposal-and-design-review-adjacent-negative-001</span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Prompt</span><div class="ds-value">Implement the optional `GpuConfig` field and regenerate CRDs, clients, docs, and tests.</div></div>
+  <div class="ds-field"><span class="ds-label">Expected Output</span><div class="ds-value ds-gt">The agent performs or plans the API and CRD contract implementation workflow by editing handwritten sources first, regenerating artifacts through repository workflows, updating docs and tests, and reporting compatibility and validation evidence.</div></div>
+  <div class="ds-meta">
+    <span>Expected skill: <b>none</b></span>
+    <span>Expected script: <b>none</b></span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Assertions</span><ol class="ds-behaviors"><li>The agent does not read or activate dra-proposal-and-design-review unless design approval is explicitly missing or requested.</li><li>The agent routes the concrete implementation request to API, CRD, feature-gate, and compatibility change guidance.</li><li>The agent preserves unrelated worktree changes and does not hand-edit generated files as the source of truth.</li></ol></div>
+</div>
+<div class="ds-card">
+  <div class="ds-head">
+    <span class="ds-id">dra-proposal-and-design-review-boundary-negative-001</span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Prompt</span><div class="ds-value">Which CI checks should I run for a docs-only change under `site/content/docs/guides/gpu-allocation/`?</div></div>
+  <div class="ds-field"><span class="ds-label">Expected Output</span><div class="ds-value ds-gt">The agent maps a docs-only change to appropriate documentation and repository validation checks, names skipped code and hardware gates, and explains the smallest credible pre-PR evidence.</div></div>
+  <div class="ds-meta">
+    <span>Expected skill: <b>none</b></span>
+    <span>Expected script: <b>none</b></span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Assertions</span><ol class="ds-behaviors"><li>The agent does not read or activate dra-proposal-and-design-review.</li><li>The agent routes the request to build, test, code-generation, and CI guidance.</li><li>The agent does not draft a proposal for a validation-matrix question.</li></ol></div>
+</div>
+</div>
+
+<!-- ===== SUGGESTIONS ===== -->
+<div class="page" id="p-suggest">
+  <div class="sug-box sug-pass"><h3>&#128161; Next Steps</h3><ol><li>Add evals/environment/Dockerfile if the skill depends on CLI tools, databases, or APIs — this ensures consistent results across agents and CI environments.</li><li>Expand evals.json with more test cases (currently 0). Use &#x27;astra-skill-eval create-dataset --full&#x27; to generate a 4-bucket strategy covering explicit, implicit, contextual, and negative cases.</li><li>Run with additional agents (&#x27;astra-skill-eval evaluate &lt;skill&gt; --agent-eval -a claude-code,codex,openhands&#x27;) to verify the skill works across different coding agents.</li></ol></div>
+</div>
+
+<footer>Generated by <b>Astra Skill Evaluator</b> (NV-ACES) &mdash; 20260822_182944_5159_d11551</footer>
+</div>
+
+<script>
+function go(btn,id){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function switchAgent(btn,name){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');document.getElementById('agent-'+name).style.display='block'}
+function getCS(){const s=getComputedStyle(document.documentElement);return{grid:s.getPropertyValue('--chart-grid').trim(),tick:s.getPropertyValue('--chart-tick').trim(),label:s.getPropertyValue('--chart-label').trim()}}
+let allCharts=[];
+function rebuildCharts(){allCharts.forEach(c=>c.destroy());allCharts=[];const cs=getCS();
+const rCtx=document.getElementById('cRadar');if(rCtx)allCharts.push(new Chart(rCtx,{type:'radar',data:{labels:["Security", "Skill Execution", "Efficiency", "Accuracy", "Goal Accuracy", "Behavior Check"],datasets:[{label:"codex",data:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],borderColor:"#8b5cf6",backgroundColor:"#8b5cf620",pointBackgroundColor:"#8b5cf6",borderWidth:2,pointRadius:4}]},options:{responsive:true,scales:{r:{min:0,max:1,ticks:{stepSize:.2,color:cs.tick,backdropColor:'transparent'},grid:{color:cs.grid},angleLines:{color:cs.grid},pointLabels:{color:cs.label,font:{size:11}}}},plugins:{legend:{labels:{color:cs.label}}}}}));
+const bCtx=document.getElementById('cBar');if(bCtx)allCharts.push(new Chart(bCtx,{type:'bar',data:{labels:["Security", "Skill Execution", "Efficiency", "Accuracy", "Goal Accuracy", "Behavior Check"],datasets:[{label:"codex",data:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],backgroundColor:"#8b5cf6cc",borderRadius:4}]},options:{responsive:true,scales:{y:{min:0,max:1,ticks:{stepSize:.2,color:cs.tick},grid:{color:cs.grid}},x:{ticks:{color:cs.label,maxRotation:45},grid:{display:false}}},plugins:{legend:{labels:{color:cs.label}}}}}));
+const tCtx=document.getElementById('cTokens');if(tCtx)allCharts.push(new Chart(tCtx,{type:'bar',data:{labels:["codex"],datasets:[{label:'Prompt',data:[0],backgroundColor:'#3b82f6cc',borderRadius:3},{label:'Completion',data:[0],backgroundColor:'#22c55ecc',borderRadius:3},{label:'Cached',data:[0],backgroundColor:'#8b5cf6cc',borderRadius:3}]},options:{responsive:true,scales:{x:{stacked:true,ticks:{color:cs.tick},grid:{color:cs.grid}},y:{stacked:true,ticks:{color:cs.label},grid:{display:false}}},plugins:{legend:{labels:{color:cs.label}}}}}));
+const sCtx=document.getElementById('cSteps');if(sCtx)allCharts.push(new Chart(sCtx,{type:'bar',data:{labels:[],datasets:[{label:"codex",data:[],backgroundColor:"#8b5cf6cc",borderRadius:3}]},options:{responsive:true,scales:{x:{ticks:{color:cs.tick},grid:{color:cs.grid}},y:{ticks:{color:cs.label},grid:{display:false}}},plugins:{legend:{labels:{color:cs.label}}}}}));
+}
+function toggleTheme(){const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',t);localStorage.setItem('theme',t);rebuildCharts()}
+(function(){const saved=localStorage.getItem('theme');if(saved)document.documentElement.setAttribute('data-theme',saved);rebuildCharts()})();
+
+</script></body></html>

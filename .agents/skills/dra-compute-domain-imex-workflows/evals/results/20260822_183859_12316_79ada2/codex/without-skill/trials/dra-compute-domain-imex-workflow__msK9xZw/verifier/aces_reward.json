@@ -1,0 +1,390 @@
+{
+  "security": 1.0,
+  "skill_execution": 1.0,
+  "skill_efficiency": 1.0,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 1.0,
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-compute-domain-imex-workflows-adjacent-negative-001",
+  "has_skill": false,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "message": "Negative case, no skill identified"
+    },
+    "skill_efficiency": {
+      "message": "Skipped (negative or no expected_skill)"
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response thoroughly traces the GPU ResourceClaim allocation path through DeviceClass selectors, ResourceSlices, scheduler allocation, node prepare, CDI, runtime, and hardware state. It correctly identifies all the allocation boundaries mentioned in the expected answer, provides factually accurate details about each boundary, directly addresses the user's request about tracing allocation boundaries for a Pending pod, and provides actionable diagnostic steps.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent analyzes the GPU ResourceClaim path through DeviceClass selectors, ResourceSlices, scheduler allocation, node prepare, CDI, runtime, and hardware state."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/24",
+          "excerpt": "Most likely, the pod is blocked at the **scheduler allocation boundary**, not the kubelet/prepare boundary.\n\n**Allocation Boundaries**\n- **Request boundary**: The pod references a `Resour\n...[truncated]...\nby-step triage checklist with the exact `kubectl` commands and the expected fields to inspect."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "low-relevance sections dropped to fit budget"
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent's response thoroughly covers all the expected components: DeviceClass selectors (gpu.nvidia.com selecting type=gpu), ResourceSlices (published by kubelet plugin), scheduler allocation (claim.status.allocation), node prepare (kubelet plugin rejecting unallocated claims), CDI (spec generation during prepare), and runtime/hardware state. It correctly traces the allocation boundaries and identifies the likely failure point between ResourceSlice inventory and scheduler allocation.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent analyzes the GPU ResourceClaim path through DeviceClass selectors, ResourceSlices, scheduler allocation, node prepare, CDI, runtime, and hardware state."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'README*' -g '*.md' | sed -n '1,120p' && cat\n...[truncated]...\ns/skills/dra-gpu-allocation-workflows/SKILL.md'",
+          "json_pointer": "/steps/3/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'README*' -g '*.md' | sed -n '1,120p' && cat AGENTS.md && echo '\n---SKILL---' && cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/SKILL.md'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find .. -name AGENTS.md -o -path '*/AGENTS.md' | sed -n '1,40p'\nprintf '\\n---ROO\n...[truncated]...\ns/skills/dra-gpu-allocation-workflows/SKILL.md'",
+          "json_pointer": "/steps/5/tool_calls/0",
+          "excerpt": "find .. -name AGENTS.md -o -path '*/AGENTS.md' | sed -n '1,40p'\nprintf '\\n---ROOT FILES---\\n'\nrg --files .. | rg '(^|/)README|(^|/)docs/|gpu|claim|DeviceClass|ResourceClaim|allocation|sch\n...[truncated]...\nri/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/SKILL.md'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/7/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"in_progress\", \"step\": \"Find allocation flow docs\"}, {\"status\": \"pending\", \"step\": \"Trace scheduler and plugin boundaries\"}, {\"status\": \"pending\", \"step\": \"Summarize likely failure boundary\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: rg -n \"ResourceClaim|allocated|allocation|DeviceClass|ResourceSlice|Prepare|CDI|\n...[truncated]...\nntent/docs/reference/api.md 2>/dev/null || true",
+          "json_pointer": "/steps/8/tool_calls/0",
+          "excerpt": "rg -n \"ResourceClaim|allocated|allocation|DeviceClass|ResourceSlice|Prepare|CDI|gpu.nvidia.com\" .. | sed -n '1,260p'\nprintf '\\n---gpu-allocation doc---\\n'\nsed -n '1,240p' ../site/content/\n...[truncated]...\n-api reference---\\n'\nsed -n '1,240p' ../site/content/docs/reference/api.md 2>/dev/null || true"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd .. && pwd && rg --files | sed -n '1,240p'",
+          "json_pointer": "/steps/10/tool_calls/0",
+          "excerpt": "cd .. && pwd && rg --files | sed -n '1,240p'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && find .. -name AGEN\n...[truncated]...\n--FILES---\\n' && rg --files . | sed -n '1,260p'",
+          "json_pointer": "/steps/11/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && find .. -name AGENTS.md | sed -n '1,20p' && printf '\\n---FILES---\\n' && rg --files . | sed -n '1,260p'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "write_stdin: write_stdin",
+          "json_pointer": "/steps/12/tool_calls/0",
+          "excerpt": "{\"chars\": \"\", \"max_output_tokens\": 30000, \"session_id\": 4884, \"yield_time_ms\": 1000}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "write_stdin: write_stdin",
+          "json_pointer": "/steps/13/tool_calls/0",
+          "excerpt": "{\"chars\": \"\\u0003\", \"max_output_tokens\": 12000, \"session_id\": 4884, \"yield_time_ms\": 1000}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && ls && printf '\\n--\n...[truncated]...\nia.com\" api cmd pkg demo site | sed -n '1,260p'",
+          "json_pointer": "/steps/15/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && ls && printf '\\n---AGENTS---\\n' && find .. -name AGENTS.md | sed -n '1,20p' && printf '\\n---TARGETED SEARCH---\\n' && rg -n \"R\n...[truncated]...\n|DeviceClass|ResourceSlice|Prepare|CDI|gpu.nvidia.com\" api cmd pkg demo site | sed -n '1,260p'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "write_stdin: write_stdin",
+          "json_pointer": "/steps/16/tool_calls/0",
+          "excerpt": "{\"chars\": \"\", \"max_output_tokens\": 30000, \"session_id\": 43482, \"yield_time_ms\": 1000}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '%s\n' '---c\n...[truncated]...\n0,1045p' cmd/gpu-kubelet-plugin/device_state.go",
+          "json_pointer": "/steps/17/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '%s\n' '---concepts---' && sed -n '1,220p' site/content/docs/concepts/gpu-allocation.md && printf '\\n---resourceslice--\n...[truncated]...\n '\\n---device state snippet---\\n' && sed -n '930,1045p' cmd/gpu-kubelet-plugin/device_state.go"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '%s\n' '---q\n...[truncated]...\nI\" cmd/gpu-kubelet-plugin pkg | sed -n '1,220p'",
+          "json_pointer": "/steps/18/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '%s\n' '---quickstart claims---' && rg -n \"deviceClassName|ResourceClaim|ResourceClaimTemplate|gpu.nvidia.com\" demo/spe\n...[truncated]...\neSlice|PrepareResources|NodePrepareResources|CDI\" cmd/gpu-kubelet-plugin pkg | sed -n '1,220p'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,220p' si\n...[truncated]...\nn '248,320p' cmd/gpu-kubelet-plugin/prepared.go",
+          "json_pointer": "/steps/19/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,220p' site/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md && printf '\\n---selectors sample---\\n'\n...[truncated]...\n&& printf '\\n---prepared snippet---\\n' && sed -n '248,320p' cmd/gpu-kubelet-plugin/prepared.go"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,220p' si\n...[truncated]...\ned -n '180,320p' cmd/gpu-kubelet-plugin/main.go",
+          "json_pointer": "/steps/20/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,220p' site/content/docs/reference/resourceslice-attributes.md && printf '\\n---feature gates snippet---\\n' && sed -n\n...[truncated]...\n -n && printf '\\n---main go relevant---\\n' && sed -n '180,320p' cmd/gpu-kubelet-plugin/main.go"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '320,460p' \n...[truncated]...\nnt/docs/guides/gpu-allocation/view-resources.md",
+          "json_pointer": "/steps/21/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '320,460p' cmd/gpu-kubelet-plugin/main.go && printf '\\n---resource publication refs---\\n' && rg -n \"Publish.*ResourceS\n...[truncated]...\nurces guide---\\n' && sed -n '1,220p' site/content/docs/guides/gpu-allocation/view-resources.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '140,260p' \n...[truncated]...\nt/docs/guides/gpu-allocation/allocating-gpus.md",
+          "json_pointer": "/steps/22/tool_calls/0",
+          "excerpt": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '140,260p' cmd/gpu-kubelet-plugin/driver.go && printf '\\n---prepare path---\\n' && sed -n '400,500p' cmd/gpu-kubelet-pl\n...[truncated]...\ntion guide---\\n' && sed -n '1,220p' site/content/docs/guides/gpu-allocation/allocating-gpus.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/23/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"completed\", \"step\": \"Find allocation flow docs\"}, {\"status\": \"completed\", \"step\": \"Trace scheduler and plugin boundaries\"}, {\"status\": \"in_progress\", \"step\": \"Summarize likely failure boundary\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_zt5dPK57kbOTEquS5MW3Cj1o",
+          "json_pointer": "/steps/3/observation/results/0",
+          "excerpt": "Chunk ID: 336ac5\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 81\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-d\n...[truncated]...\nn-imex-workflow__msK9xZw/local-environment/workspace\ncat: AGENTS.md: No such file or directory"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_IrbOuWYS2Qtoue5oeWKdKllE",
+          "json_pointer": "/steps/5/observation/results/0",
+          "excerpt": "Chunk ID: a0e079\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1726\nOutput:\n\n---ROOT FILES---\n\n---SKILL---\n---\nname: dra-gpu-allocation-workflows\ndescription:\n...[truncated]...\nILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_e3IrzAe2sTPsNgXYTzODssc9",
+          "json_pointer": "/steps/7/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_eV5DJwrZVlj5mMF4OYD0kgcr",
+          "json_pointer": "/steps/8/observation/results/0",
+          "excerpt": "Chunk ID: edb331\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 19\nOutput:\n\n---gpu-allocation doc---\n\n---resourceslice attrs---\n\n---api reference---"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_h8aVpP9ckPKjhXMJsrt4SF6S",
+          "json_pointer": "/steps/10/observation/results/0",
+          "excerpt": "Chunk ID: c3e64d\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 68\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-d\n...[truncated]...\nomain-imex-workflows-codex-without/dra-compute-domain-imex-workflow__msK9xZw/local-environment"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_FkDe5cznpMBNUoU7YbT8VRb0",
+          "json_pointer": "/steps/11/observation/results/0",
+          "excerpt": "Chunk ID: 08c97b\nWall time: 10.0010 seconds\nProcess running with session ID 4884\nOriginal token count: 0\nOutput:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_cih9UnMk3KQRzp3WQ3dAv4cs",
+          "json_pointer": "/steps/12/observation/results/0",
+          "excerpt": "Chunk ID: 47c05e\nWall time: 5.0011 seconds\nProcess running with session ID 4884\nOriginal token count: 0\nOutput:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_4ERLB4WZf1LUUuzUL9dFHvUH",
+          "json_pointer": "/steps/13/observation/results/0",
+          "excerpt": "Chunk ID: 5d0820\nWall time: 0.0005 seconds\nProcess exited with code 130\nOriginal token count: 0\nOutput:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_KIgFQXF02oX0W6sVzZ0sunNs",
+          "json_pointer": "/steps/15/observation/results/0",
+          "excerpt": "Chunk ID: 48250c\nWall time: 10.0013 seconds\nProcess running with session ID 43482\nOriginal token count: 68\nOutput:\nCLAUDE.md\nCODE_OF_CONDUCT.md\nCONTRIBUTING.md\nLICENSE\nMakefile\nOWNERS\nREA\n...[truncated]...\n.sum\nhack\ninternal\nnetlify.toml\npkg\nsite\ntemplates\ntest\ntests\nvendor\nversions.mk\n\n---AGENTS---"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_3DliNkGeG98MGYXSABZBSkDl",
+          "json_pointer": "/steps/16/observation/results/0",
+          "excerpt": "Chunk ID: 20763a\nWall time: 0.0465 seconds\nProcess exited with code 0\nOriginal token count: 8546\nOutput:\nWarning: truncated output (original token count: 8546)\nTotal output lines: 276\n\nfi\n...[truncated]...\nevice_state.go:1531:\t// ActivatePartition is idempotent: a retried Prepare (e.g. after a later"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_y6EONARu9UOiTJ1d9MJbkg9T",
+          "json_pointer": "/steps/17/observation/results/0",
+          "excerpt": "Chunk ID: 6d23cf\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 7603\nOutput:\nWarning: truncated output (original token count: 7603)\nTotal output lines: 627\n\n--\n...[truncated]...\n := []string{}\n\t\t\tallocatableDevice := s.perGPUAllocatable.GetAllocatableDevice(result.Device)"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_x4FbfZ5sKSYsv5Y0Uk6jjEbQ",
+          "json_pointer": "/steps/18/observation/results/0",
+          "excerpt": "Chunk ID: 3151b9\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 12235\nOutput:\nWarning: truncated output (original token count: 12235)\nTotal output lines: 572\n\n\n...[truncated]...\nvice_health.go:294:// single batched DeviceHealthEvent so the consumer makes one ResourceSlice"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_Vb2R4PViI9cS64LBhNdPyD1b",
+          "json_pointer": "/steps/19/observation/results/0",
+          "excerpt": "Chunk ID: aa6d3d\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3032\nOutput:\nWarning: truncated output (original token count: 3032)\nTotal output lines: 397\n\n--\n...[truncated]...\n && *r.AdminAccess {\n\t\t\tcontinue\n\t\t}\n\t\trequested[r.Device] = struct{}{}\n\t}\n\treturn requested\n}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_4TXCUhA82FImxzpbtCNVFbJ5",
+          "json_pointer": "/steps/20/observation/results/0",
+          "excerpt": "Chunk ID: bc171c\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 6591\nOutput:\nWarning: truncated output (original token count: 6591)\nTotal output lines: 631\n\n--\n...[truncated]...\numableShares)\n\t\t}\n\t}\n\n\treturn nil\n}\n\n// RunPlugin initializes and runs the GPU kubelet plugin."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_5iawbLsAGSmlAAZaaNO6LYYj",
+          "json_pointer": "/steps/21/observation/results/0",
+          "excerpt": "Chunk ID: 592850\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 4040\nOutput:\nWarning: truncated output (original token count: 4040)\nTotal output lines: 321\n\n//\n...[truncated]...\nicing](time-slicing.md)\n- [MIG](mig.md)\n- [VFIO passthrough](kubevirt-vfio-gpu-passthrough.md)"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_lvGYsQBE0iqajPG9dhB99foe",
+          "json_pointer": "/steps/22/observation/results/0",
+          "excerpt": "Chunk ID: 1de634\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3948\nOutput:\nWarning: truncated output (original token count: 3948)\nTotal output lines: 446\n\n\t\t\n...[truncated]...\non: v1\n   kind: Pod\n   metadata:\n     namespace: gpu-example\n     name: multi-gpu-pod\n   spec:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_mgVlZQ2juo2Khqg2eakWl9OQ",
+          "json_pointer": "/steps/23/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/24",
+          "excerpt": "Most likely, the pod is blocked at the **scheduler allocation boundary**, not the kubelet/prepare boundary.\n\n**Allocation Boundaries**\n- **Request boundary**: The pod references a `Resour\n...[truncated]...\nby-step triage checklist with the exact `kubectl` commands and the expected fields to inspect."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "older/low-relevance tool results dropped to fit budget"
+      }
+    },
+    "behavior_check": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent correctly avoided the IMEX workflows skill, properly routed to GPU allocation troubleshooting guidance, and did not introduce any IMEX-related concepts in its response.",
+      "results": [
+        {
+          "step": 1,
+          "passed": true,
+          "reason": "While the agent's initial commands referenced the dra-compute-domain-imex-workflows skill path (it was the workspace directory), the agent never read or activated that skill's content. The skill description shown was 'dra-gpu-allocation-workflows' which is the GPU allocation skill, not the IMEX workflows skill. The agent focused entirely on GPU allocation code and docs."
+        },
+        {
+          "step": 2,
+          "passed": true,
+          "reason": "The agent explicitly routed the request to GPU allocation guidance, tracing allocation boundaries through ResourceClaims, DeviceClasses, ResourceSlices, scheduler allocation, and kubelet prepare paths - all related to GPU allocation and operational troubleshooting."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The agent's final response discusses only GPU allocation boundaries (ResourceClaim, ResourceSlice, DeviceClass, scheduler allocation, kubelet prepare). There is no mention of ComputeDomainClique, IMEX daemon lifecycle, or channel claims anywhere in the response."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-compute-domain-imex-workflows."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent routes the request to GPU allocation or operational troubleshooting guidance."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not discuss ComputeDomainClique, IMEX daemon lifecycle, or channel claims unless the user adds that evidence."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/24",
+          "excerpt": "Most likely, the pod is blocked at the **scheduler allocation boundary**, not the kubelet/prepare boundary.\n\n**Allocation Boundaries**\n- **Request boundary**: The pod references a `Resour\n...[truncated]...\nby-step triage checklist with the exact `kubectl` commands and the expected fields to inspect."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "lower-priority behavior history truncated to fit budget"
+      }
+    }
+  },
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "validity": "valid"
+}

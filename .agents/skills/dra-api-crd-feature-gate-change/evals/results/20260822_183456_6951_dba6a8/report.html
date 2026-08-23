@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>dra-api-crd-feature-gate-change — Eval Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--r:10px;--nv:#76b900}
+[data-theme="dark"]{--bg:#0c111b;--s1:#151d2e;--s2:#1e293b;--s3:#2a3650;--tx:#e2e8f0;--tx2:#94a3b8;--bdr:#334155;--chart-grid:#1e293b;--chart-tick:#94a3b8;--chart-label:#e2e8f0;--badge-pass-bg:#14532d;--badge-pass-tx:#bbf7d0;--badge-warn-bg:#713f12;--badge-warn-tx:#fef08a;--badge-fail-bg:#7f1d1d;--badge-fail-tx:#fecaca;--shadow:0 1px 3px #0005}
+[data-theme="light"]{--bg:#f8fafc;--s1:#ffffff;--s2:#f1f5f9;--s3:#e2e8f0;--tx:#0f172a;--tx2:#64748b;--bdr:#cbd5e1;--chart-grid:#e2e8f0;--chart-tick:#64748b;--chart-label:#0f172a;--badge-pass-bg:#dcfce7;--badge-pass-tx:#166534;--badge-warn-bg:#fef9c3;--badge-warn-tx:#854d0e;--badge-fail-bg:#fee2e2;--badge-fail-tx:#991b1b;--shadow:0 1px 4px #0001}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;transition:background .2s,color .2s}
+.wrap{max-width:1140px;margin:0 auto;padding:20px 24px}
+
+/* Header + Hero */
+.header{padding:28px 0 20px;border-bottom:1px solid var(--bdr);margin-bottom:28px}
+.header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.header h1{font-size:1.7em;color:var(--nv)}
+.header .meta{color:var(--tx2);font-size:.85em;margin-top:6px}
+.hero{display:flex;gap:20px;align-items:center;margin-top:16px;flex-wrap:wrap}
+.hero-score{font-size:3em;font-weight:800;line-height:1}
+.hero-detail{font-size:.85em;color:var(--tx2)}
+.hero-detail b{color:var(--tx)}
+.subtle{color:var(--tx2);font-size:.82em}
+
+/* Theme toggle */
+.theme-toggle{background:var(--s2);border:1px solid var(--bdr);border-radius:8px;padding:6px 14px;cursor:pointer;color:var(--tx);font-size:.85em;transition:.15s}
+.theme-toggle:hover{background:var(--s3)}
+
+/* Nav */
+.nav{display:flex;gap:2px;background:var(--s1);border-radius:var(--r);padding:4px;margin-bottom:24px;overflow-x:auto}
+.nav button{background:none;border:none;color:var(--tx2);padding:10px 20px;font-size:.9em;cursor:pointer;border-radius:8px;white-space:nowrap;transition:.15s}
+.nav button:hover{background:var(--s2);color:var(--tx)}
+.nav button.active{background:var(--s2);color:var(--tx);font-weight:600;box-shadow:0 1px 3px #0005}
+.page{display:none}.page.active{display:block}
+
+/* Agent overview cards */
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:20px 0}
+.agent-card{background:var(--s1);border-radius:var(--r);padding:18px;text-align:center}
+.agent-name{font-weight:600;font-size:.95em;margin-bottom:4px}
+.agent-score{font-size:2em;font-weight:700}
+.lift-chip{font-size:.85em;font-weight:600;margin-top:4px}
+.info-box{background:var(--s1);border:1px solid var(--bdr);border-radius:var(--r);padding:18px;margin:18px 0;box-shadow:var(--shadow)}
+.info-box h3{font-size:1em;margin-bottom:10px;color:var(--tx)}
+.attempt-policy{border-left:4px solid #8b5cf6}
+.run-config{border-left:4px solid #38bdf8}
+.harbor-analysis{border-left:4px solid var(--nv)}
+.policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:10px}
+.policy-grid div{background:var(--s2);border:1px solid var(--bdr);border-radius:8px;padding:10px}
+.policy-grid span{display:block;color:var(--tx2);font-size:.76em;text-transform:uppercase;letter-spacing:.4px}
+.policy-grid b{display:block;color:var(--tx);font-size:.95em;margin-top:3px}
+.policy-grid em{display:block;color:var(--tx2);font-size:.76em;font-style:normal;margin-top:2px}
+
+/* Charts */
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}
+.chart-box{background:var(--s1);border-radius:var(--r);padding:20px}
+.chart-box h3{font-size:.95em;color:var(--tx2);margin-bottom:12px}
+@media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+
+/* Tables */
+.table-wrap{overflow-x:auto;margin:16px 0}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--bdr)}
+th{background:var(--s2);font-size:.78em;text-transform:uppercase;letter-spacing:.5px;color:var(--tx2);font-weight:600}
+td{background:var(--s1)}
+.metric-name{font-weight:600;min-width:140px}
+.metric-hint{display:block;font-weight:400;font-size:.78em;color:var(--tx2)}
+.bar-cell{display:flex;align-items:center;gap:10px}
+.val{font-weight:700;min-width:36px}
+.mini-bar{width:80px;height:7px;background:var(--s3);border-radius:4px;overflow:hidden}
+.mini-bar div{height:100%;border-radius:4px}
+
+/* Agent detail tabs */
+.agent-tabs{display:flex;gap:2px;margin:16px 0 0;flex-wrap:wrap}
+.tab-btn{background:var(--s2);border:none;color:var(--tx2);padding:8px 18px;font-size:.85em;cursor:pointer;border-radius:8px 8px 0 0;transition:.15s}
+.tab-btn:hover{color:var(--tx)}
+.tab-btn.active{background:var(--s1);color:var(--tx);font-weight:600;border-bottom:2px solid var(--accent,var(--nv))}
+.tab-panel{background:var(--s1);border-radius:0 var(--r) var(--r) var(--r);padding:20px}
+
+/* Finding cards */
+.card{background:var(--s2);border-radius:8px;padding:14px 16px;margin:10px 0;border-left:4px solid var(--bdr)}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card-title{font-weight:600;font-size:.95em}
+.card-desc{display:block;color:var(--tx2);font-size:.78em;margin-top:1px}
+.card-score{text-align:right;white-space:nowrap}
+.score{font-size:1.3em;font-weight:700;margin-left:6px}
+.checks{list-style:none;margin:10px 0 0;padding:0}
+.checks li{padding:4px 0;font-size:.85em;border-bottom:1px solid var(--s3)}
+.checks li:last-child{border:none}
+.checks .sym{display:inline-block;width:18px;font-weight:700}
+.checks .ok .sym{color:#22c55e}
+.checks .err .sym{color:#ef4444}
+.checks .note{color:var(--tx2);font-style:italic;padding-left:18px}
+.checks .sub{padding-left:24px}
+
+	/* Badges */
+	.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.72em;font-weight:600;text-transform:uppercase;vertical-align:middle}
+	.pass{background:var(--badge-pass-bg);color:var(--badge-pass-tx)}.warn{background:var(--badge-warn-bg);color:var(--badge-warn-tx)}.fail{background:var(--badge-fail-bg);color:var(--badge-fail-tx)}
+	.attempt-list{display:flex;flex-wrap:wrap;gap:6px;min-width:180px}
+	.attempt-chip{display:inline-block;padding:3px 8px;border-radius:4px;font-size:.76em;font-weight:600;white-space:nowrap}
+	.attempt-chip.muted{background:var(--s2);color:var(--tx2);border:1px dashed var(--bdr)}
+
+	/* Dataset cards */
+.ds-card{background:var(--s2);border-radius:8px;padding:16px;margin:12px 0;border-left:4px solid var(--nv)}
+.ds-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ds-id{font-weight:700;font-size:1em;color:var(--nv);font-family:monospace}
+.ds-field{margin:8px 0}
+.ds-label{display:block;font-size:.72em;text-transform:uppercase;letter-spacing:.5px;color:var(--tx2);font-weight:600;margin-bottom:2px}
+.ds-value{font-size:.9em;line-height:1.5;white-space:pre-wrap}
+.ds-gt{color:var(--tx2);font-style:italic}
+.ds-meta{display:flex;gap:20px;font-size:.82em;color:var(--tx2);margin:8px 0;flex-wrap:wrap}
+.ds-behaviors{padding-left:18px;margin:4px 0;font-size:.85em}.ds-behaviors li{margin:3px 0}
+
+/* Suggestions */
+.sug-box{background:var(--s1);border-radius:var(--r);padding:20px;margin:20px 0}
+.sug-box h3{margin-bottom:10px}.sug-box ol{padding-left:20px}.sug-box li{margin:6px 0;font-size:.92em}
+.sug-pass{border-left:4px solid #22c55e}.sug-warn{border-left:4px solid #eab308}
+.evidence-link{display:inline-flex;align-items:center;gap:4px;margin-left:4px;font-size:.78em;font-weight:600;color:var(--nv);text-decoration:none;white-space:nowrap}
+.evidence-link:hover{text-decoration:underline}
+.evidence-link-icon{font-size:.95em;line-height:1}
+
+footer{margin-top:40px;padding:16px 0;border-top:1px solid var(--bdr);color:var(--tx2);font-size:.78em;text-align:center}
+</style></head>
+<body><div class="wrap">
+
+<div class="header">
+  <div class="header-top">
+    <h1>dra-api-crd-feature-gate-change</h1>
+    <button class="theme-toggle" onclick="toggleTheme()">&#9788; / &#9790;</button>
+  </div>
+  <p class="meta">Astra Skill Evaluator &mdash; 20260822_183456_6951_dba6a8 &mdash; 1 agent(s): codex</p>
+  <div class="hero">
+    <div class="hero-score" style="color:#22c55e">0.97</div>
+    <div class="hero-detail">
+      <div><b>Best performing agent/model combination for this skill:</b> codex / openai/openai/gpt-5.4</div>
+      <div><b>Eligible trials:</b> 4 across 1 eligible agent(s)</div>
+      <div><b>Metrics:</b> 6 ACES evaluators (deterministic + LLM judge)</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="active" onclick="go(this,'p-overview')">Overview</button>
+  <button onclick="go(this,'p-trials')">Trials</button>
+  <button onclick="go(this,'p-detail')">Agent Details</button>
+  <button onclick="go(this,'p-dataset')">Dataset</button>
+  <button onclick="go(this,'p-suggest')">Suggestions</button>
+</div>
+
+<!-- ===== OVERVIEW ===== -->
+<div class="page active" id="p-overview">
+  <div class="agent-grid"><div class="agent-card" style="border-top:3px solid #8b5cf6">
+  <div class="agent-name" style="color:#8b5cf6">codex</div>
+  <div class="agent-score" style="color:#22c55e">0.97</div>
+  <div class="subtle">4 trial(s)</div><div class="lift-chip" style="color:#ef4444">-0.00 lift</div>
+</div></div>
+  
+  
+  <div class="info-box harbor-analysis">
+  <h3>Harbor Analysis</h3>
+  <p class="subtle">Open the generated Harbor/ACES engineering analysis for this uploaded job.</p>
+  <a class="evidence-link harbor-analysis-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8?tab=analysis" target="_blank" rel="noopener noreferrer" aria-label="Open Harbor Analysis">
+    <span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Open Harbor Analysis</span>
+  </a>
+</div>
+  <div class="info-box run-config">
+  <h3>Harbor Run Configuration</h3>
+  <div class="policy-grid">
+    <div><span>Base image</span><b>none</b><em>local</em></div><div><span>Environment</span><b>Local trusted host</b></div>
+  </div>
+  
+  
+</div>
+  
+  
+  
+  <div class="chart-row">
+    <div class="chart-box"><h3>Score Comparison (Radar)</h3><canvas id="cRadar"></canvas></div>
+    <div class="chart-box"><h3>Scores by Agent &amp; Metric</h3><canvas id="cBar"></canvas></div>
+  </div>
+  <h3>Scores by Metric</h3><div class="table-wrap"><table><thead><tr><th>Metric</th><th>codex</th></tr></thead><tbody><tr><td class="metric-name">Security<span class="metric-hint">Trace scan for unsafe operations, secret leakage, and unauthorized access</span></td><td><div class="bar-cell"><span class="val" style="color:#22c55e">1.00</span><div class="mini-bar"><div style="width:100%;background:#22c55e"></div></div></div></td></tr><tr><td class="metric-name">Skill Execution<span class="metric-hint">Activation, script run, workflow order, error recovery</span></td><td><div class="bar-cell"><span class="val" style="color:#22c55e">0.93</span><div class="mini-bar"><div style="width:93%;background:#22c55e"></div></div></div></td></tr><tr><td class="metric-name">Efficiency<span class="metric-hint">Routing correctness, workspace-aware skill reads, tool call productivity</span></td><td><div class="bar-cell"><span class="val" style="color:#22c55e">0.91</span><div class="mini-bar"><div style="width:90%;background:#22c55e"></div></div></div></td></tr><tr><td class="metric-name">Accuracy<span class="metric-hint">Factual correctness (5-criterion LLM rubric)</span></td><td><div class="bar-cell"><span class="val" style="color:#22c55e">1.00</span><div class="mini-bar"><div style="width:100%;background:#22c55e"></div></div></div></td></tr><tr><td class="metric-name">Goal Accuracy<span class="metric-hint">Did the agent achieve the user&#x27;s goal?</span></td><td><div class="bar-cell"><span class="val" style="color:#22c55e">1.00</span><div class="mini-bar"><div style="width:100%;background:#22c55e"></div></div></div></td></tr><tr><td class="metric-name">Behavior Check<span class="metric-hint">Adherence to expected workflow steps</span></td><td><div class="bar-cell"><span class="val" style="color:#22c55e">0.95</span><div class="mini-bar"><div style="width:95%;background:#22c55e"></div></div></div></td></tr></tbody></table></div>
+  <h3>Default Dimension Summary</h3><p class="subtle">Dimensions are report-only metric groups. Agent cells show dimension lift (with skill minus without skill). Custom metrics do not change these scores.</p><div class="table-wrap"><table><thead><tr><th>Dimension</th><th>codex</th></tr></thead><tbody><tr><td class="metric-name">Security<span class="metric-hint">Group: Security</span></td><td><span class="val" style="color:#94a3b8">0.00</span></td></tr><tr><td class="metric-name">Correctness<span class="metric-hint">Group: Accuracy</span></td><td><span class="val" style="color:#94a3b8">0.00</span></td></tr><tr><td class="metric-name">Discoverability<span class="metric-hint">Group: Skill Execution</span></td><td><span class="val" style="color:#ef4444">-0.03</span></td></tr><tr><td class="metric-name">Effectiveness<span class="metric-hint">Group: Goal Accuracy (50%) + Behavior Check (50%)</span></td><td><span class="val" style="color:#94a3b8">0.00</span></td></tr><tr><td class="metric-name">Efficiency<span class="metric-hint">Group: Efficiency</span></td><td><span class="val" style="color:#22c55e">+0.01</span></td></tr></tbody></table></div>
+  
+  
+  <h3>Skill Lift (with skill &minus; without)</h3>
+<div class="table-wrap"><table><thead><tr><th>Metric</th><th>codex</th></tr></thead><tbody><tr><td class="metric-name">Security</td><td><span class="subtle">1.00</span> &rarr; 1.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr><tr><td class="metric-name">Skill Execution</td><td><span class="subtle">0.96</span> &rarr; 0.93 <span style="color:#ef4444;font-weight:600">(-0.03)</span></td></tr><tr><td class="metric-name">Efficiency</td><td><span class="subtle">0.90</span> &rarr; 0.91 <span style="color:#22c55e;font-weight:600">(+0.01)</span></td></tr><tr><td class="metric-name">Accuracy</td><td><span class="subtle">1.00</span> &rarr; 1.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr><tr><td class="metric-name">Goal Accuracy</td><td><span class="subtle">1.00</span> &rarr; 1.00 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr><tr><td class="metric-name">Behavior Check</td><td><span class="subtle">0.95</span> &rarr; 0.95 <span style="color:#94a3b8;font-weight:600">(0.00)</span></td></tr></tbody></table></div>
+</div>
+
+<!-- ===== TRIALS ===== -->
+<div class="page" id="p-trials">
+  <h2>Score Heatmap</h2>
+  <p class="subtle">Overall score per eval case per agent (average of 6 ACES metrics).</p>
+  <div class="table-wrap"><table><thead><tr><th>Eval Case</th><th>codex</th></tr></thead><tbody><tr><td class="metric-name" style="font-family:monospace">dra-api-crd-feature-gate-change-boundary-negative-001</td><td style="background:#22c55e22"><span class="val" style="color:#22c55e">1.00</span></td></tr><tr><td class="metric-name" style="font-family:monospace">dra-api-crd-feature-gate-change-adjacent-negative-001</td><td style="background:#22c55e22"><span class="val" style="color:#22c55e">1.00</span></td></tr><tr><td class="metric-name" style="font-family:monospace">dra-api-crd-feature-gate-change-contextual-001</td><td style="background:#22c55e22"><span class="val" style="color:#22c55e">0.94</span></td></tr><tr><td class="metric-name" style="font-family:monospace">dra-api-crd-feature-gate-change-explicit-001</td><td style="background:#22c55e22"><span class="val" style="color:#22c55e">0.92</span></td></tr></tbody></table></div>
+
+  <div class="chart-row">
+    <div class="chart-box"><h3>Token Usage by Agent (total across trials)</h3><canvas id="cTokens"></canvas></div>
+    <div class="chart-box"><h3>Steps per Eval Case</h3><canvas id="cSteps"></canvas></div>
+  </div>
+
+  <h3>Error Recovery</h3><p class="subtle">Trials where commands failed and were retried, with fault attribution.</p>
+<div class="table-wrap"><table><thead><tr><th>Agent</th><th>Case</th><th>First Attempt</th><th>Faults</th><th>Details</th></tr></thead><tbody><tr><td style="font-family:monospace">codex</td><td style="font-family:monospace">dra-api-crd-feature-gate-change-contextual-001</td><td><span class="badge fail">retries needed</span></td><td><span class="badge fail">2 skill</span> <span class="badge warn">2 agent</span> </td><td><div class="subtle" style="margin:2px 0"><span class="badge fail">skill</span> Chunk ID: 19f7b1
+Wall time: 0.0000 seconds
+Process exited with code 1
+Original token count: 135
+Outp</div><div class="subtle" style="margin:2px 0"><span class="badge fail">skill</span> Chunk ID: 50c09c
+Wall time: 0.0000 seconds
+Process exited with code 1
+Original token count: 33
+Outpu</div><div class="subtle" style="margin:2px 0"><span class="badge warn">agent</span> Chunk ID: bf16e8
+Wall time: 0.0000 seconds
+Process exited with code 1
+Original token count: 5
+Output</div></td></tr><tr><td style="font-family:monospace">codex</td><td style="font-family:monospace">dra-api-crd-feature-gate-change-explicit-001</td><td><span class="badge fail">retries needed</span></td><td><span class="badge warn">1 agent</span> </td><td><div class="subtle" style="margin:2px 0"><span class="badge warn">agent</span> Chunk ID: dedcf2
+Wall time: 0.0000 seconds
+Process exited with code 2
+Original token count: 0
+Output</div></td></tr></tbody></table></div>
+
+  
+
+  <h3>Lift per Eval Case</h3>
+  <p class="subtle">Per-trial with-skill vs without-skill comparison.</p>
+  <div class="table-wrap"><table><thead><tr><th>Agent</th><th>Case</th><th>Security</th><th>Skill Execution</th><th>Efficiency</th><th>Accuracy</th><th>Goal Accuracy</th><th>Behavior Check</th></tr></thead><tbody><tr><td style="font-family:monospace">codex</td><td style="font-family:monospace">dra-api-crd-feature-gate-change-boundary-negative-001</td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td></tr><tr><td style="font-family:monospace">codex</td><td style="font-family:monospace">dra-api-crd-feature-gate-change-adjacent-negative-001</td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td></tr><tr><td style="font-family:monospace">codex</td><td style="font-family:monospace">dra-api-crd-feature-gate-change-contextual-001</td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">0.91</span>&rarr;0.81 <span style="color:#ef4444;font-weight:600;font-size:.82em">(-0.10)</span></td><td><span class="subtle">0.75</span>&rarr;0.85 <span style="color:#22c55e;font-weight:600;font-size:.82em">(+0.10)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td></tr><tr><td style="font-family:monospace">codex</td><td style="font-family:monospace">dra-api-crd-feature-gate-change-explicit-001</td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">0.94</span>&rarr;0.91 <span style="color:#ef4444;font-weight:600;font-size:.82em">(-0.03)</span></td><td><span class="subtle">0.83</span>&rarr;0.79 <span style="color:#ef4444;font-weight:600;font-size:.82em">(-0.05)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">1.00</span>&rarr;1.00 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td><td><span class="subtle">0.80</span>&rarr;0.80 <span style="color:#94a3b8;font-weight:600;font-size:.82em">(0.00)</span></td></tr></tbody></table></div>
+
+  
+</div>
+
+<!-- ===== AGENT DETAILS ===== -->
+<div class="page" id="p-detail">
+  <div class="agent-tabs"><button class="tab-btn active" onclick='switchAgent(this,"codex")' style="--accent:#8b5cf6">codex</button></div>
+  <div class="tab-panel" id="agent-codex" style="display:block"><div class="card" style="border-left-color:#22c55e">
+  <div class="card-head"><div><span class="card-title">Security</span><span class="card-desc">Trace scan for unsafe operations, secret leakage, and unauthorized access</span></div>
+  <div class="card-score"><span class="badge pass">PASS</span> <span class="score" style="color:#22c55e">1.00</span></div></div>
+  <ul class="checks"><li class="note">No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory</li></ul>
+  
+</div>
+<div class="card" style="border-left-color:#22c55e">
+  <div class="card-head"><div><span class="card-title">Skill Execution</span><span class="card-desc">Activation, script run, workflow order, error recovery</span></div>
+  <div class="card-score"><span class="badge pass">PASS</span> <span class="score" style="color:#22c55e">0.93</span></div></div>
+  <ul class="checks"><li class="ok"><span class="sym">&#10003;</span><b>activation</b>: Read SKILL.md via shell read command</li><li class="ok"><span class="sym">&#10003;</span><b>script_execution</b>: No specific script expected</li><li class="ok"><span class="sym">&#10003;</span><b>workflow_order</b>: Correct workflow order</li><li class="err"><span class="sym">&#10007;</span><b>error_recovery</b>: 2 skill defect(s), 2 agent error(s)</li><li class="sub"><span class="badge fail">skill</span> Chunk ID: 19f7b1
+Wall time: 0.0000 seconds
+Process exited with code 1
+Original token count: 135
+Output:
+/Users/bmozaffar</li><li class="sub"><span class="badge fail">skill</span> Chunk ID: 50c09c
+Wall time: 0.0000 seconds
+Process exited with code 1
+Original token count: 33
+Output:
+../agent/codex-ho</li><li class="sub"><span class="badge warn">agent</span> Chunk ID: bf16e8
+Wall time: 0.0000 seconds
+Process exited with code 1
+Original token count: 5
+Output:
+
+---repo AGENTS---</li><li class="sub"><span class="badge warn">agent</span> Chunk ID: bab702
+Wall time: 0.0000 seconds
+Process exited with code 0
+Original token count: 2731
+Output:
+Warning: trunca</li><li class="ok"><span class="sym">&#10003;</span><b>error_recovery</b>: 1 agent error(s), no skill defects</li><li class="sub"><span class="badge warn">agent</span> Chunk ID: dedcf2
+Wall time: 0.0000 seconds
+Process exited with code 2
+Original token count: 0
+Output:
+</li></ul>
+  
+</div>
+<div class="card" style="border-left-color:#22c55e">
+  <div class="card-head"><div><span class="card-title">Efficiency</span><span class="card-desc">Routing correctness, workspace-aware skill reads, tool call productivity</span></div>
+  <div class="card-score"><span class="badge pass">PASS</span> <span class="score" style="color:#22c55e">0.91</span></div></div>
+  <ul class="checks"><li class="ok"><span class="sym">&#10003;</span><b>routing</b>: Agent correctly routed to dra-api-crd-feature-gate-change only</li><li class="ok"><span class="sym">&#10003;</span><b>tool_efficiency</b>: 14/20 productive calls (70%)</li><li class="ok"><span class="sym">&#10003;</span><b>tool_efficiency</b>: 4/7 productive calls (57%)</li></ul>
+  
+</div>
+<div class="card" style="border-left-color:#22c55e">
+  <div class="card-head"><div><span class="card-title">Accuracy</span><span class="card-desc">Factual correctness (5-criterion LLM rubric)</span></div>
+  <div class="card-score"><span class="badge pass">PASS</span> <span class="score" style="color:#22c55e">1.00</span></div></div>
+  <ul class="checks"><li class="ok"><span class="sym">&#10003;</span>SKILL_IDENTIFIED <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-boundary-negative-001/trials/dra-api-crd-feature-gate-change__95yGHoP?step=5" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 5"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 5</span></a></li><li class="ok"><span class="sym">&#10003;</span>ACTION_CORRECT <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-boundary-negative-001/trials/dra-api-crd-feature-gate-change__95yGHoP?step=5" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 5"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 5</span></a></li><li class="ok"><span class="sym">&#10003;</span>FACTUALLY_ACCURATE <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-boundary-negative-001/trials/dra-api-crd-feature-gate-change__95yGHoP?step=5" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 5"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 5</span></a></li><li class="ok"><span class="sym">&#10003;</span>TASK_ADDRESSED <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-boundary-negative-001/trials/dra-api-crd-feature-gate-change__95yGHoP?step=5" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 5"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 5</span></a></li><li class="ok"><span class="sym">&#10003;</span>ACTIONABLE <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-boundary-negative-001/trials/dra-api-crd-feature-gate-change__95yGHoP?step=5" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 5"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 5</span></a></li><li class="note">The response provides a clear, high-level explanation of Kubernetes Dynamic Resource Allocation and thoroughly compares it to legacy extended resources. It correctly identifies the conceptual differen <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-boundary-negative-001/trials/dra-api-crd-feature-gate-change__95yGHoP?step=5" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 5"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 5</span></a></li><li class="note">The response correctly identifies the failing command (make check-generate with git diff --exit-code), explains the CI workflow, names the specific generators involved, provides the minimum rerun set  <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-adjacent-negative-001/trials/dra-api-crd-feature-gate-change__NdavrAx?step=24" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 24"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 24</span></a></li><li class="note">The response comprehensively addresses all expected criteria: it identifies the correct skill (adding a ResourceSlice attribute for NVLink fabric generation selection), describes correct actions with  <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-contextual-001/trials/dra-api-crd-feature-gate-change__SXTda98?step=8" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 8"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 8</span></a></li><li class="note">The response correctly identifies and uses the dra-api-crd-feature-gate-change skill, produces a comprehensive contract-change plan that traces the optional GpuConfig.driverRoot field through handwrit <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-explicit-001/trials/dra-api-crd-feature-gate-change__ngRcdsn?step=12" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 12"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 12</span></a></li></ul>
+  <details class="evidence-refs"><summary>Evidence (5)</summary><ul><li class="evidence"><code>ground_truth</code> <code>evals.json/ground_truth</code> Expected answer</li><li class="evidence"><code>final_response</code> <code>trajectory.json/steps/4</code> Final response</li><li class="evidence"><code>final_response</code> <code>trajectory.json/steps/23</code> Final response</li><li class="evidence"><code>final_response</code> <code>trajectory.json/steps/29</code> Final response</li><li class="evidence"><code>final_response</code> <code>trajectory.json/steps/16</code> Final response</li></ul></details>
+</div>
+<div class="card" style="border-left-color:#22c55e">
+  <div class="card-head"><div><span class="card-title">Goal Accuracy</span><span class="card-desc">Did the agent achieve the user&#x27;s goal?</span></div>
+  <div class="card-score"><span class="badge pass">PASS</span> <span class="score" style="color:#22c55e">1.00</span></div></div>
+  <ul class="checks"><li class="note">The agent&#x27;s response perfectly matches the expected outcome: it gives a clear general DRA explanation, provides a thorough comparison to legacy extended resources across multiple dimensions (model, expressiveness, lifecycle, device selection, sharing <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-boundary-negative-001/trials/dra-api-crd-feature-gate-change__95yGHoP?step=5" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 5"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 5</span></a></li><li class="note">The agent thoroughly diagnosed the CI failure path by inspecting the workflow file (.github/workflows/golang.yaml), the Makefile targets, and common.mk. It correctly identified: (1) the failing command (`make check-generate` which runs `generate` the <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-adjacent-negative-001/trials/dra-api-crd-feature-gate-change__NdavrAx?step=24" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 24"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 24</span></a></li><li class="note">The agent&#x27;s response thoroughly covers all expected elements: (1) authoritative source ownership via detection strategy discussion, (2) CEL-facing naming with explicit attribute name and example selectors, (3) docs and reference updates with specific <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-contextual-001/trials/dra-api-crd-feature-gate-change__SXTda98?step=8" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 8"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 8</span></a></li><li class="note">The agent&#x27;s final response covers all required elements: it starts from handwritten API sources (api/nvidia.com/resource/v1beta1/*types.go), traces the field through validation (schema markers, webhook, unit tests), generated artifacts (deepcopy, CRD <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-explicit-001/trials/dra-api-crd-feature-gate-change__ngRcdsn?step=17" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 17"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 17</span></a></li></ul>
+  <details class="evidence-refs"><summary>Evidence (51)</summary><ul><li class="evidence"><code>ground_truth</code> <code>evals.json/ground_truth</code> Expected answer</li><li class="evidence"><code>final_response</code> <code>trajectory.json/steps/4</code> Final response</li><li class="evidence"><code>tool_call</code> <code>trajectory.json/steps/4/tool_calls/0</code> exec_command: pwd &amp;&amp; rg --files -g &#x27;AGENTS.md&#x27; -g &#x27;Makefile*&#x27; -g &#x27;*.mk&#x27; -g &#x27;hack/**&#x27; -g &#x27;.gith
+...[truncated]...
+intf &#x27;\</li><li class="evidence"><code>tool_call</code> <code>trajectory.json/steps/6/tool_calls/0</code> update_plan: update_plan</li><li class="evidence"><code>tool_call</code> <code>trajectory.json/steps/7/tool_calls/0</code> exec_command: set -e
+ls -la
+printf &#x27;\n--- AGENTS files ---\n&#x27;
+find .. -name AGENTS.md -print
+printf &#x27;\n--- workspace fil</li><li class="evidence"><code>tool_call</code> <code>trajectory.json/steps/9/tool_calls/0</code> exec_command: set -e
+cat skills/dra-build-test-codegen-ci/SKILL.md 2&gt;/dev/null || true
+printf 
+...[truncated]...
+d -o -n</li><li class="evidence"><code>tool_call</code> <code>trajectory.json/steps/11/tool_calls/0</code> exec_command: set -e
+REPO=/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu
+printf &#x27;repo
+...[truncated]...
+REPO&quot;/h</li><li class="evidence"><code>tool_call</code> <code>trajectory.json/steps/13/tool_calls/0</code> exec_command: set -e
+REPO=/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu
+ls -la &quot;$REP
+...[truncated]...
+ -g &#x27;ha</li></ul></details>
+</div>
+<div class="card" style="border-left-color:#22c55e">
+  <div class="card-head"><div><span class="card-title">Behavior Check</span><span class="card-desc">Adherence to expected workflow steps</span></div>
+  <div class="card-score"><span class="badge pass">PASS</span> <span class="score" style="color:#22c55e">0.95</span></div></div>
+  <ul class="checks"><li class="ok"><span class="sym">&#10003;</span>The agent did not read or activate any file named &#x27;dra-api-crd-feature-gate-change&#x27;. It simply provided a high-level explanation from genera</li><li class="ok"><span class="sym">&#10003;</span>The user asked for a high-level explanation, not exact project paths. The agent answered with general knowledge about Kubernetes DRA, which </li><li class="ok"><span class="sym">&#10003;</span>The agent did not edit any files at all. It only provided an informational response.</li><li class="ok"><span class="sym">&#10003;</span>The agent found the dra-api-crd-feature-gate-change skill file in the skills directory but never read its contents (the cat command was for </li><li class="ok"><span class="sym">&#10003;</span>The agent provided detailed CI guidance including identifying the failing command (make check-generate), explaining what the generate target</li><li class="ok"><span class="sym">&#10003;</span>The agent never ran any git reset, git checkout, or file-overwriting commands. It only inspected files and provided guidance without modifyi</li><li class="ok"><span class="sym">&#10003;</span>The agent explicitly invoked the &#x27;dra-api-crd-feature-gate-change&#x27; skill at the start, reading its SKILL.md, demonstrating it recognized the <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-contextual-001/trials/dra-api-crd-feature-gate-change__SXTda98?step=8" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 8"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 8</span></a></li><li class="ok"><span class="sym">&#10003;</span>The agent explicitly discusses attribute naming conventions (e.g., &#x27;gpu.nvidia.com/nvlinkFabricGeneration&#x27;), CEL access paths (&#x27;device.attri <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-contextual-001/trials/dra-api-crd-feature-gate-change__SXTda98?step=8" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 8"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 8</span></a></li><li class="ok"><span class="sym">&#10003;</span>The agent searched through multiple files including deviceinfo.go, mig.go, nvlib.go, device_state_test.go, and referenced docs and samples.  <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-contextual-001/trials/dra-api-crd-feature-gate-change__SXTda98?step=8" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 8"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 8</span></a></li><li class="ok"><span class="sym">&#10003;</span>The final sketch explicitly calls out design alignment considerations (stable naming, additive-only changes, feature-gate decisions, VFIO pa <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-contextual-001/trials/dra-api-crd-feature-gate-change__SXTda98?step=8" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 8"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 8</span></a></li></ul>
+  <details class="evidence-refs"><summary>Evidence (9)</summary><ul><li class="evidence"><code>expected_behavior</code> <code>evals.json/expected_behavior/0</code> Expected behavior 1</li><li class="evidence"><code>expected_behavior</code> <code>evals.json/expected_behavior/1</code> Expected behavior 2</li><li class="evidence"><code>expected_behavior</code> <code>evals.json/expected_behavior/2</code> Expected behavior 3</li><li class="evidence"><code>final_response</code> <code>trajectory.json/steps/4</code> Final response</li><li class="evidence"><code>final_response</code> <code>trajectory.json/steps/23</code> Final response</li><li class="evidence"><code>expected_behavior</code> <code>evals.json/expected_behavior/3</code> Expected behavior 4</li><li class="evidence"><code>expected_behavior</code> <code>evals.json/expected_behavior/4</code> Expected behavior 5</li><li class="evidence"><code>final_response</code> <code>trajectory.json/steps/29</code> Final response</li></ul></details>
+</div></div>
+</div>
+
+<!-- ===== DATASET ===== -->
+<div class="page" id="p-dataset">
+  <h2>AgentSkills Dataset</h2>
+  <p class="subtle">4 AgentSkills eval case(s) in dataset</p>
+<div class="ds-card">
+  <div class="ds-head">
+    <span class="ds-id">dra-api-crd-feature-gate-change-explicit-001</span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Prompt</span><div class="ds-value">Use dra-api-crd-feature-gate-change to plan adding an optional `driverRoot` field to `GpuConfig` for v0.8.0. Include source files, generated artifacts, compatibility, docs, and validation.</div></div>
+  <div class="ds-field"><span class="ds-label">Expected Output</span><div class="ds-value ds-gt">The agent produces a contract-change plan that starts from handwritten API sources, traces the optional `GpuConfig.driverRoot` field through validation, generated CRDs and clients, Helm, docs, samples, and tests, and reports compatibility, generated-file, validation, release-note, and risk items.</div></div>
+  <div class="ds-meta">
+    <span>Expected skill: <b>dra-api-crd-feature-gate-change</b></span>
+    <span>Expected script: <b>none</b></span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Assertions</span><ol class="ds-behaviors"><li>The agent reads the dra-api-crd-feature-gate-change instructions before taking action.</li><li>The agent checks `git status --short`, `VERSION`, `go.mod`, and `deployments/helm/dra-driver-nvidia-gpu/Chart.yaml` before proposing edits.</li><li>The agent identifies `api/nvidia.com/resource/v1beta1/`, generated outputs, `cmd/webhook/`, Helm values/templates, and `site/content/docs/reference/` </li><li>The agent requires repository generation and checks such as `make generate`, `make check-generate`, focused unit tests, `make test`, `make check`, and</li><li>The agent does not leak secrets, discard unrelated changes, or run live-cluster tests without explicit approval.</li></ol></div>
+</div>
+<div class="ds-card">
+  <div class="ds-head">
+    <span class="ds-id">dra-api-crd-feature-gate-change-contextual-001</span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Prompt</span><div class="ds-value">A new ResourceSlice attribute is needed so DeviceClasses can select H100 SXM GPUs by NVLink fabric generation. Sketch the safe implementation and review checklist for this repository.</div></div>
+  <div class="ds-field"><span class="ds-label">Expected Output</span><div class="ds-value ds-gt">The agent delivers a safe implementation and review checklist for adding a public ResourceSlice attribute, including authoritative source ownership, CEL-facing naming, docs and reference updates, compatibility with supported Kubernetes DRA versions, generated artifact review, and tests.</div></div>
+  <div class="ds-meta">
+    <span>Expected skill: <b>dra-api-crd-feature-gate-change</b></span>
+    <span>Expected script: <b>none</b></span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Assertions</span><ol class="ds-behaviors"><li>The agent infers that the request belongs to DRA API, CRD, feature-gate, and compatibility change handling.</li><li>The agent treats ResourceSlice attribute names and CEL access paths as public contracts.</li><li>The agent searches or plans to search readers, writers, validators, docs, samples, tests, and generated artifacts before editing.</li><li>The agent calls out design alignment and maintainer review for the user-visible API surface.</li><li>The agent avoids exposing secrets or normalizing unrelated drift outside the requested scope.</li></ol></div>
+</div>
+<div class="ds-card">
+  <div class="ds-head">
+    <span class="ds-id">dra-api-crd-feature-gate-change-adjacent-negative-001</span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Prompt</span><div class="ds-value">CI failed on `make check-generate` after I touched generated client files. Help me identify the failing command and the minimum checks to rerun.</div></div>
+  <div class="ds-field"><span class="ds-label">Expected Output</span><div class="ds-value ds-gt">The agent diagnoses the CI and code-generation failure path by inspecting the diff and build/test workflow, naming the failing command, first actionable error, and smallest credible rerun set.</div></div>
+  <div class="ds-meta">
+    <span>Expected skill: <b>none</b></span>
+    <span>Expected script: <b>none</b></span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Assertions</span><ol class="ds-behaviors"><li>The agent does not read or activate dra-api-crd-feature-gate-change.</li><li>The agent handles the request with build, test, code-generation, or CI guidance.</li><li>The agent preserves unrelated worktree changes and does not reset generated files as a shortcut.</li></ol></div>
+</div>
+<div class="ds-card">
+  <div class="ds-head">
+    <span class="ds-id">dra-api-crd-feature-gate-change-boundary-negative-001</span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Prompt</span><div class="ds-value">Explain at a high level what Kubernetes Dynamic Resource Allocation is and how it differs from legacy extended resources.</div></div>
+  <div class="ds-field"><span class="ds-label">Expected Output</span><div class="ds-value ds-gt">The agent gives a general DRA explanation and comparison to legacy extended resources without producing a repository-specific API implementation plan.</div></div>
+  <div class="ds-meta">
+    <span>Expected skill: <b>none</b></span>
+    <span>Expected script: <b>none</b></span>
+  </div>
+  <div class="ds-field"><span class="ds-label">Assertions</span><ol class="ds-behaviors"><li>The agent does not read or activate dra-api-crd-feature-gate-change.</li><li>The agent answers with general knowledge or repository orientation only if exact project paths are requested.</li><li>The agent does not edit API, CRD, Helm, checkpoint, or generated files.</li></ol></div>
+</div>
+</div>
+
+<!-- ===== SUGGESTIONS ===== -->
+<div class="page" id="p-suggest">
+  <div class="sug-box sug-pass"><h3>&#128161; Next Steps</h3><ol><li>Strengthen EFFICIENCY (scored 0.91) — review the reasons above and refine expected_behavior or ground_truth in evals.json to better match what agents actually do. <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-explicit-001/trials/dra-api-crd-feature-gate-change__ngRcdsn?step=7" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 7"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 7</span></a></li><li>Add evals/environment/Dockerfile if the skill depends on CLI tools, databases, or APIs — this ensures consistent results across agents and CI environments. <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-explicit-001/trials/dra-api-crd-feature-gate-change__ngRcdsn?step=12" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 12"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 12</span></a></li><li>Run with additional agents (&#x27;astra-skill-eval evaluate &lt;skill&gt; --agent-eval -a claude-code,codex,openhands&#x27;) to verify the skill works across different coding agents. <a class="evidence-link" href="https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-api-crd-feature-gate-change-codex-with--20260822_183456_6951_dba6a8/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-api-crd-feature-gate-change-explicit-001/trials/dra-api-crd-feature-gate-change__ngRcdsn?step=17" target="_blank" rel="noopener noreferrer" aria-label="View Harbor Log Viewer trajectory step 17"><span class="evidence-link-icon" aria-hidden="true">&#128279;</span><span>Step 17</span></a></li></ol></div>
+</div>
+
+<footer>Generated by <b>Astra Skill Evaluator</b> (NV-ACES) &mdash; 20260822_183456_6951_dba6a8</footer>
+</div>
+
+<script>
+function go(btn,id){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function switchAgent(btn,name){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab-panel').forEach(p=>p.style.display='none');document.getElementById('agent-'+name).style.display='block'}
+function getCS(){const s=getComputedStyle(document.documentElement);return{grid:s.getPropertyValue('--chart-grid').trim(),tick:s.getPropertyValue('--chart-tick').trim(),label:s.getPropertyValue('--chart-label').trim()}}
+let allCharts=[];
+function rebuildCharts(){allCharts.forEach(c=>c.destroy());allCharts=[];const cs=getCS();
+const rCtx=document.getElementById('cRadar');if(rCtx)allCharts.push(new Chart(rCtx,{type:'radar',data:{labels:["Security", "Skill Execution", "Efficiency", "Accuracy", "Goal Accuracy", "Behavior Check"],datasets:[{label:"codex",data:[1.0, 0.9313, 0.9089, 1.0, 1.0, 0.95],borderColor:"#8b5cf6",backgroundColor:"#8b5cf620",pointBackgroundColor:"#8b5cf6",borderWidth:2,pointRadius:4}]},options:{responsive:true,scales:{r:{min:0,max:1,ticks:{stepSize:.2,color:cs.tick,backdropColor:'transparent'},grid:{color:cs.grid},angleLines:{color:cs.grid},pointLabels:{color:cs.label,font:{size:11}}}},plugins:{legend:{labels:{color:cs.label}}}}}));
+const bCtx=document.getElementById('cBar');if(bCtx)allCharts.push(new Chart(bCtx,{type:'bar',data:{labels:["Security", "Skill Execution", "Efficiency", "Accuracy", "Goal Accuracy", "Behavior Check"],datasets:[{label:"codex",data:[1.0, 0.9313, 0.9089, 1.0, 1.0, 0.95],backgroundColor:"#8b5cf6cc",borderRadius:4}]},options:{responsive:true,scales:{y:{min:0,max:1,ticks:{stepSize:.2,color:cs.tick},grid:{color:cs.grid}},x:{ticks:{color:cs.label,maxRotation:45},grid:{display:false}}},plugins:{legend:{labels:{color:cs.label}}}}}));
+const tCtx=document.getElementById('cTokens');if(tCtx)allCharts.push(new Chart(tCtx,{type:'bar',data:{labels:["codex"],datasets:[{label:'Prompt',data:[899215],backgroundColor:'#3b82f6cc',borderRadius:3},{label:'Completion',data:[9565],backgroundColor:'#22c55ecc',borderRadius:3},{label:'Cached',data:[793600],backgroundColor:'#8b5cf6cc',borderRadius:3}]},options:{responsive:true,scales:{x:{stacked:true,ticks:{color:cs.tick},grid:{color:cs.grid}},y:{stacked:true,ticks:{color:cs.label},grid:{display:false}}},plugins:{legend:{labels:{color:cs.label}}}}}));
+const sCtx=document.getElementById('cSteps');if(sCtx)allCharts.push(new Chart(sCtx,{type:'bar',data:{labels:["dra-api-crd-feature-gate-change-boundary-negative-001", "dra-api-crd-feature-gate-change-adjacent-negative-001", "dra-api-crd-feature-gate-change-contextual-001", "dra-api-crd-feature-gate-change-explicit-001"],datasets:[{label:"codex",data:[5, 24, 30, 17],backgroundColor:"#8b5cf6cc",borderRadius:3}]},options:{responsive:true,scales:{x:{ticks:{color:cs.tick},grid:{color:cs.grid}},y:{ticks:{color:cs.label},grid:{display:false}}},plugins:{legend:{labels:{color:cs.label}}}}}));
+}
+function toggleTheme(){const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',t);localStorage.setItem('theme',t);rebuildCharts()}
+(function(){const saved=localStorage.getItem('theme');if(saved)document.documentElement.setAttribute('data-theme',saved);rebuildCharts()})();
+
+</script></body></html>

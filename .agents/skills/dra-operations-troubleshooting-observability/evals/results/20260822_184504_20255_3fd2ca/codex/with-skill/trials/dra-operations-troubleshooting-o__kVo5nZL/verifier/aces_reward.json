@@ -1,0 +1,271 @@
+{
+  "security": 1.0,
+  "skill_execution": 1.0,
+  "skill_efficiency": 1.0,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 1.0,
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-operations-troubleshooting-observability-adjacent-negative-001",
+  "has_skill": true,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "message": "Negative case, no skill identified"
+    },
+    "skill_efficiency": {
+      "message": "Skipped (negative or no expected_skill)"
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response creates a comprehensive maintainer-ready design proposal covering necessity/rationale, public contract naming (nvidia.com/pool), feature-gate stage (alpha, default disabled) with gate name, compatibility analysis (upgrade/downgrade/mixed-version), documentation impact, tests/validation plan, alternatives, drawbacks/risks, and open maintainer decisions. All expected elements are present in the produced artifact.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent drafts or outlines a proposal that covers necessity, public contract naming, feature-gate stage and default, compatibility, docs, tests, alternatives, drawbacks, and open maintainer decisions."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/17",
+          "excerpt": "Created a maintainer-ready proposal draft at `proposal/resource-slice-cel-attribute-proposal.md:1`.\n\n**What\u2019s Included**\n- Provisional design for a new CEL-selectable ResourceSlice attrib\n...[truncated]...\n this into the repository\u2019s exact proposal template format once you point me at the full repo."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The proposal covers all expected sections: necessity/rationale, public contract naming (nvidia.com/pool), feature-gate stage and default (alpha, disabled), compatibility analysis, docs impact, tests/validation plan, alternatives, drawbacks/risks, and open maintainer decisions. It is a comprehensive maintainer-ready design proposal as requested.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent drafts or outlines a proposal that covers necessity, public contract naming, feature-gate stage and default, compatibility, docs, tests, alternatives, drawbacks, and open maintainer decisions."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'README*' -g 'docs/**' -g '*.md' | head -200\n...[truncated]...\nskills/dra-proposal-and-design-review/SKILL.md'",
+          "json_pointer": "/steps/4/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'README*' -g 'docs/**' -g '*.md' | head -200 && echo '---SKILL---' && cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/6/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"in_progress\", \"step\": \"Find proposal template and guidance\"}, {\"status\": \"pending\", \"step\": \"Inspect ResourceSlice selector patterns\"}, {\"status\": \"pending\", \"step\": \"Draft maintainer-ready proposal\"}, {\"status\": \"pending\", \"step\": \"Save proposal in repo docs\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: rg --files | rg 'site/content/contribute/proposals|ResourceSlice|CEL|selector|fe\n...[truncated]...\n/content docs cmd pkg api internal -g '!vendor'",
+          "json_pointer": "/steps/7/tool_calls/0",
+          "excerpt": "rg --files | rg 'site/content/contribute/proposals|ResourceSlice|CEL|selector|feature.?gate|DeviceClass|api/' && echo '---GUIDE---' && sed -n '1,240p' site/content/contribute/proposals/_i\n...[truncated]...\n -n \"ResourceSlice|CEL|selector|attribute\" site/content docs cmd pkg api internal -g '!vendor'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find . -maxdepth 3 \\( -name .git -o -name vendor \\) -prune -o -type f | sed 's#^./##' | sort | head -400",
+          "json_pointer": "/steps/9/tool_calls/0",
+          "excerpt": "find . -maxdepth 3 \\( -name .git -o -name vendor \\) -prune -o -type f | sed 's#^./##' | sort | head -400"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/11/tool_calls/0",
+          "excerpt": "{\"explanation\": \"The workspace only contains the troubleshooting skill, not the full repository. I\\u2019ll produce a maintainer-ready proposal draft aligned to the repo process and note t\n...[truncated]...\naft maintainer-ready proposal\"}, {\"status\": \"pending\", \"step\": \"Save proposal in repo docs\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: mkdir -p proposal && cat > proposal/resource-slice-cel-attribute-proposal.md <<'\n...[truncated]...\noposal/resource-slice-cel-attribute-proposal.md",
+          "json_pointer": "/steps/13/tool_calls/0",
+          "excerpt": "mkdir -p proposal && cat > proposal/resource-slice-cel-attribute-proposal.md <<'EOF'\n# DRA Driver Proposal: Add a CEL-Selectable `pool` ResourceSlice Attribute\n\n- **Status:** provisional\n\n...[truncated]...\nre implementation begins.\nEOF\n\necho 'WROTE:' proposal/resource-slice-cel-attribute-proposal.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: sed -n '1,260p' proposal/resource-slice-cel-attribute-proposal.md",
+          "json_pointer": "/steps/15/tool_calls/0",
+          "excerpt": "sed -n '1,260p' proposal/resource-slice-cel-attribute-proposal.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/16/tool_calls/0",
+          "excerpt": "{\"explanation\": \"The draft proposal is complete and saved locally. Because the full repo is not present in this workspace, I cannot place it into the repository\\u2019s numbered proposal p\n...[truncated]...\nt maintainer-ready proposal\"}, {\"status\": \"completed\", \"step\": \"Save proposal in repo docs\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_cP0gMdQ2JZBEeXZiOC1Wc1WD",
+          "json_pointer": "/steps/4/observation/results/0",
+          "excerpt": "Chunk ID: fc36dc\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1649\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-operati\n...[truncated]...\nILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_9MTKp62rd2fEF4pKh5t9pYWS",
+          "json_pointer": "/steps/6/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_DyuFaEuaLcMd7H61TzPz2wpQ",
+          "json_pointer": "/steps/7/observation/results/0",
+          "excerpt": "Chunk ID: a71802\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 0\nOutput:"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_fJPoNTUZcWBbEPjQrAhx0yrr",
+          "json_pointer": "/steps/9/observation/results/0",
+          "excerpt": "Chunk ID: 02192b\nWall time: 0.2579 seconds\nProcess exited with code 0\nOriginal token count: 16\nOutput:\nskills/dra-operations-troubleshooting-observability/SKILL.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_vt8ZVMHOZ7QnbIxY62QAWfxE",
+          "json_pointer": "/steps/11/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_mkJhyk2AOOz5ASNSdIMVat4b",
+          "json_pointer": "/steps/13/observation/results/0",
+          "excerpt": "Chunk ID: 48cb42\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 15\nOutput:\nWROTE: proposal/resource-slice-cel-attribute-proposal.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_uPf2k56GWXzZWbRhBstm1SXY",
+          "json_pointer": "/steps/15/observation/results/0",
+          "excerpt": "Chunk ID: 93f59b\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3079\nOutput:\nWarning: truncated output (original token count: 3079)\nTotal output lines: 260\n\n# \n...[truncated]...\n# 4. Add multiple pool-related attributes now\n\nExamples: pool type, pool class, pool priority."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_zeK1lXAh5bdJKZ7GxjPm3CF7",
+          "json_pointer": "/steps/16/observation/results/0",
+          "excerpt": "Plan updated"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/17",
+          "excerpt": "Created a maintainer-ready proposal draft at `proposal/resource-slice-cel-attribute-proposal.md:1`.\n\n**What\u2019s Included**\n- Provisional design for a new CEL-selectable ResourceSlice attrib\n...[truncated]...\n this into the repository\u2019s exact proposal template format once you point me at the full repo."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "behavior_check": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "All three expected behaviors were observed. The agent correctly avoided activating the troubleshooting skill, routed the task to design/proposal review, and did not gather any operational cluster evidence for what was clearly a design proposal task.",
+      "results": [
+        {
+          "step": 1,
+          "passed": true,
+          "reason": "The agent discovered the dra-operations-troubleshooting-observability skill file in the workspace but never read its contents (SKILL.md) or activated/used any of its capabilities. It recognized the workspace was minimal and proceeded to draft the proposal independently."
+        },
+        {
+          "step": 2,
+          "passed": true,
+          "reason": "The agent explicitly stated 'I'm using the design-review skill first' and attempted to locate proposal templates and guidance documents. It routed the request toward proposal/design review processes rather than operational troubleshooting."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The agent never attempted to gather cluster logs, kubectl outputs, pod statuses, or any operational/runtime evidence. All commands were focused on finding documentation templates, listing files, and writing the proposal draft."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-operations-troubleshooting-observability."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent routes the request to proposal/design review or API contract guidance."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not gather cluster logs or operational evidence for a design proposal task."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "file_change",
+          "label": "exec_command: mkdir -p proposal && cat > proposal/resource-slice-cel-attribute-proposal.md <<'\n...[truncated]...\noposal/resource-slice-cel-attribute-proposal.md",
+          "json_pointer": "/steps/13/tool_calls/0",
+          "excerpt": "mkdir -p proposal && cat > proposal/resource-slice-cel-attribute-proposal.md <<'EOF'\n# DRA Driver Proposal: Add a CEL-Selectable `pool` ResourceSlice Attribute\n\n- **Status:** provisional\n\n...[truncated]...\nre implementation begins.\nEOF\n\necho 'WROTE:' proposal/resource-slice-cel-attribute-proposal.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/17",
+          "excerpt": "Created a maintainer-ready proposal draft at `proposal/resource-slice-cel-attribute-proposal.md:1`.\n\n**What\u2019s Included**\n- Provisional design for a new CEL-selectable ResourceSlice attrib\n...[truncated]...\n this into the repository\u2019s exact proposal template format once you point me at the full repo."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "lower-priority behavior history truncated to fit budget"
+      }
+    }
+  },
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "validity": "valid"
+}

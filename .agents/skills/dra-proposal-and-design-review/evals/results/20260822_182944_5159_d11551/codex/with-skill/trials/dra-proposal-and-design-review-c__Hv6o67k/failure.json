@@ -1,0 +1,26 @@
+{
+  "status": "unscored",
+  "trial": "dra-proposal-and-design-review-c__Hv6o67k",
+  "agent": "codex",
+  "variant": "with_skill",
+  "artifacts": [
+    "result.json",
+    "config.json",
+    "exception.txt",
+    "trial.log"
+  ],
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "task_id": {
+    "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_182944_5159_d11551/_harbor-tasks/dra-proposal-and-design-review-contextual-001"
+  },
+  "task_name": "nvidia/skill-eval-dra-proposal-and-design-review-contextual-001",
+  "trial_name": "dra-proposal-and-design-review-c__Hv6o67k",
+  "started_at": "2026-08-23T01:29:48.382477Z",
+  "finished_at": "2026-08-23T01:29:48.695276Z",
+  "error": {
+    "type": "RuntimeError",
+    "message": "Docker compose command failed for environment skill-eval-dra-proposal-and-design-review-contextual-001. Command: docker compose --project-name dra-proposal-and-design-review-c__hv6o67k --project-directory /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_182944_5159_d11551/_harbor-tasks/dra-proposal-and-design-review-contextual-001/environment -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpzdno087d/dra-proposal-and-design-review-c__Hv6o67k-docker-compose-resources.json -f /Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker-compose-build.yaml -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpfuet87zy/docker-compose-mounts.json build. Return code: 125. Stdout: unknown flag: --project-name\n\nUsage:  docker [OPTIONS] COMMAND [ARG...]\n\nRun 'docker --help' for more information\n. Stderr: None. ",
+    "occurred_at": "2026-08-22T18:29:48.527741"
+  }
+}

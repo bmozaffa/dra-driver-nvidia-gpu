@@ -1,0 +1,194 @@
+{
+  "security": 1.0,
+  "skill_execution": 1.0,
+  "skill_efficiency": 1.0,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 1.0,
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-api-crd-feature-gate-change-boundary-negative-001",
+  "has_skill": false,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "message": "Negative case, no skill identified"
+    },
+    "skill_efficiency": {
+      "message": "Skipped (negative or no expected_skill)"
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response correctly identifies and uses the DRA project orientation skill, provides a thorough high-level explanation of Kubernetes Dynamic Resource Allocation, accurately contrasts it with legacy extended resources (integer counting vs. claim-based, driver-managed approach), and does so without producing a repository-specific API implementation plan. All factual claims about DRA (ResourceClaim, ResourceClass, ResourceSlice, prepare/unprepare lifecycle, richer selection, structured allocation) are consistent with the expected answer's intent. The response is actionable with clear explanations and offers further assistance.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent gives a general DRA explanation and comparison to legacy extended resources without producing a repository-specific API implementation plan."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/9",
+          "excerpt": "At a high level, **Kubernetes Dynamic Resource Allocation (DRA)** is the newer framework for handling hardware and other specialized resources that are too complex for the old \u201cjust count\n...[truncated]...\n- a **GPU-specific explanation** of how DRA differs from the older NVIDIA device plugin model."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent's final response gives a clear, general explanation of DRA (claim-based, driver-managed, richer selection, structured allocation objects, per-claim lifecycle, driver-controlled preparation) and contrasts it with legacy extended resources (simple integer counting). It does not produce any repository-specific API implementation plan. This matches the expected outcome perfectly.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent gives a general DRA explanation and comparison to legacy extended resources without producing a repository-specific API implementation plan."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'README*' . && echo '---ROOT AGENTS---' && cat AGENTS.md",
+          "json_pointer": "/steps/4/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'README*' . && echo '---ROOT AGENTS---' && cat AGENTS.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find .. -name AGENTS.md -print | sed 's#^#AGENTS: #' | head -20 && echo '---' && ls -la",
+          "json_pointer": "/steps/6/tool_calls/0",
+          "excerpt": "find .. -name AGENTS.md -print | sed 's#^#AGENTS: #' | head -20 && echo '---' && ls -la"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/SKILL.md",
+          "json_pointer": "/steps/8/tool_calls/0",
+          "excerpt": "cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/SKILL.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_mKVJM9JBo3hbpJ20z8h0apia",
+          "json_pointer": "/steps/4/observation/results/0",
+          "excerpt": "Chunk ID: 3316ba\nWall time: 0.0088 seconds\nProcess exited with code 1\nOriginal token count: 69\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-f\n...[truncated]...\ngate-change-codex-without/dra-api-crd-feature-gate-change__pnmRwet/local-environment/workspace"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_czNeG5xSzHZs52XdaNtGkGQC",
+          "json_pointer": "/steps/6/observation/results/0",
+          "excerpt": "Chunk ID: 1eb2e7\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 58\nOutput:\n---\ntotal 0\ndrwxr-xr-x  4 bmozaffari  staff  128 Aug 22 18:35 .\ndrwxr-xr-x  8 bmozaf\n...[truncated]...\naffari  staff   64 Aug 22 18:35 input\ndrwxr-xr-x  2 bmozaffari  staff   64 Aug 22 18:34 skills"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_jsbuWrdHZLQJG9uftq9LoRZt",
+          "json_pointer": "/steps/8/observation/results/0",
+          "excerpt": "Chunk ID: 5d8ecd\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1482\nOutput:\n---\nname: dra-project-orientation\ndescription: Orient contributors and reviewers t\n...[truncated]...\nml` only as registration metadata; do not fork the instructions for individual agent products."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/9",
+          "excerpt": "At a high level, **Kubernetes Dynamic Resource Allocation (DRA)** is the newer framework for handling hardware and other specialized resources that are too complex for the old \u201cjust count\n...[truncated]...\n- a **GPU-specific explanation** of how DRA differs from the older NVIDIA device plugin model."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "behavior_check": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "All expected behaviors were observed. The agent did not activate the dra-api-crd-feature-gate-change skill, answered with general knowledge appropriate to the question, and made no file edits.",
+      "results": [
+        {
+          "step": 1,
+          "passed": true,
+          "reason": "The agent attempted to find AGENTS.md and read the dra-project-orientation SKILL.md, but never read or activated the dra-api-crd-feature-gate-change skill. The working directory happened to be within that skill's eval results path, but the agent did not read or use that skill's content."
+        },
+        {
+          "step": 2,
+          "passed": true,
+          "reason": "The agent answered with general knowledge about Kubernetes DRA concepts. It read the dra-project-orientation skill for context but the final answer is a general high-level explanation, not specific project path details. No exact project paths were requested by the user, and the agent appropriately provided a conceptual explanation."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The agent only executed read/find commands and never edited any files, let alone API, CRD, Helm, checkpoint, or generated files."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-api-crd-feature-gate-change."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent answers with general knowledge or repository orientation only if exact project paths are requested."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not edit API, CRD, Helm, checkpoint, or generated files."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/9",
+          "excerpt": "At a high level, **Kubernetes Dynamic Resource Allocation (DRA)** is the newer framework for handling hardware and other specialized resources that are too complex for the old \u201cjust count\n...[truncated]...\n- a **GPU-specific explanation** of how DRA differs from the older NVIDIA device plugin model."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    }
+  },
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "validity": "valid"
+}

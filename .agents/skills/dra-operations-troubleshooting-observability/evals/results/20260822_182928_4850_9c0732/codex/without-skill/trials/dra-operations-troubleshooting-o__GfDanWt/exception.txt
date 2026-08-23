@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/trial/trial.py", line 291, in run
+    await self._prepare()
+  File "/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/trial/trial.py", line 318, in _prepare
+    await self._setup_agent_environment()
+  File "/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/trial/trial.py", line 782, in _setup_agent_environment
+    await self._start_agent_environment()
+  File "/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/trial/trial.py", line 788, in _start_agent_environment
+    await asyncio.wait_for(
+  File "/Users/bmozaffari/.local/share/astra-skill-eval/uv-python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker.py", line 520, in start
+    await self._run_docker_compose_command(["build"])
+  File "/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker.py", line 417, in _run_docker_compose_command
+    raise RuntimeError(
+RuntimeError: Docker compose command failed for environment skill-eval-dra-operations-troubleshooting-observability-explicit-001. Command: docker compose --project-name dra-operations-troubleshooting-o__gfdanwt --project-directory /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-operations-troubleshooting-observability/evals/results/20260822_182928_4850_9c0732/_harbor-tasks-baseline/dra-operations-troubleshooting-observability-explicit-001/environment -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpczskf3wb/dra-operations-troubleshooting-o__GfDanWt-docker-compose-resources.json -f /Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker-compose-build.yaml -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpwkq7m323/docker-compose-mounts.json build. Return code: 125. Stdout: unknown flag: --project-name
+
+Usage:  docker [OPTIONS] COMMAND [ARG...]
+
+Run 'docker --help' for more information
+. Stderr: None. 

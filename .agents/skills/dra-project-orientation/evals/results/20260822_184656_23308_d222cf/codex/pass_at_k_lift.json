@@ -1,0 +1,6 @@
+{
+  "with_skill": 1.0,
+  "without_skill": 0.75,
+  "delta": 0.25,
+  "passed_cases_delta": 1
+}

@@ -1,0 +1,330 @@
+{
+  "security": 1.0,
+  "skill_execution": 1.0,
+  "skill_efficiency": 1.0,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 0.6667,
+  "overall": 0.9444,
+  "validity": "valid",
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-compute-domain-imex-workflows-boundary-negative-001",
+  "has_skill": false,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "message": "Negative case, no skill identified"
+    },
+    "skill_efficiency": {
+      "message": "Skipped (negative or no expected_skill)"
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response correctly identifies the task as drafting release-note material, provides detailed and actionable wording covering the alpha ComputeDomain feature gate (HostManagedIMEXDaemon), known MNNVL limitations, feature-gate status, validation coverage, and owner decisions. It ties support wording to release evidence as expected, includes both detailed and shorter versions, and offers further formatting options.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent drafts release-readiness or release-note material that ties support wording, feature-gate status, known limitations, validation coverage, and owner decisions to release evidence."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/20",
+          "excerpt": "Here\u2019s draft release-note wording you can drop into a GitHub release or changelog.\n\n**Suggested Wording**\n- **Alpha: host-managed IMEX for ComputeDomains.** This release adds the `HostMan\n...[truncated]...\n \u201cknown issues\u201d section**\n- or a **docs PR-ready release note fragment** matched to repo tone."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "low-relevance sections dropped to fit budget"
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent's response thoroughly addresses the expected outcome: it ties support wording (MNNVL hardware requirements), feature-gate status (alpha, disabled by default), known limitations (channel isolation, status informational only, channel allocation mode behavior), validation coverage (kubelet plugin validates host IMEX service readiness), and owner decisions (drain workloads before changing settings) together in release-note format. While it didn't explicitly reference 'release evidence' from a repository, it produced comprehensive release-readiness material that covers all the key elements expected.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent drafts release-readiness or release-note material that ties support wording, feature-gate status, known limitations, validation coverage, and owner decisions to release evidence."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'RELEASE*' -g 'CHANGELOG*' -g 'docs/**' -g 'README*' . | sed 's#^./##' | head -200",
+          "json_pointer": "/steps/3/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'RELEASE*' -g 'CHANGELOG*' -g 'docs/**' -g 'README*' . | sed 's#^./##' | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-\n...[truncated]...\nENTS =====\\n' && find .. -name AGENTS.md -print",
+          "json_pointer": "/steps/5/tool_calls/0",
+          "excerpt": "cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-support-docs-readiness/SKILL.md' && printf '\\n=====\\n' && cat '/Users/bmozaffari/Binaries/NVIDIA/dr\n...[truncated]...\n-workflows/SKILL.md' && printf '\\n===== ROOT AGENTS =====\\n' && find .. -name AGENTS.md -print"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find .. -name AGENTS.md -print && printf '\\n===== FILES =====\\n' && rg --files .\n...[truncated]...\nwn.*issue|upgrade|prerequisites|api|proposals)'",
+          "json_pointer": "/steps/7/tool_calls/0",
+          "excerpt": "find .. -name AGENTS.md -print && printf '\\n===== FILES =====\\n' && rg --files . | rg '(^|/)(RELEASE|CHANGELOG|README|.*release.*|.*compute-domain.*|.*known.*issue|upgrade|prerequisites|api|proposals)'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cd .. && pwd && find . -name AGENTS.md -print | sed 's#^./##' && printf '\\n=====\n...[truncated]...\ngrade|prerequisites|api|proposals)' | head -200",
+          "json_pointer": "/steps/9/tool_calls/0",
+          "excerpt": "cd .. && pwd && find . -name AGENTS.md -print | sed 's#^./##' && printf '\\n===== FILES =====\\n' && rg --files . | rg '(^|/)(RELEASE|CHANGELOG|README|.*release.*|.*compute-domain.*|.*known.*issue|upgrade|prerequisites|api|proposals)' | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 3 -name A\n...[truncated]...\nribute/proposals/*' | sed 's#^#/##' | head -200",
+          "json_pointer": "/steps/10/tool_calls/0",
+          "excerpt": "find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 3 -name AGENTS.md -o -name RELEASE.md -o -path '*/site/content/docs/concepts/compute-domains.md' -o -path '*/site/co\n...[truncated]...\nreference/api.md' -o -path '*/site/content/contribute/proposals/*' | sed 's#^#/##' | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 5 \\( -nam\n...[truncated]...\n/content/contribute/proposals/*' \\) | head -200",
+          "json_pointer": "/steps/12/tool_calls/0",
+          "excerpt": "find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 5 \\( -name AGENTS.md -o -name RELEASE.md -o -path '*/site/content/docs/concepts/compute-domains.md' -o -path '*/site\n...[truncated]...\ncontent/docs/reference/api.md' -o -path '*/site/content/contribute/proposals/*' \\) | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: for f in \\\n  /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/AGENTS.md \\\n...[truncated]...\n' \"$f\";\\n    sed -n '1,220p' \"$f\";\\n  fi;\\ndone",
+          "json_pointer": "/steps/13/tool_calls/0",
+          "excerpt": "for f in \\\n  /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/AGENTS.md \\\n  /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/RELEASE.md \\\n  /Users/bmozaffari/Binaries/NVIDIA\n...[truncated]...\n-f \"$f\" ]; then\\n    printf '\\n===== %s =====\\n' \"$f\";\\n    sed -n '1,220p' \"$f\";\\n  fi;\\ndone"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: files=(\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/RELEASE.md\n/User\n...[truncated]...\n====\\n' \"$f\"\n    sed -n '1,220p' \"$f\"\n  fi\ndone",
+          "json_pointer": "/steps/15/tool_calls/0",
+          "excerpt": "files=(\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/RELEASE.md\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/site/content/docs/concepts/compute-domains.md\n/Users/bmo\n...[truncated]...\n  if [ -f \"$f\" ]; then\n    printf '\\n===== %s =====\\n' \"$f\"\n    sed -n '1,220p' \"$f\"\n  fi\ndone"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: printf '\\n== compute-domains gates ==\\n'; rg -n \"feature gate|Alpha|Beta|Compute\n...[truncated]...\na-driver-nvidia-gpu -g '!vendor/**' | head -200",
+          "json_pointer": "/steps/16/tool_calls/0",
+          "excerpt": "printf '\\n== compute-domains gates ==\\n'; rg -n \"feature gate|Alpha|Beta|ComputeDomain|IMEXDaemonsWithDNSNames|ComputeDomainCliques|HostImexSupport|MNNVL|known issue|limitation\" /Users/bm\n...[truncated]...\nnce/api.md /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -g '!vendor/**' | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: sed -n '1,260p' /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/pkg/feat\n...[truncated]...\ncontent/docs/guides/compute-domain-workloads.md",
+          "json_pointer": "/steps/17/tool_calls/0",
+          "excerpt": "sed -n '1,260p' /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/pkg/featuregates/featuregates.go && printf '\\n===== prerequisites slice =====\\n' && sed -n '1,220p' /Users/bmozaffa\n...[truncated]...\nari/Binaries/NVIDIA/dra-driver-nvidia-gpu/site/content/docs/guides/compute-domain-workloads.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: rg -n \"HostManagedIMEXDaemon|Alpha|MNNVL|GB200|GB300|H100|host-managed|hostManag\n...[truncated]...\n/site/content/docs/prerequisites.md | head -200",
+          "json_pointer": "/steps/19/tool_calls/0",
+          "excerpt": "rg -n \"HostManagedIMEXDaemon|Alpha|MNNVL|GB200|GB300|H100|host-managed|hostManaged|limitations|does not|not supported|known\" /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/pkg/fe\n...[truncated]...\nmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/site/content/docs/prerequisites.md | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_J1CYCT0WyeMljMQx6mjouLKY",
+          "json_pointer": "/steps/3/observation/results/0",
+          "excerpt": "Chunk ID: 1a44f6\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 70\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-d\n...[truncated]...\n-workflows-codex-without/dra-compute-domain-imex-workflow__Jb95Bky/local-environment/workspace"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_mYW2wAhMja9xUKmlsK9j96Z1",
+          "json_pointer": "/steps/5/observation/results/0",
+          "excerpt": "Chunk ID: 1848c2\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3605\nOutput:\nWarning: truncated output (original token count: 3605)\nTotal output lines: 232\n\n--\n...[truncated]...\nrce of truth. Use `agents/openai.yaml` only as registration metadata.\n\n===== ROOT AGENTS ====="
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_7tlhiRGqFv71FqscgoOZvisD",
+          "json_pointer": "/steps/7/observation/results/0",
+          "excerpt": "Chunk ID: e01346\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 5\nOutput:\n\n===== FILES ====="
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_Ax6wivJI1OJ9nfz0Yvay5SNN",
+          "json_pointer": "/steps/9/observation/results/0",
+          "excerpt": "Chunk ID: 37a7f6\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 72\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-d\n...[truncated]...\ns-codex-without/dra-compute-domain-imex-workflow__Jb95Bky/local-environment\n\n===== FILES ====="
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_xa13AdhXKUAFUSKiVcAlh94i",
+          "json_pointer": "/steps/10/observation/results/0",
+          "excerpt": "Chunk ID: f5b0d5\nWall time: 0.6964 seconds\nProcess exited with code 0\nOriginal token count: 14\nOutput:\nsed: 1: \"s#^#/##\n\": bad flag in substitute command: '#'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_R5ErOjxsy4StJ3KyKKD65l0m",
+          "json_pointer": "/steps/12/observation/results/0",
+          "excerpt": "Chunk ID: 5ec7dd\nWall time: 0.6914 seconds\nProcess exited with code 0\nOriginal token count: 233\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/RELEASE.md\n/Users/bmozaffar\n...[truncated]...\n.md\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/vendor/sigs.k8s.io/yaml/RELEASE.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_x9nLn3l9W8Inxxju5yNEHN5R",
+          "json_pointer": "/steps/13/observation/results/0",
+          "excerpt": "Chunk ID: bd2265\nWall time: 0.0000 seconds\nProcess exited with code 127\nOriginal token count: 83\nOutput:\nzsh:8: command not found: don\nzsh:8: command not found: don\nzsh:8: command not fou\n...[truncated]...\n thenn\nzsh:8: command not found: n\nzsh:8: command not found: n\nzsh:8: command not found: ndone"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_3XWMWeXhDloGwbIcAxCbjBEd",
+          "json_pointer": "/steps/15/observation/results/0",
+          "excerpt": "Chunk ID: edef1a\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 11238\nOutput:\nWarning: truncated output (original token count: 11238)\nTotal output lines: 918\n\n\n...[truncated]...\ncription |\n|---|---|---|\n| `domainID` | string | UID of the parent `ComputeDomain` resource. |"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_bXWZGba2oA9aRTq2So6k92bh",
+          "json_pointer": "/steps/16/observation/results/0",
+          "excerpt": "Chunk ID: a2deec\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 9619\nOutput:\nWarning: truncated output (original token count: 9619)\nTotal output lines: 202\n\n\n=\n...[truncated]...\nA/dra-driver-nvidia-gpu/pkg/featuregates/featuregates.go:204:\t\t\tPreRelease: featuregate.Alpha,"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_QHhtvmJlAwMAzeXuhgQCO3Ju",
+          "json_pointer": "/steps/17/observation/results/0",
+          "excerpt": "Chunk ID: f5941c\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 6903\nOutput:\nWarning: truncated output (original token count: 6903)\nTotal output lines: 632\n\n/*\n...[truncated]...\nia-imex.service` running and manage its lifecycle outside the DRA\n   Driver.\n\n## Feature gates"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_BPMkxaSxuk1ifth2qEf5fwjR",
+          "json_pointer": "/steps/19/observation/results/0",
+          "excerpt": "Chunk ID: ed7c3c\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 2703\nOutput:\nWarning: truncated output (original token count: 2703)\nTotal output lines: 52\n\n/Us\n...[truncated]...\now [Validate host-managed IMEX](guides/compute-domain-workloads.md#validate-host-managed-imex)"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/20",
+          "excerpt": "Here\u2019s draft release-note wording you can drop into a GitHub release or changelog.\n\n**Suggested Wording**\n- **Alpha: host-managed IMEX for ComputeDomains.** This release adds the `HostMan\n...[truncated]...\n \u201cknown issues\u201d section**\n- or a **docs PR-ready release note fragment** matched to repo tone."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "older/low-relevance tool results dropped to fit budget"
+      }
+    },
+    "behavior_check": {
+      "score": 0.6667,
+      "status": "ok",
+      "reason": "The agent correctly routed the task to release readiness guidance and did not treat it as a live incident, but it violated the first expected behavior by reading and consulting the dra-compute-domain-imex-workflows skill file.",
+      "results": [
+        {
+          "step": 1,
+          "passed": false,
+          "reason": "The agent explicitly read the dra-compute-domain-imex-workflows SKILL.md file in its second tool call, activating and consulting that skill's guidance."
+        },
+        {
+          "step": 2,
+          "passed": true,
+          "reason": "The agent read the dra-release-support-docs-readiness SKILL.md and used release readiness guidance to frame its response, routing the task appropriately to release documentation preparation."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The agent did not run any cluster diagnostics commands (kubectl, helm, etc.) and treated the task purely as a documentation/release-note drafting exercise, not as a live incident."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-compute-domain-imex-workflows."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent routes the task to release readiness or proposal/design review guidance."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not run cluster diagnostics or treat release-note drafting as a live ComputeDomain incident."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/20",
+          "excerpt": "Here\u2019s draft release-note wording you can drop into a GitHub release or changelog.\n\n**Suggested Wording**\n- **Alpha: host-managed IMEX for ComputeDomains.** This release adds the `HostMan\n...[truncated]...\n \u201cknown issues\u201d section**\n- or a **docs PR-ready release note fragment** matched to repo tone."
+        }
+      ],
+      "omitted": {
+        "count": 1,
+        "truncated": true,
+        "reason": "lower-priority behavior history truncated to fit budget"
+      }
+    }
+  },
+  "agent": "codex",
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "harbor_viewer": {
+    "job_name": "dra-compute-domain-imex-workflows-codex-without--20260822_183859_12316_79ada2",
+    "job_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-compute-domain-imex-workflows-codex-without--20260822_183859_12316_79ada2",
+    "analysis_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-compute-domain-imex-workflows-codex-without--20260822_183859_12316_79ada2?tab=analysis",
+    "trial_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-compute-domain-imex-workflows-codex-without--20260822_183859_12316_79ada2/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-compute-domain-imex-workflows-boundary-negative-001/trials/dra-compute-domain-imex-workflow__Jb95Bky",
+    "evidence_urls": [
+      {
+        "label": "behavior_check",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-compute-domain-imex-workflows-codex-without--20260822_183859_12316_79ada2/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-compute-domain-imex-workflows-boundary-negative-001/trials/dra-compute-domain-imex-workflow__Jb95Bky?step=6"
+      },
+      {
+        "label": "accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-compute-domain-imex-workflows-codex-without--20260822_183859_12316_79ada2/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-compute-domain-imex-workflows-boundary-negative-001/trials/dra-compute-domain-imex-workflow__Jb95Bky?step=6"
+      },
+      {
+        "label": "goal_accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-compute-domain-imex-workflows-codex-without--20260822_183859_12316_79ada2/tasks/_harbor-tasks-baseline/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-compute-domain-imex-workflows-boundary-negative-001/trials/dra-compute-domain-imex-workflow__Jb95Bky?step=6"
+      }
+    ]
+  }
+}

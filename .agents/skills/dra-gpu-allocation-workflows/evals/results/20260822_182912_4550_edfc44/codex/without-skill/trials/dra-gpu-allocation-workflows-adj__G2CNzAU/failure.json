@@ -1,0 +1,26 @@
+{
+  "status": "unscored",
+  "trial": "dra-gpu-allocation-workflows-adj__G2CNzAU",
+  "agent": "codex",
+  "variant": "without_skill",
+  "artifacts": [
+    "result.json",
+    "config.json",
+    "exception.txt",
+    "trial.log"
+  ],
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "task_id": {
+    "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/evals/results/20260822_182912_4550_edfc44/_harbor-tasks-baseline/dra-gpu-allocation-workflows-adjacent-negative-001"
+  },
+  "task_name": "nvidia/skill-eval-dra-gpu-allocation-workflows-adjacent-negative-001",
+  "trial_name": "dra-gpu-allocation-workflows-adj__G2CNzAU",
+  "started_at": "2026-08-23T01:29:16.749684Z",
+  "finished_at": "2026-08-23T01:29:17.067904Z",
+  "error": {
+    "type": "RuntimeError",
+    "message": "Docker compose command failed for environment skill-eval-dra-gpu-allocation-workflows-adjacent-negative-001. Command: docker compose --project-name dra-gpu-allocation-workflows-adj__g2cnzau --project-directory /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/evals/results/20260822_182912_4550_edfc44/_harbor-tasks-baseline/dra-gpu-allocation-workflows-adjacent-negative-001/environment -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmp0zalz_3q/dra-gpu-allocation-workflows-adj__G2CNzAU-docker-compose-resources.json -f /Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker-compose-build.yaml -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpqkwek8cv/docker-compose-mounts.json build. Return code: 125. Stdout: unknown flag: --project-name\n\nUsage:  docker [OPTIONS] COMMAND [ARG...]\n\nRun 'docker --help' for more information\n. Stderr: None. ",
+    "occurred_at": "2026-08-22T18:29:16.937477"
+  }
+}

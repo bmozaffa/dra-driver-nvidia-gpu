@@ -1,0 +1,332 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "session_id": "01a02c49-0d0d-7242-83b0-8d1bd05e65f7",
+  "agent": {
+    "name": "codex",
+    "version": "0.142.5",
+    "model_name": "openai/openai/gpt-5.4",
+    "extra": {
+      "originator": "codex_exec",
+      "cwd": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace",
+      "git": {
+        "commit_hash": "f5d8e5e379881b2abb03be9e63c2df56148d243a",
+        "branch": "astra-evals",
+        "repository_url": "https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu"
+      }
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-08-23T01:43:00.546Z",
+      "source": "system",
+      "message": "<permissions instructions>\nFilesystem sandboxing defines which files can be read or written. `sandbox_mode` is `danger-full-access`: No filesystem sandboxing - all commands are permitted. Network access is enabled.\nApproval policy is currently never. Do not provide the `sandbox_permissions` for any reason, commands will be rejected.\n</permissions instructions><skills_instructions>\n## Skills\nA skill is a set of instructions provided through a `SKILL.md` source. Below is the list of skills that can be used. Each entry includes a name, description, and source locator. `file` locators are on the host filesystem, `environment resource` locators are owned by an execution environment, `orchestrator resource` locators are opaque non-filesystem resources, and `custom resource` locators use their provider's access mechanism.\n### Available skills\n- imagegen: Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/agent/codex-home/skills/.system/imagegen/SKILL.md)\n- openai-docs: Use when the user asks how to build with OpenAI products or APIs, asks about Codex itself or choosing Codex surfaces, needs up-to-date official documentation with citations, help choosing the latest model for a use case, or model upgrade and prompt-upgrade guidance; use OpenAI docs MCP tools for non-Codex docs questions, use the Codex manual helper first for broad Codex self-knowledge, and restrict fallback browsing to official OpenAI domains. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/agent/codex-home/skills/.system/openai-docs/SKILL.md)\n- plugin-creator: Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, valid manifest defaults, and personal-marketplace entries by default. Use when Codex needs to create a new personal plugin, add optional plugin structure, generate or update marketplace entries for plugin ordering and availability metadata, or update an existing local plugin during development with the CLI-driven cachebuster and reinstall flow. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/agent/codex-home/skills/.system/plugin-creator/SKILL.md)\n- skill-creator: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/agent/codex-home/skills/.system/skill-creator/SKILL.md)\n- skill-installer: Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos). (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/agent/codex-home/skills/.system/skill-installer/SKILL.md)\n- dra-api-crd-feature-gate-change: Plan, implement, review, or validate NVIDIA GPU DRA driver API, CRD, opaque configuration, ResourceSlice attribute, Helm value, CLI flag, checkpoint schema, feature-gate, and compatibility changes. Use when work touches api/nvidia.com, generated CRDs or clients, validation, DeviceClasses, public configuration, feature-gate stages or dependencies, or upgrade and downgrade behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md)\n- dra-build-test-codegen-ci: Select, run, and interpret the NVIDIA GPU DRA driver's local build, formatting, lint, code generation, unit, Helm, BATS, Ginkgo e2e, mock-NVML, and CI checks. Use when preparing a PR, validating a patch, reproducing CI, debugging a failed check, or mapping changed files to the minimum credible test set. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/SKILL.md)\n- dra-compute-domain-imex-workflows: Explain, design, review, or troubleshoot NVIDIA DRA ComputeDomain workflows across MNNVL hardware, IMEX daemon lifecycle, driver-managed or host-managed mode, ComputeDomain and ComputeDomainClique resources, per-domain DaemonSets, channel claims, readiness, kubelet prepare, and workload device or mount injection. Use when asked about GB200 or GB300 fabrics, clique state, IMEX channels, or multi-node workload failures. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/SKILL.md)\n- dra-gpu-allocation-workflows: Explain, design, review, or troubleshoot NVIDIA GPU DRA allocation across full GPUs, MIG, dynamic MIG, VFIO, time-slicing, MPS, DeviceClasses, ResourceClaims, ResourceSlices, scheduler binding, kubelet prepare/unprepare, checkpoints, and CDI injection. Use when asked about GPU selectors, attributes, capacity, sharing, passthrough, scheduling, allocation failures, or container-visible devices. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/SKILL.md)\n- dra-helm-demo-sample-workloads: Plan, render, install, upgrade, or validate NVIDIA GPU DRA driver Helm deployments, local kind or nvkind demos, and GPU or ComputeDomain sample workloads. Use when asked for chart values, prerequisites, demo clusters, quickstarts, sample manifests, DeviceClasses, ResourceSlices, or basic allocation validation, while separating standalone community flows from GPU Operator-managed deployment. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md)\n- dra-operations-troubleshooting-observability: Triage NVIDIA GPU DRA driver installation, scheduling, allocation, prepare/unprepare, CDI, checkpoint, GPU, MIG, VFIO, ComputeDomain, IMEX, upgrade, health, log, event, and Prometheus metric failures. Use when given failed pods or claims, missing devices, broken ResourceSlices, controller or daemon symptoms, upgrade regressions, or a support escalation that needs a bounded evidence plan. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-operations-troubleshooting-observability/SKILL.md)\n- dra-project-orientation: Orient contributors and reviewers to the NVIDIA GPU DRA driver repository, its runtime components, documentation, ownership, and source layout. Use when asked what the project does, how GPU and ComputeDomain paths fit together, where code or docs live, who owns review, or how to onboard without inventing repository paths. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/SKILL.md)\n- dra-proposal-and-design-review: Draft or review maintainer-ready proposals, ADRs, design notes, feature-gate plans, and implementation plans for the NVIDIA GPU DRA driver. Use when a change affects user-facing APIs, CRDs, Helm values, ResourceSlice attributes, checkpoint schemas, feature gates, dependencies, upstream coordination, or multi-node ComputeDomain and IMEX behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md)\n- dra-release-support-docs-readiness: Assess and prepare NVIDIA GPU DRA driver release, support, documentation, known-issue, compatibility, and handoff readiness. Use when asked for a release checklist, changelog or release-note impact, version matrix, docs updates, support caveats, image/chart promotion review, upgrade guidance, or stale-source refresh across the repository and GPU Operator documentation. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-support-docs-readiness/SKILL.md)\n### How to use skills\n- Discovery: The list above is the skills available in this session (name + description + source locator). `file` entries live on the host filesystem, `environment resource` entries are owned by their execution environment, `orchestrator resource` entries must be accessed through `skills.list` and `skills.read`, and `custom resource` entries use their provider's access mechanism.\n- Trigger rules: If the user names a skill (with `$SkillName` or plain text) OR the task clearly matches a skill's description shown above, you must use that skill for that turn. Multiple mentions mean use them all. Do not carry skills across turns unless re-mentioned.\n- Missing/blocked: If a named skill isn't in the list or its source can't be read, say so briefly and continue with the best fallback.\n- How to use a skill (progressive disclosure):\n  1) After deciding to use a skill, the main agent must read its `SKILL.md` completely before taking task actions. For a `file` entry, open the listed path. For an `environment resource`, use the filesystem of the owning environment. For an `orchestrator resource`, call `skills.list` with `{\"authority\":{\"kind\":\"orchestrator\"}}`, select the matching package, and pass its `main_resource` to `skills.read`. If a read is truncated or paginated, continue until EOF.\n  2) When `SKILL.md` references another resource, use the same access mechanism. Resolve relative paths against a filesystem-backed skill directory. For orchestrator skills, pass the exact referenced resource identifier with the same authority and package to `skills.read`; do not treat `skill://` identifiers as filesystem paths.\n  3) If `SKILL.md` points to extra folders such as `references/`, use its routing instructions to identify the resources required for the task. The main agent must read each required instruction or reference file itself before acting on it. Do not delegate reading, summarizing, or interpreting skill instructions to a subagent. Subagents may still perform task work when the selected skill allows it.\n  4) For filesystem-backed skills, prefer running or patching provided scripts instead of retyping large code blocks. For orchestrator skills, use `skills.read` and the available tools; do not invent a local path.\n  5) Reuse provided assets or templates through the same source access mechanism instead of recreating them.\n- Coordination and sequencing:\n  - If multiple skills apply, choose the minimal set that covers the request and state the order you'll use them.\n  - Announce which skill(s) you're using and why (one short line). If you skip an obvious skill, say why.\n- Context hygiene:\n  - Progressive disclosure applies to selecting relevant files, not partially reading a selected instruction file. Do not load unrelated references, scripts, or assets.\n  - Avoid deep reference-chasing: prefer opening only files directly linked from `SKILL.md` unless you're blocked.\n  - When variants exist (frameworks, providers, domains), pick only the relevant reference file(s) and note that choice.\n- Safety and fallback: If a skill can't be applied cleanly (missing files, unclear instructions), state the issue, pick the next-best approach, and continue.\n</skills_instructions>"
+    },
+    {
+      "step_id": 2,
+      "timestamp": "2026-08-23T01:43:00.546Z",
+      "source": "user",
+      "message": "<environment_context>\n  <cwd>/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace</cwd>\n  <shell>zsh</shell>\n  <current_date>2026-08-22</current_date>\n  <timezone>America/Los_Angeles</timezone>\n  <filesystem><workspace_roots><root>/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace</root></workspace_roots><permission_profile type=\"disabled\"><file_system type=\"unrestricted\" /></permission_profile></filesystem>\n</environment_context>"
+    },
+    {
+      "step_id": 3,
+      "timestamp": "2026-08-23T01:43:00.568Z",
+      "source": "user",
+      "message": "Draft a proposal for adding a new Helm value that controls IMEX isolation mode and explain upgrade risks.\n"
+    },
+    {
+      "step_id": 4,
+      "timestamp": "2026-08-23T01:43:02.166Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019m using the design-review and Helm-demo skills first, then I\u2019ll draft the proposal with upgrade risks."
+    },
+    {
+      "step_id": 5,
+      "timestamp": "2026-08-23T01:43:02.736Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_78HGqmAQMCkVOJSeKqST4fdw",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md' && printf '\\n---SKILL2---\\n' && cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md'",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 1000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_78HGqmAQMCkVOJSeKqST4fdw",
+            "content": "Chunk ID: 6f669f\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3262\nOutput:\nWarning: truncated output (original token count: 3262)\nTotal output lines: 221\n\n---\nname: dra-proposal-and-design-review\ndescription: Draft or review maintainer-ready proposals, ADRs, design notes, feature-gate plans, and implementation plans for the NVIDIA GPU DRA driver. Use when a change affects user-facing APIs, CRDs, Helm values, ResourceSlice attributes, checkpoint schemas, feature gates, dependencies, upstream coordination, or multi-node ComputeDomain and IMEX behavior.\n---\n\n# DRA Proposal and Design Review\n\n## Purpose\n\nTurn a DRA driver idea into a bounded, source-backed design artifact that follows the repository's proposal process and exposes its compatibility, ownership, safety, and test implications.\n\n## Triggers\n\n- Draft or review a proposal, ADR, implementation plan, scope analysis, or maintainer-ready design.\n- Add or graduate a feature gate.\n- Change a CRD, API field, Helm value, ResourceSlice attribute, CLI flag, checkpoint schema, external dependency, or multi-node coordination behavior.\n- Decide whether work belongs in this driver, upstream Kubernetes, GPU Operator, the device plugin, or another layer.\n\n## Audience\n\n- Contributors\n- DRA maintainers and reviewers\n- Documentation and release owners\n\n## Inputs\n\n- Problem statement, named user or workload, and desired outcome\n- Related issues, PRs, upstream work, or release target\n- Affected components and user-facing examples\n- Upgrade/downgrade, platform, Kubernetes, driver, GPU, and feature-gate constraints\n- Available unit, integration, mock, BATS, and real-GPU test environments\n\n## Workflow\n\n1. Read `site/content/contribute/proposals/_index.md` and `site/content/contribute/proposals/NNNN-template.md` completely.\n2. Decide whether a proposal is required. Require one for the cases enumerated by the proposal process; explain why a bug fix, docs-only change, or internal refactor can proceed directly when exempt.\n3. Verify the problem against current code, repository docs, relevant release notes, Kubernetes DRA docs, and GPU Operator docs. Label public and internal supplemental sources.\n4. Establish the layer boundary. State why the change belongs here instead of upstream Kubernetes/DRA, GPU Operator, the legacy device plugin, a runtime, or a separate tool.\n5. Start from the repository template. Use the next proposal number only after inspecting existing proposal files; keep status `provisional` until maintainers agree.\n6. Write the release-note-quality summary and a concrete user-facing example first.\n7. Define measurable goals, explicit non-goals, the smallest valuable slice, affected components, and the single authoritative owner for new state.\n8. Cover API and configuration changes, feature-gate stage and graduation, upgrade and downgrade behavior, environment floor, and compatibility with adjacent features.\n9. Build a test plan that names appropriate files or jobs across unit, controller/integration, generated artifacts, Helm, mock NVML, BATS, Ginkgo e2e, and real GPU or MNNVL coverage. Explain unavailable hardware coverage.\n10. Analyze failure modes including prepare/unprepare races, force deletion, reboot, restart, checkpoint migration, leader election, multi-node partitions, privilege, device mounts, and fail-fast behavior.\n11. Compare alternatives, including existing CEL selectors, DRA primitives, current CRD/Helm knobs, upstream work, and reusable NVIDIA libraries.\n12. Review for scope, user surface, ownership, upgrade impact, alternatives, drawbacks, open questions, testability, docs, and release/support consequences.\n13. Return the design plus a short list of unresolved maintainer decisions. Do not claim an unreviewed proposal is implementable.\n\n## Expected Outputs\n\n- Proposal or ADR draft\n- Structured design-review findings\n- Scope and layer analysis\n- Implementation and validation plan\n\n## References\n\n- Public proposal process: `site/content/contribute/proposals/_index.md`\n- Public proposal template: `site/content/contribute/proposals/NNNN-template.md`\n- Public architecture: `site/content/docs/concepts/architecture.md`\n- Public development workflow: `site/content/contribute/development.md`\n- Public upstream repository: https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu\n- Public Kubernetes DRA concepts: https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/\n- Public GPU Operator DRA guide: https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/dra-intro-install.html\n- Internal supplemental: none provided by this skill\n\n## Validation\n\n- Include status, authorship context, related work, summary, motivation, goals, non-goals, layer rationale, user-facing example, affected components, state owner, smallest slice, design, upgrade/downgrade, environment floor, test plan, risks, alternatives, drawbacks, and open questions.\n- Make each goal imply at least one validation check.\n- Name the reviewer roles and source anchors.\n- For the scenario \"add a new ResourceSlice attribute behind a feature gate\", cover proposal necessity, CEL-facing naming, gate stage/default/depend\u2026762 tokens truncated\u2026 follow `site/content/docs/prerequisites.md`, `install.md`, `upgrade.md`, and the release-tagged chart docs.\n   - Local development: follow scripts under `demo/clusters/kind/` or GPU-aware `demo/clusters/nvkind/`; use provider-specific directories for GKE or OpenShift.\n3. Select GPU resources, ComputeDomains, or both. Confirm the matching hardware, feature gates, driver root, CDI, NFD/GFD, IMEX, and chart values.\n4. Pin the chart version and review `deployments/helm/dra-driver-nvidia-gpu/values.yaml`, `Chart.yaml`, and `templates/validation.yaml`. Do not copy defaults from a different release.\n5. Render before applying:\n   - Run `make helm-lint`.\n   - Run `helm template` with the exact intended values.\n   - Inspect namespaces, images, service accounts, RBAC, host paths, security context, node selectors, feature gates, controller/plugin enablement, and DeviceClasses.\n6. Present the mutation plan, affected cluster objects, rollback/cleanup plan, and verification steps. Obtain explicit approval before creating a cluster or running Helm/kubectl mutations.\n7. Apply only the approved commands. Avoid embedding credentials or kubeconfig contents.\n8. Verify in order:\n   - Helm release and driver pod readiness\n   - Expected plugin/controller/webhook containers\n   - Expected DeviceClasses\n   - `gpu.nvidia.com` and/or `compute-domain.nvidia.com` ResourceSlices\n   - ResourceClaim allocation/reservation and pod scheduling\n   - Container-visible GPU/CDI devices or IMEX channel/mounts\n   - Relevant events and component logs\n9. Prefer an existing release-matched manifest under `demo/specs/` or the maintained docs. Select the Kubernetes DRA API version that matches the cluster.\n10. Distinguish a local demonstration from a supported GPU Operator deployment. Capture known issues, support status, and hardware limitations from current release sources.\n11. Clean up only exact approved objects. Confirm whether workloads, claims, ComputeDomains, namespaces, Helm releases, or demo clusters contain state the operator wants to keep.\n12. Return the rendered plan or execution report with versions, values, evidence, deviations, and cleanup state.\n\n## Expected Outputs\n\n- Helm values and rendered-deployment review\n- Plan/apply runbook\n- Demo or quickstart procedure\n- Sample workload manifest and validation report\n\n## References\n\n- Standalone prerequisites: `site/content/docs/prerequisites.md`\n- Standalone install and validation: `site/content/docs/install.md`\n- Upgrades: `site/content/docs/upgrade.md`\n- Chart authority: `deployments/helm/dra-driver-nvidia-gpu/`\n- Local clusters: `demo/clusters/`\n- Samples: `demo/specs/`\n- Public project docs: https://dra-driver-nvidia-gpu.sigs.k8s.io/\n- Public documentation navigation history: https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu/issues/1103\n- Public GPU Operator DRA guide: https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/dra-intro-install.html\n- Public Kubernetes DRA concepts: https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/\n- Internal supplemental: none provided by this skill\n\n## Validation\n\n- Record Kubernetes, driver, chart, GPU Operator, NVIDIA driver, runtime/CDI, and hardware context.\n- Verify the rendered chart before mutation.\n- Verify only the expected resource families and DeviceClasses are enabled.\n- For the scenario \"run the basic GPU sharing sample\", verify one claim is allocated, the pod is running, both containers reference the intended claim, and observed GPU UUIDs match the expected sharing result.\n- For the scenario \"run a ComputeDomain sample\", verify clique labels, ComputeDomain/controller objects, daemon readiness evidence, channel claim allocation, and injected channel device plus `/imexd`.\n- State whether the result is a local demo, experimental feature, or productized GPU Operator flow.\n\n## Safety Constraints\n\n- Require explicit approval before `helm install/upgrade/uninstall`, mutating `kubectl`, cluster creation/deletion, or invasive tests.\n- Show the current context, namespace, release name, and exact target before mutation.\n- Never request or print kubeconfigs, tokens, registry credentials, or private cluster data.\n- Avoid destructive cleanup globs and broad namespace deletion.\n\n## Non-Goals\n\n- Do not present local demo scripts as production support guidance.\n- Do not assume current online prerequisites apply to an older release.\n- Do not mutate a cluster merely to answer a configuration or explanation question.\n\n## Owners\n\n- DRA engineering\n- DRA documentation maintainers\n- Cluster operator for each execution\n\n## Refresh Policy\n\n- Review every DRA driver and GPU Operator release.\n- Review after Helm value, prerequisite, Kubernetes DRA API, runtime/CDI, demo-script, or known-issue changes.\n- Verify official online sources immediately before a productized install or upgrade.\n\n## Registration Notes\n\nKeep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md' && printf '\\\\n---SKILL2---\\\\n' && cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md'\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":1000}"
+      }
+    },
+    {
+      "step_id": 6,
+      "timestamp": "2026-08-23T01:43:05.982Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019ve got the skill guidance; next I\u2019ll inspect the proposal template and current IMEX-related chart/docs."
+    },
+    {
+      "step_id": 7,
+      "timestamp": "2026-08-23T01:43:06.404Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_xvTzmuw6MJaLXvkKj5rOnRDl",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Inspect proposal and Helm sources",
+                "status": "in_progress"
+              },
+              {
+                "step": "Locate current IMEX settings",
+                "status": "pending"
+              },
+              {
+                "step": "Draft proposal with risks",
+                "status": "pending"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_xvTzmuw6MJaLXvkKj5rOnRDl",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Inspect proposal and Helm sources\",\"status\":\"in_progress\"},{\"step\":\"Locate current IMEX settings\",\"status\":\"pending\"},{\"step\":\"Draft proposal with risks\",\"status\":\"pending\"}]}"
+      }
+    },
+    {
+      "step_id": 8,
+      "timestamp": "2026-08-23T01:43:17.538Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_mOia4RpCrohmVnruVUNkVWZI",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "pwd && rg --files -g 'AGENTS.md' -g 'site/content/contribute/proposals/*' -g 'deployments/helm/dra-driver-nvidia-gpu/**' -g 'site/content/docs/**' -g 'demo/specs/**' . && printf '\\n---INDEX---\\n' && sed -n '1,220p' site/content/contribute/proposals/_index.md && printf '\\n---TEMPLATE---\\n' && sed -n '1,260p' site/content/contribute/proposals/NNNN-template.md && printf '\\n---IMEX-HITS---\\n' && rg -n \"IMEX|imex|isolation\" deployments/helm/dra-driver-nvidia-gpu site/content docs demo/specs pkg cmd api internal .",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 1000,
+            "workdir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_mOia4RpCrohmVnruVUNkVWZI",
+            "content": "Chunk ID: 1a7112\nWall time: 0.3162 seconds\nProcess exited with code 1\nOriginal token count: 69\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"pwd && rg --files -g 'AGENTS.md' -g 'site/content/contribute/proposals/*' -g 'deployments/helm/dra-driver-nvidia-gpu/**' -g 'site/content/docs/**' -g 'demo/specs/**' . && printf '\\\\n---INDEX---\\\\n' && sed -n '1,220p' site/content/contribute/proposals/_index.md && printf '\\\\n---TEMPLATE---\\\\n' && sed -n '1,260p' site/content/contribute/proposals/NNNN-template.md && printf '\\\\n---IMEX-HITS---\\\\n' && rg -n \\\"IMEX|imex|isolation\\\" deployments/helm/dra-driver-nvidia-gpu site/content docs demo/specs pkg cmd api internal .\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":1000,\"workdir\":\"/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace\"}"
+      }
+    },
+    {
+      "step_id": 9,
+      "timestamp": "2026-08-23T01:43:21.199Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "That glob was too broad; I\u2019m narrowing to the repo layout and relevant files."
+    },
+    {
+      "step_id": 10,
+      "timestamp": "2026-08-23T01:43:22.176Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_XLytPxGrr1IJuUi0wlcK8C3D",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "find .. -name AGENTS.md -print ; printf '\\n---ROOT---\\n' ; ls ; printf '\\n---PROPOSALS---\\n' ; ls site/content/contribute/proposals ; printf '\\n---HELM---\\n' ; find deployments/helm/dra-driver-nvidia-gpu -maxdepth 3 -type f | sort ; printf '\\n---DOCS-IMEX---\\n' ; rg -n \"IMEX|imex|isolation\" site/content deployments/helm/dra-driver-nvidia-gpu demo/specs pkg cmd api internal 2>/dev/null ; printf '\\n---INDEX---\\n' ; sed -n '1,220p' site/content/contribute/proposals/_index.md ; printf '\\n---TEMPLATE---\\n' ; sed -n '1,260p' site/content/contribute/proposals/NNNN-template.md",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 1000,
+            "workdir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_XLytPxGrr1IJuUi0wlcK8C3D",
+            "content": "Chunk ID: 67d589\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 99\nOutput:\n\n---ROOT---\ninput\nskills\n\n---PROPOSALS---\nls: site/content/contribute/proposals: No such file or directory\n\n---HELM---\nfind: deployments/helm/dra-driver-nvidia-gpu: No such file or directory\n\n---DOCS-IMEX---\n\n---INDEX---\nsed: site/content/contribute/proposals/_index.md: No such file or directory\n\n---TEMPLATE---\nsed: site/content/contribute/proposals/NNNN-template.md: No such file or directory\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"find .. -name AGENTS.md -print ; printf '\\\\n---ROOT---\\\\n' ; ls ; printf '\\\\n---PROPOSALS---\\\\n' ; ls site/content/contribute/proposals ; printf '\\\\n---HELM---\\\\n' ; find deployments/helm/dra-driver-nvidia-gpu -maxdepth 3 -type f | sort ; printf '\\\\n---DOCS-IMEX---\\\\n' ; rg -n \\\"IMEX|imex|isolation\\\" site/content deployments/helm/dra-driver-nvidia-gpu demo/specs pkg cmd api internal 2>/dev/null ; printf '\\\\n---INDEX---\\\\n' ; sed -n '1,220p' site/content/contribute/proposals/_index.md ; printf '\\\\n---TEMPLATE---\\\\n' ; sed -n '1,260p' site/content/contribute/proposals/NNNN-template.md\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":1000,\"workdir\":\"/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace\"}"
+      }
+    },
+    {
+      "step_id": 11,
+      "timestamp": "2026-08-23T01:43:23.920Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019m in the eval workspace wrapper, so I\u2019ll locate the actual repo first."
+    },
+    {
+      "step_id": 12,
+      "timestamp": "2026-08-23T01:43:25.132Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_aYDqrhg6CZqOMb5JRIgdSxA8",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "find .. -maxdepth 4 -type d \\( -name .git -o -name deployments -o -name site \\) -print | sed 's#/\\.git##' | sort -u | head -100",
+            "login": true,
+            "max_output_tokens": 12000,
+            "yield_time_ms": 1000,
+            "workdir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_aYDqrhg6CZqOMb5JRIgdSxA8",
+            "content": "Chunk ID: 20afa1\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 0\nOutput:\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"find .. -maxdepth 4 -type d \\\\( -name .git -o -name deployments -o -name site \\\\) -print | sed 's#/\\\\.git##' | sort -u | head -100\",\"login\":true,\"max_output_tokens\":12000,\"yield_time_ms\":1000,\"workdir\":\"/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace\"}"
+      }
+    },
+    {
+      "step_id": 13,
+      "timestamp": "2026-08-23T01:43:26.814Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "No repo checkout here. I\u2019ll inspect the provided inputs and draft from the available skill guidance."
+    },
+    {
+      "step_id": 14,
+      "timestamp": "2026-08-23T01:43:27.855Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_gBM5WE8XBdyOcybValr4VvQd",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "find . -maxdepth 3 -type f | sort | sed -n '1,200p' && printf '\\n---INPUT---\\n' && find input -type f -maxdepth 3 -print -exec sh -c 'echo \"--- {} ---\"; sed -n \"1,220p\" \"$1\"' _ {} \\;",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 1000,
+            "workdir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace"
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_gBM5WE8XBdyOcybValr4VvQd",
+            "content": "Chunk ID: bd1bdc\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 4\nOutput:\n\n---INPUT---\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"find . -maxdepth 3 -type f | sort | sed -n '1,200p' && printf '\\\\n---INPUT---\\\\n' && find input -type f -maxdepth 3 -print -exec sh -c 'echo \\\"--- {} ---\\\"; sed -n \\\"1,220p\\\" \\\"$1\\\"' _ {} \\\\;\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":1000,\"workdir\":\"/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/evals/results/20260822_184254_17626_e0d1c4/_harbor-jobs/dra-helm-demo-sample-workloads-codex-without/dra-helm-demo-sample-workloads-b__PoRmhE5/local-environment/workspace\"}"
+      }
+    },
+    {
+      "step_id": 15,
+      "timestamp": "2026-08-23T01:43:30.856Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_OdUSm3XKH6EQpR8i6AFHpOft",
+          "function_name": "update_plan",
+          "arguments": {
+            "explanation": "The actual repository sources are not present in this workspace, so I\u2019m drafting a source-aware proposal from the skill instructions and clearly marking repo-specific details as items to confirm against the chart and proposal template in-repo.",
+            "plan": [
+              {
+                "step": "Inspect proposal and Helm sources",
+                "status": "completed"
+              },
+              {
+                "step": "Locate current IMEX settings",
+                "status": "completed"
+              },
+              {
+                "step": "Draft proposal with risks",
+                "status": "in_progress"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_OdUSm3XKH6EQpR8i6AFHpOft",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"explanation\":\"The actual repository sources are not present in this workspace, so I\u2019m drafting a source-aware proposal from the skill instructions and clearly marking repo-specific details as items to confirm against the chart and proposal template in-repo.\",\"plan\":[{\"step\":\"Inspect proposal and Helm sources\",\"status\":\"completed\"},{\"step\":\"Locate current IMEX settings\",\"status\":\"completed\"},{\"step\":\"Draft proposal with risks\",\"status\":\"in_progress\"}]}"
+      }
+    },
+    {
+      "step_id": 16,
+      "timestamp": "2026-08-23T01:43:50.792Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "**Proposal Draft**\n\nTitle: Add a Helm value to control IMEX isolation mode\n\nStatus: Provisional\n\nSummary:\n- Add a new Helm value that lets operators choose the IMEX isolation mode used by the NVIDIA GPU DRA driver\u2019s ComputeDomain/IMEX deployment path.\n- The value is intended to make isolation behavior explicit at install and upgrade time, instead of relying on an implicit chart default or host-level behavior.\n- The first slice should be chart-only wiring into the existing driver configuration surface, not a new CRD or per-claim API.\n\nMotivation:\n- IMEX isolation is operationally significant for multi-node ComputeDomain workflows because it affects how IMEX channels and related mounts are shared or separated across workloads.\n- Today, if isolation mode is implicit, operators can unintentionally change behavior during upgrades when defaults move, when new environments are introduced, or when moving between standalone Helm and GPU Operator-managed flows.\n- A Helm value gives cluster operators a release-scoped, reviewable, GitOps-friendly knob for choosing the intended isolation behavior.\n\nGoals:\n- Add a user-facing Helm value for IMEX isolation mode.\n- Preserve current behavior by default for existing users.\n- Make upgrades deterministic by rendering the chosen mode explicitly.\n- Surface invalid values early through Helm/chart validation.\n- Document when a mode change is safe versus disruptive.\n\nNon-goals:\n- Do not introduce per-ComputeDomain or per-claim isolation selection in this change.\n- Do not redesign IMEX channel allocation semantics.\n- Do not change Kubernetes DRA APIs, ResourceClaim APIs, or ResourceSlice schemas unless a later design requires it.\n- Do not silently change the existing default isolation behavior in the same release.\n\n**Recommended Design**\n- Add a new chart value such as `imex.isolationMode`.\n- Accept a small enum only, for example:\n  - `default` or `driver-default` for backward-compatible behavior\n  - `shared` if one host/domain-level IMEX context can be reused across workloads\n  - `strict` or `isolated` if workload/domain separation is enforced more aggressively\n- Wire the value into the existing driver configuration path used by the IMEX-capable components, ideally through a single authoritative config field rather than template-local branching.\n- Validate the value in the chart so unsupported strings fail render/upgrade early.\n- Render the chosen mode explicitly into the driver config, even when the user selects the compatibility default, so future chart default drift is easier to detect in diffs.\n\nUser-facing example:\n- Standalone Helm install:\n  - `--set imex.isolationMode=driver-default`\n- Hardened environment:\n  - `--set imex.isolationMode=isolated`\n\nRationale for Helm scope first:\n- Isolation mode is cluster/operator policy, not obviously a workload author concern.\n- Helm is the smallest useful slice because it addresses install-time clarity and upgrade safety without expanding the Kubernetes API surface.\n- If future user demand requires mixed policies in one cluster, that can be proposed separately via a higher-level API or class-based override.\n\n**Behavior Contract**\n- If the value is unset, the chart must preserve the current behavior exactly.\n- If the value is set, the rendered manifests and runtime config must unambiguously reflect that choice.\n- Unsupported combinations should fail fast, for example:\n  - IMEX isolation mode set while ComputeDomain/IMEX support is disabled\n  - isolation modes requiring hardware/software support not present in the environment\n- The authoritative owner of the new state should be the existing driver config consumed by the IMEX path, with Helm acting only as the config producer.\n\n**Upgrade Risks**\n- **Behavioral drift risk**\n  - If the new value defaults to a new mode instead of preserving legacy behavior, upgrades can silently change workload isolation semantics.\n  - Mitigation: keep the default backward-compatible for at least one full release window and document any future default change separately.\n\n- **In-place disruption risk**\n  - Changing isolation mode on an existing release may invalidate assumptions held by running ComputeDomains, IMEX daemons, or prepared workloads.\n  - Possible symptoms include channel remapping, workload restart requirements, failed prepare/unprepare, or partial readiness after rollout.\n  - Mitigation: document mode changes as disruptive unless proven otherwise; recommend draining or recreating affected workloads/ComputeDomains before switching modes.\n\n- **Mixed-version rollout risk**\n  - During a rolling Helm upgrade, some nodes/components may run old config while others run new config.\n  - For multi-node IMEX workflows, temporary skew may produce inconsistent domain behavior or readiness failures.\n  - Mitigation: either require full component compatibility across modes or state clearly that mode changes require coordinated rollout and workload quiescence.\n\n- **Downgrade risk**\n  - If a newer release writes an explicit isolation mode into config that an older release does not understand, rollback can fail or ignore the setting.\n  - Mitigation: use enum values that older versions safely reject with clear errors, or gate the field so downgrade guidance includes removing/resetting the value first.\n\n- **Support-boundary risk**\n  - Some modes may only be valid for specific hardware, IMEX topologies, or driver/runtime combinations.\n  - Mitigation: validate what can be validated at render time, and document runtime prerequisites and unsupported combinations.\n\n- **Operator integration risk**\n  - If standalone Helm gains the knob first but GPU Operator-managed flows do not expose it consistently, users can observe differing behavior across deployment methods.\n  - Mitigation: call out parity expectations and whether this release is standalone-only or coordinated with GPU Operator.\n\n**Upgrade Guidance**\n- Safe upgrade:\n  - Existing release upgraded with `imex.isolationMode` unset, preserving prior behavior.\n- Cautious upgrade:\n  - Existing release upgraded with the value set explicitly to the legacy-equivalent mode to lock behavior for future releases.\n- Disruptive change:\n  - Existing release upgraded while also changing the mode from legacy/shared to isolated, or vice versa.\n  - Treat as requiring maintenance planning, validation, and likely workload/ComputeDomain recreation.\n\n**Validation Plan**\n- Chart validation:\n  - `helm template` succeeds for allowed values and fails for invalid ones.\n  - Rendered manifests show the chosen value in the driver config.\n- Unit/config validation:\n  - Driver config parsing accepts supported values and rejects invalid ones.\n- Integration:\n  - Existing IMEX/ComputeDomain happy path remains unchanged when the value is unset.\n  - At least one explicit mode value is exercised end-to-end.\n- Upgrade:\n  - Upgrade from previous chart with value unset preserves behavior.\n  - Upgrade with explicit legacy-equivalent mode preserves behavior.\n  - If supported, mode-switch upgrade is tested and documented as disruptive or non-disruptive based on observed results.\n\n**Open Questions**\n- What are the exact supported IMEX isolation modes in current driver code?\n- Is the current behavior best represented as `driver-default`, `shared`, or another named mode?\n- Can mode changes be made in-place safely, or must they require workload and/or ComputeDomain recreation?\n- Does this need release-synchronized exposure in GPU Operator as well?\n- Should the value be always available, or only when ComputeDomain/IMEX-related features are enabled?\n\n**Maintainer Recommendation**\n- Proceed with a proposal if this value changes user-facing Helm behavior or upgrade semantics, which it likely does.\n- Keep the first implementation minimal:\n  - one Helm value\n  - one authoritative config field\n  - strict validation\n  - explicit docs for upgrade/downgrade behavior\n- Avoid introducing a new API surface until there is a clear need for per-workload policy.\n\nIf you want, I can turn this into a maintainer-style proposal file matching `site/content/contribute/proposals/NNNN-template.md` once you point me at the repo checkout or paste the template."
+    }
+  ],
+  "final_metrics": {
+    "total_prompt_tokens": 146978,
+    "total_completion_tokens": 2989,
+    "total_cached_tokens": 128000,
+    "total_steps": 16,
+    "extra": {
+      "reasoning_output_tokens": 0,
+      "total_tokens": 149967,
+      "last_token_usage": {
+        "input_tokens": 19551,
+        "cached_input_tokens": 19072,
+        "output_tokens": 1593,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 21144
+      }
+    }
+  }
+}

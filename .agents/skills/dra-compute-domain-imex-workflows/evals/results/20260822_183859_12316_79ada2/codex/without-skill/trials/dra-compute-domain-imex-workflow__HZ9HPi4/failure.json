@@ -1,0 +1,23 @@
+{
+  "status": "unscored",
+  "trial": "dra-compute-domain-imex-workflow__HZ9HPi4",
+  "agent": "codex",
+  "variant": "without_skill",
+  "artifacts": [
+    "result.json",
+    "config.json",
+    "trial.log",
+    "verifier/aces_reward.json",
+    "trajectory.json",
+    "codex.txt"
+  ],
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "task_id": {
+    "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/evals/results/20260822_183859_12316_79ada2/_harbor-tasks-baseline/dra-compute-domain-imex-workflows-explicit-001"
+  },
+  "task_name": "nvidia/skill-eval-dra-compute-domain-imex-workflows-explicit-001",
+  "trial_name": "dra-compute-domain-imex-workflow__HZ9HPi4",
+  "started_at": "2026-08-23T01:39:04.426530Z",
+  "finished_at": "2026-08-23T01:40:24.596773Z"
+}

@@ -1,0 +1,228 @@
+{
+  "skill_name": "dra-operations-troubleshooting-observability",
+  "agent": "codex",
+  "suggestion_mode": "passing_next_steps",
+  "findings": [
+    {
+      "metric": "security",
+      "label": "SECURITY (unsafe operations, secret leakage, unauthorized access)",
+      "severity": "ok",
+      "score": 1.0,
+      "reasons": [
+        "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory"
+      ],
+      "evidence_refs": []
+    },
+    {
+      "metric": "skill_execution",
+      "label": "SKILL EXECUTION (activation, script run, workflow order, error recovery)",
+      "severity": "ok",
+      "score": 0.9375,
+      "reasons": [
+        "Read SKILL.md via shell read command",
+        "No specific script expected"
+      ],
+      "evidence_refs": []
+    },
+    {
+      "metric": "skill_efficiency",
+      "label": "EFFICIENCY (routing, tool call productivity)",
+      "severity": "ok",
+      "score": 0.9375,
+      "reasons": [
+        "Agent correctly routed to dra-operations-troubleshooting-observability only",
+        "3/3 productive calls (100%)"
+      ],
+      "evidence_refs": []
+    },
+    {
+      "metric": "accuracy",
+      "label": "ACCURACY (factual correctness, 5-criterion rubric)",
+      "severity": "ok",
+      "score": 1.0,
+      "reasons": [
+        "Passed: SKILL_IDENTIFIED, ACTION_CORRECT, FACTUALLY_ACCURATE, TASK_ADDRESSED, ACTIONABLE",
+        "The response covers all expected elements: render-first chart validation (helm template and helm-lint), sample selection (gpu-test2.yaml), mutation approval points (install scripts with explicit steps), verification steps (kubectl get pods, logs, deviceclasses, resourceslices), and cleanup boundaries (delete manifest and cluster). It is factually detailed with file references, actionable with concrete commands, and directly addresses the user's request about rendering the chart and running a sample workload on a fresh kind cluster."
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent gives a deployment and demo runbook with render-first chart validation, sample selection, mutation approval points, verification steps, and cleanup boundaries."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/18",
+          "excerpt": "Use the repo\u2019s local-demo flow for `kind`, and render the Helm chart before mutating anything.\n\n**Render**\n- From the repo root, lint the chart with `make helm-lint` as defined in `Makefi\n...[truncated]...\ne copy-paste command block that does the full render \u2192 create cluster \u2192 install \u2192 verify flow."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/9",
+          "excerpt": "Ask for a **tight, redacted evidence bundle** that proves where injection breaks: claim/controller, node prepare, CDI/runtime, or the workload spec itself.\n\n**Scope**\n- Incident window, a\n...[truncated]...\nu want, I can turn this into a customer-ready support checklist with exact `kubectl` commands."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/13",
+          "excerpt": "Using `dra-operations-troubleshooting-observability`, I\u2019d triage this as an **allocation succeeds, node prepare fails** incident, with the first likely failing boundary at the **node/runt\n...[truncated]...\nte incident runbook** with exact `kubectl` and node-level commands for bad-vs-good comparison."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/17",
+          "excerpt": "Created a maintainer-ready proposal draft at `proposal/resource-slice-cel-attribute-proposal.md:1`.\n\n**What\u2019s Included**\n- Provisional design for a new CEL-selectable ResourceSlice attrib\n...[truncated]...\n this into the repository\u2019s exact proposal template format once you point me at the full repo."
+        }
+      ]
+    },
+    {
+      "metric": "goal_accuracy",
+      "label": "GOAL ACCURACY (did agent achieve the user's goal?)",
+      "severity": "ok",
+      "score": 1.0,
+      "reasons": [
+        "The response covers all expected elements: (1) render-first chart validation via helm template and make helm-lint, (2) sample selection with gpu-test2.yaml, (3) mutation approval points by showing the install steps sequentially with verification before applying workloads, (4) verification steps for both the driver and the sample workload, and (5) cleanup boundaries with delete commands for both the sample and the cluster.",
+        "The agent's response covers nearly all elements of the expected outcome: deployment mode, versions, topology, clique/node labels, ComputeDomain and clique objects, daemon/host service readiness, channel claim allocation, kubelet prepare evidence, injected mounts and devices, events, logs, hypotheses about failure boundaries, and implicitly remaining unknowns (what they're trying to prove). While metrics are not explicitly called out as a separate section, the overall bundle is comprehensive and closely matches the expected outcome. The response is structured as a customer-ready support checklist with exact evidence items, which fulfills the goal."
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent gives a deployment and demo runbook with render-first chart validation, sample selection, mutation approval points, verification steps, and cleanup boundaries."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/3/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"in_progress\", \"step\": \"Inspect repo guidance files\"}, {\"status\": \"pending\", \"step\": \"Read relevant Helm/demo skill\"}, {\"status\": \"pending\", \"step\": \"Find chart rende\n...[truncated]...\n\": \"Find sample workload steps\"}, {\"status\": \"pending\", \"step\": \"Summarize fresh kind flow\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'README*' -g 'SKILL.md' . .. | sed 's#^#/#' | head -200",
+          "json_pointer": "/steps/5/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'README*' -g 'SKILL.md' . .. | sed 's#^#/#' | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md",
+          "json_pointer": "/steps/7/tool_calls/0",
+          "excerpt": "cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: rg -n \"kind|helm template|helm lint|sample workload|demo/specs|DeviceClass|Resou\n...[truncated]...\nnaries/NVIDIA/dra-driver-nvidia-gpu | head -300",
+          "json_pointer": "/steps/9/tool_calls/0",
+          "excerpt": "rg -n \"kind|helm template|helm lint|sample workload|demo/specs|DeviceClass|ResourceClaim|kind cluster\" -S .. /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu | head -300"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "update_plan: update_plan",
+          "json_pointer": "/steps/10/tool_calls/0",
+          "excerpt": "{\"plan\": [{\"status\": \"completed\", \"step\": \"Inspect repo guidance files\"}, {\"status\": \"completed\", \"step\": \"Read relevant Helm/demo skill\"}, {\"status\": \"in_progress\", \"step\": \"Find chart r\n...[truncated]...\n\": \"Find sample workload steps\"}, {\"status\": \"pending\", \"step\": \"Summarize fresh kind flow\"}]}"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: sed -n '41,100p' /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/README.\n...[truncated]...\n/dra-driver-nvidia-gpu/demo/specs/quickstart/v1",
+          "json_pointer": "/steps/12/tool_calls/0",
+          "excerpt": "sed -n '41,100p' /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/README.md && printf '\\n---\\n' && sed -n '1,220p' /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/site/cont\n...[truncated]...\n-\\n' && ls -1 /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/demo/specs/quickstart/v1"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: sed -n '220,340p' /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/site/c\n...[truncated]...\npu/demo/clusters/kind/install-dra-driver-gpu.sh",
+          "json_pointer": "/steps/14/tool_calls/0",
+          "excerpt": "sed -n '220,340p' /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/site/content/docs/install.md && printf '\\n---\\n' && sed -n '1,220p' /Users/bmozaffari/Binaries/NVIDIA/dra-driver-\n...[truncated]...\n/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/demo/clusters/kind/install-dra-driver-gpu.sh"
+        }
+      ]
+    },
+    {
+      "metric": "behavior_check",
+      "label": "BEHAVIOR CHECK (expected workflow adherence)",
+      "severity": "ok",
+      "score": 0.85,
+      "reasons": [
+        "3/3 expected behaviors observed",
+        "All expected behaviors were observed. The agent correctly routed to the Helm/demo/sample-workload skill, avoided the operations-troubleshooting skill, and treated the request as a standard setup guide rather than an incident or escalation."
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-operations-troubleshooting-observability."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent routes the request to Helm, demo, and sample workload guidance."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not treat a fresh demo setup as an incident triage or support escalation."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/18",
+          "excerpt": "Use the repo\u2019s local-demo flow for `kind`, and render the Helm chart before mutating anything.\n\n**Render**\n- From the repo root, lint the chart with `make helm-lint` as defined in `Makefi\n...[truncated]...\ne copy-paste command block that does the full render \u2192 create cluster \u2192 install \u2192 verify flow."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 4",
+          "json_pointer": "/expected_behavior/3",
+          "excerpt": "The agent marks confirmed facts, hypotheses, attempted mutations, and remaining unknowns separately."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 5",
+          "json_pointer": "/expected_behavior/4",
+          "excerpt": "The agent does not prescribe a generic restart as root-cause analysis."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/9",
+          "excerpt": "Ask for a **tight, redacted evidence bundle** that proves where injection breaks: claim/controller, node prepare, CDI/runtime, or the workload spec itself.\n\n**Scope**\n- Incident window, a\n...[truncated]...\nu want, I can turn this into a customer-ready support checklist with exact `kubectl` commands."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/13",
+          "excerpt": "Using `dra-operations-troubleshooting-observability`, I\u2019d triage this as an **allocation succeeds, node prepare fails** incident, with the first likely failing boundary at the **node/runt\n...[truncated]...\nte incident runbook** with exact `kubectl` and node-level commands for bad-vs-good comparison."
+        }
+      ]
+    }
+  ],
+  "suggestions": [
+    "Strengthen BEHAVIOR CHECK (scored 0.85) \u2014 review the reasons above and refine expected_behavior or ground_truth in evals.json to better match what agents actually do. Evidence: https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-operations-troubleshooting-observability-codex-with--20260822_184504_20255_3fd2ca/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-operations-troubleshooting-observability-contextual-001/trials/dra-operations-troubleshooting-o__ByMy97E?step=5",
+    "Add evals/environment/Dockerfile if the skill depends on CLI tools, databases, or APIs \u2014 this ensures consistent results across agents and CI environments. Evidence: https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-operations-troubleshooting-observability-codex-with--20260822_184504_20255_3fd2ca/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-operations-troubleshooting-observability-contextual-001/trials/dra-operations-troubleshooting-o__ByMy97E",
+    "Run with additional agents ('astra-skill-eval evaluate <skill> --agent-eval -a claude-code,codex,openhands') to verify the skill works across different coding agents. Evidence: https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-operations-troubleshooting-observability-codex-with--20260822_184504_20255_3fd2ca/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-operations-troubleshooting-observability-explicit-001/trials/dra-operations-troubleshooting-o__KjRcjbW?step=5"
+  ],
+  "suggestions_v2": []
+}

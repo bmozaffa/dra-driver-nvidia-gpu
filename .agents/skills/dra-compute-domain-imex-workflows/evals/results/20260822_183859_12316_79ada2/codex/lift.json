@@ -1,0 +1,43 @@
+{
+  "security": {
+    "with_skill": 1.0,
+    "without_skill": 1.0,
+    "delta": 0.0,
+    "direction": "flat"
+  },
+  "skill_execution": {
+    "with_skill": 0.9375,
+    "without_skill": 0.9792,
+    "delta": -0.0417,
+    "direction": "down"
+  },
+  "skill_efficiency": {
+    "with_skill": 0.8709,
+    "without_skill": 0.9445,
+    "delta": -0.0736,
+    "direction": "down"
+  },
+  "accuracy": {
+    "with_skill": 0.85,
+    "without_skill": 0.7333,
+    "delta": 0.1167,
+    "direction": "up"
+  },
+  "goal_accuracy": {
+    "with_skill": 1.0,
+    "without_skill": 1.0,
+    "delta": 0.0,
+    "direction": "flat"
+  },
+  "behavior_check": {
+    "with_skill": 0.7834,
+    "without_skill": 0.8889,
+    "delta": -0.1055,
+    "direction": "down"
+  },
+  "overall": {
+    "with_skill": 0.907,
+    "without_skill": 0.9243,
+    "delta": -0.0173
+  }
+}

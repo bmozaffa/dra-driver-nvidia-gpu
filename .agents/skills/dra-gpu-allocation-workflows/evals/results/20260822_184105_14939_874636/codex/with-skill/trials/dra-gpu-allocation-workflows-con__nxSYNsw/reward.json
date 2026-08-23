@@ -1,0 +1,283 @@
+{
+  "security": 1.0,
+  "skill_execution": 0.9375,
+  "skill_efficiency": 1.0,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 0.8,
+  "overall": 0.9562,
+  "validity": "valid",
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-gpu-allocation-workflows-contextual-001",
+  "has_skill": true,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "activation": {
+        "passed": true,
+        "score": 0.75,
+        "reason": "Read SKILL.md via shell read command",
+        "details": {
+          "expected_skill": "dra-gpu-allocation-workflows",
+          "acceptable_skills": [
+            "dra-gpu-allocation-workflows"
+          ],
+          "acceptable_alternates": [],
+          "matched_skill": "dra-gpu-allocation-workflows",
+          "match_type": "expected",
+          "score": 1.0,
+          "accepted_skills": [
+            "dra-gpu-allocation-workflows"
+          ]
+        }
+      },
+      "script_execution": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "No specific script expected"
+      },
+      "workflow_order": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "Correct workflow order"
+      },
+      "error_recovery": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "All commands succeeded on first attempt",
+        "first_attempt_clean": true,
+        "corrections": [],
+        "skill_faults": 0,
+        "agent_faults": 0
+      }
+    },
+    "skill_efficiency": {
+      "routing": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "Agent correctly routed to dra-gpu-allocation-workflows only",
+        "details": {
+          "expected_skill": "dra-gpu-allocation-workflows",
+          "acceptable_skills": [
+            "dra-gpu-allocation-workflows"
+          ],
+          "acceptable_alternates": [],
+          "skills_read": [
+            "cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/evals/results/20260822_184105_14939_874636/_harbor-jobs/dra-gpu-allocation-workflows-codex-with/dra-gpu-allocation-workflows-con__nxSYNsw/local-environment/home/.agents/skills/dra-gpu-allocation-workflows/SKILL.md'"
+          ]
+        }
+      },
+      "tool_efficiency": {
+        "passed": true,
+        "score": 1.0,
+        "reason": "2/2 productive calls (100%)"
+      }
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response builds a comprehensive bounded triage checklist that covers all expected elements: DeviceClass and opaque config verification, ResourceSlice inventory, claim allocation and node assignment, gpu-kubelet-plugin prepare output, checkpoint and CDI specs, runtime CDI support, container-visible UUID evidence, and distinguishes time-slicing from other isolation modes. It correctly identifies the relevant DRA GPU allocation skill and provides actionable diagnostic steps.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent creates a GPU-sharing triage checklist that verifies DeviceClass and opaque config, ResourceSlice inventory, claim allocation and node assignment, gpu-kubelet-plugin prepare out\n...[truncated]...\nort, and container-visible UUID evidence while distinguishing time-slicing from MIG isolation."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/8",
+          "excerpt": "Here\u2019s a bounded triage checklist for this exact symptom: **one Pod, two containers, both use the same ResourceClaim for two time-sliced GPUs, but only one container sees a GPU UUID**.\n\n*\n...[truncated]...\n into a **copy/paste command checklist** using `kubectl` and the likely NVIDIA DRA node paths."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The checklist covers all the expected elements: DeviceClass and opaque config (step 1), ResourceSlice inventory (step 3), claim allocation and node assignment (step 2), gpu-kubelet-plugin prepare output (step 5), checkpoint and CDI specs (step 6), runtime CDI support (step 7), container-visible UUID evidence (step 8), and distinguishes time-slicing from MIG isolation (steps 1 and 10 classification). The checklist is bounded (10 steps) and actionable.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent creates a GPU-sharing triage checklist that verifies DeviceClass and opaque config, ResourceSlice inventory, claim allocation and node assignment, gpu-kubelet-plugin prepare out\n...[truncated]...\nort, and container-visible UUID evidence while distinguishing time-slicing from MIG isolation."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-\n...[truncated]...\ns/skills/dra-gpu-allocation-workflows/SKILL.md'",
+          "json_pointer": "/steps/4/tool_calls/0",
+          "excerpt": "cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/evals/results/20260822_184105_14939_874636/_harbor-jobs/dra-gpu-allocation-workflo\n...[truncated]...\nlows-con__nxSYNsw/local-environment/home/.agents/skills/dra-gpu-allocation-workflows/SKILL.md'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: rg -n \"time-slicing|CDI|claim.*container|ResourceClaim|prepared state|prepare\" s\n...[truncated]...\nin demo/specs test/e2e tests/bats | head -n 200",
+          "json_pointer": "/steps/6/tool_calls/0",
+          "excerpt": "rg -n \"time-slicing|CDI|claim.*container|ResourceClaim|prepared state|prepare\" site/content/docs cmd/gpu-kubelet-plugin demo/specs test/e2e tests/bats | head -n 200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_5IxbrtyeNZWLECCpU0TXC6fP",
+          "json_pointer": "/steps/4/observation/results/0",
+          "excerpt": "Chunk ID: 42520b\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1719\nOutput:\n---\nname: dra-gpu-allocation-workflows\ndescription: Explain, design, review, or tr\n...[truncated]...\nILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_CUm6KvOB2Xx5Dn6aJoi2Y7vg",
+          "json_pointer": "/steps/6/observation/results/0",
+          "excerpt": "Chunk ID: 9d6c3d\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 73\nOutput:\nrg: site/content/docs: No such file or directory (os error 2)\nrg: cmd/gpu-kubelet-pl\n...[truncated]...\n No such file or directory (os error 2)\nrg: tests/bats: No such file or directory (os error 2)"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/8",
+          "excerpt": "Here\u2019s a bounded triage checklist for this exact symptom: **one Pod, two containers, both use the same ResourceClaim for two time-sliced GPUs, but only one container sees a GPU UUID**.\n\n*\n...[truncated]...\n into a **copy/paste command checklist** using `kubectl` and the likely NVIDIA DRA node paths."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "behavior_check": {
+      "score": 0.8,
+      "status": "ok",
+      "reason": "The agent correctly identified the GPU sharing/DRA domain, separated concerns across the stack, preserved workloads, and avoided leaking sensitive info. However, it failed to successfully read or reference actual repo docs and cmd/gpu-kubelet-plugin/ content, relying instead on its skill's cached knowledge.",
+      "results": [
+        {
+          "step": 1,
+          "passed": true,
+          "reason": "The agent clearly identifies the issue as involving GPU sharing, ResourceClaims, prepare/CDI generation, and per-container runtime injection. The checklist explicitly covers claim allocation, kubelet prepare/CDI generation, and container-visible devices."
+        },
+        {
+          "step": 2,
+          "passed": false,
+          "reason": "The agent attempted to read GPU allocation docs and cmd/gpu-kubelet-plugin/ but the directories did not exist. The verified facts confirm cmd/gpu-kubelet-plugin/ was NOT OBSERVED. While the agent referenced its skill's documented flow, it did not successfully read or reference the actual repo docs, API types, ResourceSlice attributes, feature gates, or cmd/gpu-kubelet-plugin/ content."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The checklist clearly separates concerns: claim allocation (scheduler), node inventory/ResourceSlice (DRA driver), kubelet prepare/CDI generation (kubelet plugin), and per-container runtime injection (container runtime/CDI). The final response explicitly distinguishes these layers."
+        },
+        {
+          "step": 4,
+          "passed": true,
+          "reason": "The checklist is described as 'read-only except where noted' and the goal states 'Stay read-only except where noted.' The agent does not suggest destructive actions that would disrupt active workloads or claims."
+        },
+        {
+          "step": 5,
+          "passed": true,
+          "reason": "The agent does not expose any kubeconfigs, credentials, or sensitive workload details in its response or tool calls."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent infers that the request concerns GPU sharing, ResourceClaims, prepare, CDI, and container-visible devices."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent reads or references GPU allocation docs, API types, ResourceSlice attributes, feature gates, and `cmd/gpu-kubelet-plugin/`."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent separates DRA driver behavior from scheduler, GPU Operator, NVIDIA driver, runtime/CDI, and hardware configuration."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 4",
+          "json_pointer": "/expected_behavior/3",
+          "excerpt": "The agent preserves active workloads and claims when suggesting recovery."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 5",
+          "json_pointer": "/expected_behavior/4",
+          "excerpt": "The agent does not leak kubeconfigs, credentials, or sensitive workload details."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/8",
+          "excerpt": "Here\u2019s a bounded triage checklist for this exact symptom: **one Pod, two containers, both use the same ResourceClaim for two time-sliced GPUs, but only one container sees a GPU UUID**.\n\n*\n...[truncated]...\n into a **copy/paste command checklist** using `kubectl` and the likely NVIDIA DRA node paths."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    }
+  },
+  "agent": "codex",
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "harbor_viewer": {
+    "job_name": "dra-gpu-allocation-workflows-codex-with--20260822_184105_14939_874636",
+    "job_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-gpu-allocation-workflows-codex-with--20260822_184105_14939_874636",
+    "analysis_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-gpu-allocation-workflows-codex-with--20260822_184105_14939_874636?tab=analysis",
+    "trial_url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-gpu-allocation-workflows-codex-with--20260822_184105_14939_874636/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-gpu-allocation-workflows-contextual-001/trials/dra-gpu-allocation-workflows-con__nxSYNsw",
+    "evidence_urls": [
+      {
+        "label": "behavior_check",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-gpu-allocation-workflows-codex-with--20260822_184105_14939_874636/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-gpu-allocation-workflows-contextual-001/trials/dra-gpu-allocation-workflows-con__nxSYNsw?step=5"
+      },
+      {
+        "label": "accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-gpu-allocation-workflows-codex-with--20260822_184105_14939_874636/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-gpu-allocation-workflows-contextual-001/trials/dra-gpu-allocation-workflows-con__nxSYNsw?step=5"
+      },
+      {
+        "label": "goal_accuracy",
+        "url": "https://harbor-viewer.prd.astra.nvidia.com/jobs/dra-gpu-allocation-workflows-codex-with--20260822_184105_14939_874636/tasks/_harbor-tasks/codex/openai/openai%2Fgpt-5.4/nvidia%2Fskill-eval-dra-gpu-allocation-workflows-contextual-001/trials/dra-gpu-allocation-workflows-con__nxSYNsw?step=5"
+      }
+    ]
+  }
+}

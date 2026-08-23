@@ -1,0 +1,108 @@
+{
+  "agent": "codex",
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "scores": {
+    "security": 0.0,
+    "skill_execution": 0.0,
+    "skill_efficiency": 0.0,
+    "accuracy": 0.0,
+    "goal_accuracy": 0.0,
+    "behavior_check": 0.0
+  },
+  "custom_scores": {},
+  "metric_set": "aces-default-v2",
+  "metrics": [
+    "security",
+    "skill_execution",
+    "skill_efficiency",
+    "accuracy",
+    "goal_accuracy",
+    "behavior_check"
+  ],
+  "dimensions": {
+    "security": {
+      "score": 0.0,
+      "sources": {
+        "security": 1.0
+      }
+    },
+    "correctness": {
+      "score": 0.0,
+      "sources": {
+        "accuracy": 1.0
+      }
+    },
+    "discoverability": {
+      "score": 0.0,
+      "sources": {
+        "skill_execution": 1.0
+      }
+    },
+    "effectiveness": {
+      "score": 0.0,
+      "sources": {
+        "goal_accuracy": 0.5,
+        "behavior_check": 0.5
+      }
+    },
+    "efficiency": {
+      "score": 0.0,
+      "sources": {
+        "skill_efficiency": 1.0
+      }
+    }
+  },
+  "num_trials": 0,
+  "pass_at_k": {
+    "k": 1,
+    "pass_threshold": 0.5,
+    "stop_on_pass": false,
+    "passed_cases": 0,
+    "failed_cases": 4,
+    "total_cases": 4,
+    "rate": 0.0,
+    "attempts_used": 0,
+    "max_attempts_possible": 4,
+    "avg_attempts_used": 0.0,
+    "extra_cases": [],
+    "cases": {
+      "dra-project-orientation-explicit-001": {
+        "passed": false,
+        "first_pass_attempt": null,
+        "attempts_used": 0,
+        "attempts_skipped": 0,
+        "attempts_missing": 1,
+        "best_score": 0.0,
+        "attempts": []
+      },
+      "dra-project-orientation-contextual-001": {
+        "passed": false,
+        "first_pass_attempt": null,
+        "attempts_used": 0,
+        "attempts_skipped": 0,
+        "attempts_missing": 1,
+        "best_score": 0.0,
+        "attempts": []
+      },
+      "dra-project-orientation-adjacent-negative-001": {
+        "passed": false,
+        "first_pass_attempt": null,
+        "attempts_used": 0,
+        "attempts_skipped": 0,
+        "attempts_missing": 1,
+        "best_score": 0.0,
+        "attempts": []
+      },
+      "dra-project-orientation-boundary-negative-001": {
+        "passed": false,
+        "first_pass_attempt": null,
+        "attempts_used": 0,
+        "attempts_skipped": 0,
+        "attempts_missing": 1,
+        "best_score": 0.0,
+        "attempts": []
+      }
+    }
+  }
+}

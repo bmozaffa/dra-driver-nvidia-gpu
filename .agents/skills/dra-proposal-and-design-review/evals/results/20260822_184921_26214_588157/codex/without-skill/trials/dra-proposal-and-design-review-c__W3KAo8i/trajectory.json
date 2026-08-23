@@ -1,0 +1,562 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "session_id": "01a02c4f-1cdc-7af0-85bc-5a4d0736b7e6",
+  "agent": {
+    "name": "codex",
+    "version": "0.142.5",
+    "model_name": "openai/openai/gpt-5.4",
+    "extra": {
+      "originator": "codex_exec",
+      "cwd": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/local-environment/workspace",
+      "git": {
+        "commit_hash": "f5d8e5e379881b2abb03be9e63c2df56148d243a",
+        "branch": "astra-evals",
+        "repository_url": "https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu"
+      }
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-08-23T01:49:37.962Z",
+      "source": "system",
+      "message": "<permissions instructions>\nFilesystem sandboxing defines which files can be read or written. `sandbox_mode` is `danger-full-access`: No filesystem sandboxing - all commands are permitted. Network access is enabled.\nApproval policy is currently never. Do not provide the `sandbox_permissions` for any reason, commands will be rejected.\n</permissions instructions><skills_instructions>\n## Skills\nA skill is a set of instructions provided through a `SKILL.md` source. Below is the list of skills that can be used. Each entry includes a name, description, and source locator. `file` locators are on the host filesystem, `environment resource` locators are owned by an execution environment, `orchestrator resource` locators are opaque non-filesystem resources, and `custom resource` locators use their provider's access mechanism.\n### Available skills\n- imagegen: Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/agent/codex-home/skills/.system/imagegen/SKILL.md)\n- openai-docs: Use when the user asks how to build with OpenAI products or APIs, asks about Codex itself or choosing Codex surfaces, needs up-to-date official documentation with citations, help choosing the latest model for a use case, or model upgrade and prompt-upgrade guidance; use OpenAI docs MCP tools for non-Codex docs questions, use the Codex manual helper first for broad Codex self-knowledge, and restrict fallback browsing to official OpenAI domains. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/agent/codex-home/skills/.system/openai-docs/SKILL.md)\n- plugin-creator: Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, valid manifest defaults, and personal-marketplace entries by default. Use when Codex needs to create a new personal plugin, add optional plugin structure, generate or update marketplace entries for plugin ordering and availability metadata, or update an existing local plugin during development with the CLI-driven cachebuster and reinstall flow. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/agent/codex-home/skills/.system/plugin-creator/SKILL.md)\n- skill-creator: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/agent/codex-home/skills/.system/skill-creator/SKILL.md)\n- skill-installer: Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos). (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/agent/codex-home/skills/.system/skill-installer/SKILL.md)\n- dra-api-crd-feature-gate-change: Plan, implement, review, or validate NVIDIA GPU DRA driver API, CRD, opaque configuration, ResourceSlice attribute, Helm value, CLI flag, checkpoint schema, feature-gate, and compatibility changes. Use when work touches api/nvidia.com, generated CRDs or clients, validation, DeviceClasses, public configuration, feature-gate stages or dependencies, or upgrade and downgrade behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md)\n- dra-build-test-codegen-ci: Select, run, and interpret the NVIDIA GPU DRA driver's local build, formatting, lint, code generation, unit, Helm, BATS, Ginkgo e2e, mock-NVML, and CI checks. Use when preparing a PR, validating a patch, reproducing CI, debugging a failed check, or mapping changed files to the minimum credible test set. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/SKILL.md)\n- dra-compute-domain-imex-workflows: Explain, design, review, or troubleshoot NVIDIA DRA ComputeDomain workflows across MNNVL hardware, IMEX daemon lifecycle, driver-managed or host-managed mode, ComputeDomain and ComputeDomainClique resources, per-domain DaemonSets, channel claims, readiness, kubelet prepare, and workload device or mount injection. Use when asked about GB200 or GB300 fabrics, clique state, IMEX channels, or multi-node workload failures. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/SKILL.md)\n- dra-gpu-allocation-workflows: Explain, design, review, or troubleshoot NVIDIA GPU DRA allocation across full GPUs, MIG, dynamic MIG, VFIO, time-slicing, MPS, DeviceClasses, ResourceClaims, ResourceSlices, scheduler binding, kubelet prepare/unprepare, checkpoints, and CDI injection. Use when asked about GPU selectors, attributes, capacity, sharing, passthrough, scheduling, allocation failures, or container-visible devices. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/SKILL.md)\n- dra-helm-demo-sample-workloads: Plan, render, install, upgrade, or validate NVIDIA GPU DRA driver Helm deployments, local kind or nvkind demos, and GPU or ComputeDomain sample workloads. Use when asked for chart values, prerequisites, demo clusters, quickstarts, sample manifests, DeviceClasses, ResourceSlices, or basic allocation validation, while separating standalone community flows from GPU Operator-managed deployment. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md)\n- dra-operations-troubleshooting-observability: Triage NVIDIA GPU DRA driver installation, scheduling, allocation, prepare/unprepare, CDI, checkpoint, GPU, MIG, VFIO, ComputeDomain, IMEX, upgrade, health, log, event, and Prometheus metric failures. Use when given failed pods or claims, missing devices, broken ResourceSlices, controller or daemon symptoms, upgrade regressions, or a support escalation that needs a bounded evidence plan. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-operations-troubleshooting-observability/SKILL.md)\n- dra-project-orientation: Orient contributors and reviewers to the NVIDIA GPU DRA driver repository, its runtime components, documentation, ownership, and source layout. Use when asked what the project does, how GPU and ComputeDomain paths fit together, where code or docs live, who owns review, or how to onboard without inventing repository paths. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/SKILL.md)\n- dra-proposal-and-design-review: Draft or review maintainer-ready proposals, ADRs, design notes, feature-gate plans, and implementation plans for the NVIDIA GPU DRA driver. Use when a change affects user-facing APIs, CRDs, Helm values, ResourceSlice attributes, checkpoint schemas, feature gates, dependencies, upstream coordination, or multi-node ComputeDomain and IMEX behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md)\n- dra-release-support-docs-readiness: Assess and prepare NVIDIA GPU DRA driver release, support, documentation, known-issue, compatibility, and handoff readiness. Use when asked for a release checklist, changelog or release-note impact, version matrix, docs updates, support caveats, image/chart promotion review, upgrade guidance, or stale-source refresh across the repository and GPU Operator documentation. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-support-docs-readiness/SKILL.md)\n### How to use skills\n- Discovery: The list above is the skills available in this session (name + description + source locator). `file` entries live on the host filesystem, `environment resource` entries are owned by their execution environment, `orchestrator resource` entries must be accessed through `skills.list` and `skills.read`, and `custom resource` entries use their provider's access mechanism.\n- Trigger rules: If the user names a skill (with `$SkillName` or plain text) OR the task clearly matches a skill's description shown above, you must use that skill for that turn. Multiple mentions mean use them all. Do not carry skills across turns unless re-mentioned.\n- Missing/blocked: If a named skill isn't in the list or its source can't be read, say so briefly and continue with the best fallback.\n- How to use a skill (progressive disclosure):\n  1) After deciding to use a skill, the main agent must read its `SKILL.md` completely before taking task actions. For a `file` entry, open the listed path. For an `environment resource`, use the filesystem of the owning environment. For an `orchestrator resource`, call `skills.list` with `{\"authority\":{\"kind\":\"orchestrator\"}}`, select the matching package, and pass its `main_resource` to `skills.read`. If a read is truncated or paginated, continue until EOF.\n  2) When `SKILL.md` references another resource, use the same access mechanism. Resolve relative paths against a filesystem-backed skill directory. For orchestrator skills, pass the exact referenced resource identifier with the same authority and package to `skills.read`; do not treat `skill://` identifiers as filesystem paths.\n  3) If `SKILL.md` points to extra folders such as `references/`, use its routing instructions to identify the resources required for the task. The main agent must read each required instruction or reference file itself before acting on it. Do not delegate reading, summarizing, or interpreting skill instructions to a subagent. Subagents may still perform task work when the selected skill allows it.\n  4) For filesystem-backed skills, prefer running or patching provided scripts instead of retyping large code blocks. For orchestrator skills, use `skills.read` and the available tools; do not invent a local path.\n  5) Reuse provided assets or templates through the same source access mechanism instead of recreating them.\n- Coordination and sequencing:\n  - If multiple skills apply, choose the minimal set that covers the request and state the order you'll use them.\n  - Announce which skill(s) you're using and why (one short line). If you skip an obvious skill, say why.\n- Context hygiene:\n  - Progressive disclosure applies to selecting relevant files, not partially reading a selected instruction file. Do not load unrelated references, scripts, or assets.\n  - Avoid deep reference-chasing: prefer opening only files directly linked from `SKILL.md` unless you're blocked.\n  - When variants exist (frameworks, providers, domains), pick only the relevant reference file(s) and note that choice.\n- Safety and fallback: If a skill can't be applied cleanly (missing files, unclear instructions), state the issue, pick the next-best approach, and continue.\n</skills_instructions>"
+    },
+    {
+      "step_id": 2,
+      "timestamp": "2026-08-23T01:49:37.962Z",
+      "source": "user",
+      "message": "<environment_context>\n  <cwd>/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/local-environment/workspace</cwd>\n  <shell>zsh</shell>\n  <current_date>2026-08-22</current_date>\n  <timezone>America/Los_Angeles</timezone>\n  <filesystem><workspace_roots><root>/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/local-environment/workspace</root></workspace_roots><permission_profile type=\"disabled\"><file_system type=\"unrestricted\" /></permission_profile></filesystem>\n</environment_context>"
+    },
+    {
+      "step_id": 3,
+      "timestamp": "2026-08-23T01:49:37.976Z",
+      "source": "user",
+      "message": "We need to decide whether host-managed IMEX isolation mode belongs in this driver, GPU Operator, or upstream Kubernetes. Write the design review.\n"
+    },
+    {
+      "step_id": 4,
+      "timestamp": "2026-08-23T01:49:40.100Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_0AUkwCJtDFlZvN9IQmB00giU",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Inspect repo guidance and context",
+                "status": "in_progress"
+              },
+              {
+                "step": "Review design-review skill instructions",
+                "status": "pending"
+              },
+              {
+                "step": "Gather IMEX architecture context",
+                "status": "pending"
+              },
+              {
+                "step": "Draft placement decision review",
+                "status": "pending"
+              },
+              {
+                "step": "Polish and save review doc",
+                "status": "pending"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_0AUkwCJtDFlZvN9IQmB00giU",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Inspect repo guidance and context\",\"status\":\"in_progress\"},{\"step\":\"Review design-review skill instructions\",\"status\":\"pending\"},{\"step\":\"Gather IMEX architecture context\",\"status\":\"pending\"},{\"step\":\"Draft placement decision review\",\"status\":\"pending\"},{\"step\":\"Polish and save review doc\",\"status\":\"pending\"}]}"
+      }
+    },
+    {
+      "step_id": 5,
+      "timestamp": "2026-08-23T01:49:41.611Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019ll first pull the repo guidance, then read the design-review skill."
+    },
+    {
+      "step_id": 6,
+      "timestamp": "2026-08-23T01:49:42.077Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_j9syjrxP9guplEMpiIU3n6GO",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "pwd && rg --files -g 'AGENTS.md' -g 'README*' -g 'docs/**' -g 'design/**' -g '*IMEX*' -g '*ComputeDomain*' -g '*host-managed*' -g '*proposal*' -g '*design*' .",
+            "login": true,
+            "max_output_tokens": 12000,
+            "yield_time_ms": 10000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_j9syjrxP9guplEMpiIU3n6GO",
+            "content": "Chunk ID: 6eeb35\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 69\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/evals/results/20260822_184921_26214_588157/_harbor-jobs/dra-proposal-and-design-review-codex-without/dra-proposal-and-design-review-c__W3KAo8i/local-environment/workspace\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"pwd && rg --files -g 'AGENTS.md' -g 'README*' -g 'docs/**' -g 'design/**' -g '*IMEX*' -g '*ComputeDomain*' -g '*host-managed*' -g '*proposal*' -g '*design*' .\",\"login\":true,\"max_output_tokens\":12000,\"yield_time_ms\":10000}"
+      }
+    },
+    {
+      "step_id": 7,
+      "timestamp": "2026-08-23T01:49:43.783Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "The first scan was too broad; I\u2019m narrowing to guidance and repo layout."
+    },
+    {
+      "step_id": 8,
+      "timestamp": "2026-08-23T01:49:43.851Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_rRpFADy1rwODFM3qc3SQvfCi",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "find .. -name AGENTS.md -print; printf '\\n--- root ---\\n'; ls -la; printf '\\n--- files ---\\n'; rg --files . | sed -n '1,220p'",
+            "login": true,
+            "max_output_tokens": 12000,
+            "yield_time_ms": 10000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_rRpFADy1rwODFM3qc3SQvfCi",
+            "content": "Chunk ID: 2b1972\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 64\nOutput:\n\n--- root ---\ntotal 0\ndrwxr-xr-x  4 bmozaffari  staff  128 Aug 22 18:49 .\ndrwxr-xr-x  8 bmozaffari  staff  256 Aug 22 18:49 ..\ndrwxr-xr-x  2 bmozaffari  staff   64 Aug 22 18:49 input\ndrwxr-xr-x  2 bmozaffari  staff   64 Aug 22 18:49 skills\n\n--- files ---\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"find .. -name AGENTS.md -print; printf '\\\\n--- root ---\\\\n'; ls -la; printf '\\\\n--- files ---\\\\n'; rg --files . | sed -n '1,220p'\",\"login\":true,\"max_output_tokens\":12000,\"yield_time_ms\":10000}"
+      }
+    },
+    {
+      "step_id": 9,
+      "timestamp": "2026-08-23T01:49:50.600Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "This workspace is minimal, so I\u2019m reading the requested skill and provided inputs."
+    },
+    {
+      "step_id": 10,
+      "timestamp": "2026-08-23T01:49:50.641Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_Nles7L426Ja2MtmobTZMIsqR",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "printf '--- skill files ---\\n'; find skills -maxdepth 3 -type f | sort; printf '\\n--- input files ---\\n'; find input -maxdepth 3 -type f | sort; printf '\\n--- design review skill ---\\n'; cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 10000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_Nles7L426Ja2MtmobTZMIsqR",
+            "content": "Chunk ID: 24b132\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1573\nOutput:\n--- skill files ---\n\n--- input files ---\n\n--- design review skill ---\n---\nname: dra-proposal-and-design-review\ndescription: Draft or review maintainer-ready proposals, ADRs, design notes, feature-gate plans, and implementation plans for the NVIDIA GPU DRA driver. Use when a change affects user-facing APIs, CRDs, Helm values, ResourceSlice attributes, checkpoint schemas, feature gates, dependencies, upstream coordination, or multi-node ComputeDomain and IMEX behavior.\n---\n\n# DRA Proposal and Design Review\n\n## Purpose\n\nTurn a DRA driver idea into a bounded, source-backed design artifact that follows the repository's proposal process and exposes its compatibility, ownership, safety, and test implications.\n\n## Triggers\n\n- Draft or review a proposal, ADR, implementation plan, scope analysis, or maintainer-ready design.\n- Add or graduate a feature gate.\n- Change a CRD, API field, Helm value, ResourceSlice attribute, CLI flag, checkpoint schema, external dependency, or multi-node coordination behavior.\n- Decide whether work belongs in this driver, upstream Kubernetes, GPU Operator, the device plugin, or another layer.\n\n## Audience\n\n- Contributors\n- DRA maintainers and reviewers\n- Documentation and release owners\n\n## Inputs\n\n- Problem statement, named user or workload, and desired outcome\n- Related issues, PRs, upstream work, or release target\n- Affected components and user-facing examples\n- Upgrade/downgrade, platform, Kubernetes, driver, GPU, and feature-gate constraints\n- Available unit, integration, mock, BATS, and real-GPU test environments\n\n## Workflow\n\n1. Read `site/content/contribute/proposals/_index.md` and `site/content/contribute/proposals/NNNN-template.md` completely.\n2. Decide whether a proposal is required. Require one for the cases enumerated by the proposal process; explain why a bug fix, docs-only change, or internal refactor can proceed directly when exempt.\n3. Verify the problem against current code, repository docs, relevant release notes, Kubernetes DRA docs, and GPU Operator docs. Label public and internal supplemental sources.\n4. Establish the layer boundary. State why the change belongs here instead of upstream Kubernetes/DRA, GPU Operator, the legacy device plugin, a runtime, or a separate tool.\n5. Start from the repository template. Use the next proposal number only after inspecting existing proposal files; keep status `provisional` until maintainers agree.\n6. Write the release-note-quality summary and a concrete user-facing example first.\n7. Define measurable goals, explicit non-goals, the smallest valuable slice, affected components, and the single authoritative owner for new state.\n8. Cover API and configuration changes, feature-gate stage and graduation, upgrade and downgrade behavior, environment floor, and compatibility with adjacent features.\n9. Build a test plan that names appropriate files or jobs across unit, controller/integration, generated artifacts, Helm, mock NVML, BATS, Ginkgo e2e, and real GPU or MNNVL coverage. Explain unavailable hardware coverage.\n10. Analyze failure modes including prepare/unprepare races, force deletion, reboot, restart, checkpoint migration, leader election, multi-node partitions, privilege, device mounts, and fail-fast behavior.\n11. Compare alternatives, including existing CEL selectors, DRA primitives, current CRD/Helm knobs, upstream work, and reusable NVIDIA libraries.\n12. Review for scope, user surface, ownership, upgrade impact, alternatives, drawbacks, open questions, testability, docs, and release/support consequences.\n13. Return the design plus a short list of unresolved maintainer decisions. Do not claim an unreviewed proposal is implementable.\n\n## Expected Outputs\n\n- Proposal or ADR draft\n- Structured design-review findings\n- Scope and layer analysis\n- Implementation and validation plan\n\n## References\n\n- Public proposal process: `site/content/contribute/proposals/_index.md`\n- Public proposal template: `site/content/contribute/proposals/NNNN-template.md`\n- Public architecture: `site/content/docs/concepts/architecture.md`\n- Public development workflow: `site/content/contribute/development.md`\n- Public upstream repository: https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu\n- Public Kubernetes DRA concepts: https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/\n- Public GPU Operator DRA guide: https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/dra-intro-install.html\n- Internal supplemental: none provided by this skill\n\n## Validation\n\n- Include status, authorship context, related work, summary, motivation, goals, non-goals, layer rationale, user-facing example, affected components, state owner, smallest slice, design, upgrade/downgrade, environment floor, test plan, risks, alternatives, drawbacks, and open questions.\n- Make each goal imply at least one validation check.\n- Name the reviewer roles and source anchors.\n- For the scenario \"add a new ResourceSlice attribute behind a feature gate\", cover proposal necessity, CEL-facing naming, gate stage/default/dependencies, code generation if APIs change, scheduler-version compatibility, docs, release note, and unit plus e2e coverage.\n- Flag contradictions between current code, docs, and release assumptions instead of silently choosing one.\n\n## Safety Constraints\n\n- Do not modify clusters, external services, issues, PRs, or releases without explicit approval.\n- Preserve internal-only information boundaries in upstream-ready drafts.\n- Never include secrets, credentials, kubeconfigs, customer data, or private cluster identifiers.\n\n## Non-Goals\n\n- Do not bypass the repository proposal lifecycle or maintainer approval.\n- Do not turn speculative behavior into a compatibility promise.\n- Do not implement the design unless the user separately requests implementation.\n\n## Owners\n\n- DRA maintainers\n- DRA documentation maintainers\n\n## Refresh Policy\n\n- Review whenever the proposal template or lifecycle changes.\n- Review each DRA driver release and after major Kubernetes DRA or GPU Operator changes.\n- Revalidate external links and feature-gate conventions before drafting a release-bound proposal.\n\n## Registration Notes\n\nKeep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"printf '--- skill files ---\\\\n'; find skills -maxdepth 3 -type f | sort; printf '\\\\n--- input files ---\\\\n'; find input -maxdepth 3 -type f | sort; printf '\\\\n--- design review skill ---\\\\n'; cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":10000}"
+      }
+    },
+    {
+      "step_id": 11,
+      "timestamp": "2026-08-23T01:49:57.329Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "Now I\u2019m checking whether the workspace includes source docs or only an eval prompt."
+    },
+    {
+      "step_id": 12,
+      "timestamp": "2026-08-23T01:49:57.502Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_3zsH9n4UacHEO61ZWlbJF7YT",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 3 \\( -name '_index.md' -o -name 'NNNN-template.md' -o -path '*/site/content/docs/concepts/architecture.md' -o -name '*IMEX*' -o -name '*ComputeDomain*' -o -name 'AGENTS.md' \\) | sed -n '1,260p'",
+            "login": true,
+            "max_output_tokens": 12000,
+            "yield_time_ms": 10000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_3zsH9n4UacHEO61ZWlbJF7YT",
+            "content": "Chunk ID: 96ea6c\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 20\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/site/content/_index.md\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 3 \\\\( -name '_index.md' -o -name 'NNNN-template.md' -o -path '*/site/content/docs/concepts/architecture.md' -o -name '*IMEX*' -o -name '*ComputeDomain*' -o -name 'AGENTS.md' \\\\) | sed -n '1,260p'\",\"login\":true,\"max_output_tokens\":12000,\"yield_time_ms\":10000}"
+      }
+    },
+    {
+      "step_id": 13,
+      "timestamp": "2026-08-23T01:49:59.611Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_ttQjHa1QP7LZdMMHHrwtWkrO",
+          "function_name": "update_plan",
+          "arguments": {
+            "explanation": "The eval workspace doesn\u2019t include the full repo content, so I\u2019m using the skill guidance plus public/current architecture context to produce a design review artifact rather than editing an in-repo proposal file.",
+            "plan": [
+              {
+                "step": "Inspect repo guidance and context",
+                "status": "completed"
+              },
+              {
+                "step": "Review design-review skill instructions",
+                "status": "completed"
+              },
+              {
+                "step": "Gather IMEX architecture context",
+                "status": "in_progress"
+              },
+              {
+                "step": "Draft placement decision review",
+                "status": "pending"
+              },
+              {
+                "step": "Polish and save review doc",
+                "status": "pending"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_ttQjHa1QP7LZdMMHHrwtWkrO",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"explanation\":\"The eval workspace doesn\u2019t include the full repo content, so I\u2019m using the skill guidance plus public/current architecture context to produce a design review artifact rather than editing an in-repo proposal file.\",\"plan\":[{\"step\":\"Inspect repo guidance and context\",\"status\":\"completed\"},{\"step\":\"Review design-review skill instructions\",\"status\":\"completed\"},{\"step\":\"Gather IMEX architecture context\",\"status\":\"in_progress\"},{\"step\":\"Draft placement decision review\",\"status\":\"pending\"},{\"step\":\"Polish and save review doc\",\"status\":\"pending\"}]}"
+      }
+    },
+    {
+      "step_id": 14,
+      "timestamp": "2026-08-23T01:50:01.357Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I have the skill guidance; next I\u2019m pulling authoritative public context."
+    },
+    {
+      "step_id": 15,
+      "timestamp": "2026-08-23T01:50:05.163Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "",
+          "function_name": "web_search_call",
+          "arguments": {
+            "action_type": "search",
+            "query": "site:github.com/kubernetes-sigs/dra-driver-nvidia-gpu IMEX ComputeDomain host-managed NVIDIA DRA driver",
+            "queries": [
+              "site:github.com/kubernetes-sigs/dra-driver-nvidia-gpu IMEX ComputeDomain host-managed NVIDIA DRA driver",
+              "site:kubernetes.io dynamic resource allocation DRA architecture device-specific drivers responsibilities",
+              "site:docs.nvidia.com GPU Operator DRA IMEX ComputeDomain host managed",
+              "site:github.com/kubernetes-sigs/dra-driver-nvidia-gpu proposal IMEX ComputeDomain"
+            ]
+          }
+        }
+      ],
+      "extra": {
+        "status": "completed"
+      }
+    },
+    {
+      "step_id": 16,
+      "timestamp": "2026-08-23T01:50:07.766Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "",
+          "function_name": "web_search_call",
+          "arguments": {
+            "action_type": "open_page",
+            "url": "https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu/releases"
+          }
+        }
+      ],
+      "extra": {
+        "status": "completed"
+      }
+    },
+    {
+      "step_id": 17,
+      "timestamp": "2026-08-23T01:50:11.637Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "",
+          "function_name": "web_search_call",
+          "arguments": {
+            "action_type": "search",
+            "query": "site:dra-driver-nvidia-gpu.sigs.k8s.io host-managed IMEX validate host-managed IMEX",
+            "queries": [
+              "site:dra-driver-nvidia-gpu.sigs.k8s.io host-managed IMEX validate host-managed IMEX",
+              "site:dra-driver-nvidia-gpu.sigs.k8s.io ComputeDomainClique host-managed IMEX",
+              "site:docs.nvidia.com nvidia-imex service systemd IMEX channel domain isolation host managed"
+            ]
+          }
+        }
+      ],
+      "extra": {
+        "status": "completed"
+      }
+    },
+    {
+      "step_id": 18,
+      "timestamp": "2026-08-23T01:50:11.809Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019ve got enough source context; drafting the decision and rationale now."
+    },
+    {
+      "step_id": 19,
+      "timestamp": "2026-08-23T01:50:51.034Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_8ZPR81D18nB77qpEQqyXuIf2",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cat > input/host-managed-imex-design-review.md <<'EOF'\n# Design Review: Placement of Host-Managed IMEX Isolation Mode\n\n- Status: provisional design review\n- Audience: DRA maintainers, GPU Operator maintainers, Kubernetes DRA reviewers, documentation/release owners\n- Scope: decide whether host-managed IMEX isolation mode belongs in the NVIDIA GPU DRA driver, NVIDIA GPU Operator, or upstream Kubernetes\n- Date: 2026-08-22\n\n## Summary\n\nHost-managed IMEX isolation mode belongs primarily in the NVIDIA GPU DRA driver as a driver-owned, explicitly limited integration mode, with deployment wiring and lifecycle UX surfaced by GPU Operator, and without any new upstream Kubernetes API or core behavior requirement.\n\nIn short:\n\n1. The DRA driver should remain the authoritative owner of ComputeDomain semantics, admission-time guarantees, and container-visible IMEX channel handling.\n2. GPU Operator should own packaging, node prerequisites, rollout policy, and host-service integration ergonomics for clusters that prefer a pre-installed or host-managed `nvidia-imex` daemon.\n3. Upstream Kubernetes should not grow IMEX-specific APIs or logic for this mode unless a future requirement generalizes beyond NVIDIA and cannot be represented through existing DRA driver contracts.\n\nThis means the feature is correctly split as:\n\n- Driver: feature gate, validation, degraded-capability semantics, kubelet/plugin/controller behavior, documentation of guarantees and limitations.\n- GPU Operator: install/upgrade orchestration, host package expectations, systemd/service readiness checks, and policy defaults.\n- Kubernetes upstream: no immediate changes; only generic DRA enhancements if future needs prove reusable.\n\n## Related work and current state\n\nThe DRA driver already defines ComputeDomains as the abstraction that guarantees MNNVL reachability and secure isolation between pods in different namespaces, while treating IMEX as an implementation detail that the driver launches and/or reconfigures as needed. The GPU Operator documentation presents the same model and positions the driver as the component doing the \u201cheavy lifting\u201d for ComputeDomains. Kubernetes DRA, by contrast, provides generic APIs and explicitly leaves device-specific configuration and scheduling information to the DRA driver. \ue200cite\ue202turn0search0\ue202turn1view1\ue202turn1view2\ue201\n\nThe project\u2019s current public release state already includes `HostManagedIMEXDaemon` as an alpha feature gate, disabled by default, which allows `resources.computeDomains.imex.mode=hostManaged`. The release notes also make two constraints explicit: in host-managed mode, driver-managed DNS daemon naming and `ComputeDomainClique` tracking are not used; and host-managed IMEX currently supports domain isolation only, not per-channel isolation, so all workloads in the same IMEX domain receive channel 0. The same release notes warn that switching IMEX mode or isolation configuration while ComputeDomain workloads are active is unsupported. \ue200cite\ue202turn1view0\ue201\n\nNVIDIA\u2019s IMEX documentation and CUDA documentation reinforce why this matters: IMEX channels are the primitive used for multi-user isolation inside an IMEX domain, and when multi-user isolation is desired, separate channels are required per user; channel 0 shared broadly is therefore an intentionally weaker isolation model than driver-managed per-workload channel assignment. NVIDIA\u2019s IMEX service docs also show that `nvidia-imex` can be deployed as a host service managed outside Kubernetes, which makes a host-managed mode operationally plausible but not a reason to move semantic ownership away from the DRA driver. \ue200cite\ue202turn2search0\ue202turn2search3\ue202turn2search15\ue201\n\n## Problem statement\n\nWe need to decide the architectural home for \u201chost-managed IMEX isolation mode\u201d: a mode where the host runs and manages `nvidia-imex`, while Kubernetes workloads still request ComputeDomains through DRA.\n\nThe main question is not where a daemon binary runs. The real question is which layer should own:\n\n- the meaning of the mode,\n- the safety boundary and user-visible guarantees,\n- validation of unsupported combinations,\n- upgrade and downgrade behavior,\n- reconciliation against ComputeDomain lifecycle,\n- and documentation of the reduced isolation properties.\n\nBecause this mode changes the way ComputeDomain guarantees are realized, it is not just packaging. But because it depends on host packages, systemd ordering, and cluster rollout policy, it is also not purely a driver-internal runtime concern.\n\n## Decision\n\n### Recommended placement\n\nHost-managed IMEX isolation mode should be implemented and owned as a driver-level ComputeDomain mode, exposed through the driver\u2019s configuration and feature-gated by the driver, while GPU Operator provides the preferred distribution and operational integration for that mode.\n\n### Explicit non-decision\n\nThis review does **not** recommend moving ComputeDomain or IMEX semantics into upstream Kubernetes APIs, scheduler logic, kubelet core, or a generic cluster API extension at this time.\n\n## Why it belongs in the DRA driver\n\n### 1. ComputeDomain semantics are already driver-owned\n\nComputeDomain is a vendor-specific abstraction provided by this driver, not a native Kubernetes concept. The driver already owns the mapping from a ResourceClaim to IMEX primitives, as well as the guarantees made to users about reachability and isolation. A host-managed variant changes how those guarantees are implemented and weakens part of the isolation model; that is squarely in the driver\u2019s semantic boundary, not merely in an installer boundary. \ue200cite\ue202turn0search0\ue202turn1view1\ue202turn1view2\ue201\n\n### 2. The feature changes user-visible guarantees, not just deployment mechanics\n\nThe release notes state that host-managed mode provides only domain isolation and not channel isolation, with all workloads in the same IMEX domain receiving channel 0. That limitation directly affects the security and multi-tenancy properties exposed by ComputeDomains. If the meaning and admissibility of this mode lived only in GPU Operator, the driver would still need to understand and enforce the degraded guarantee, because the driver is what allocates claims, configures kubelet-facing behavior, and injects runtime state into workloads. \ue200cite\ue202turn1view0\ue202turn2search0\ue202turn2search15\ue201\n\n### 3. The driver is the only layer with the full reconciliation context\n\nOnly the driver naturally sees all of the following together:\n\n- ComputeDomain CR lifecycle,\n- ResourceClaim / pod binding intent,\n- per-node plugin state,\n- IMEX-related CDI or device injection behavior,\n- and feature interactions like `ComputeDomainClique` tracking being unavailable in host-managed mode.\n\nGPU Operator can install and configure components, but it does not own claim-time semantics. Kubernetes core sees generic DRA objects, not NVIDIA-specific IMEX invariants. Therefore the driver must remain the authoritative place to reject unsupported combinations and to document the actual contract. \ue200cite\ue202turn1view0\ue202turn1view1\ue202turn1view2\ue201\n\n### 4. Feature gating belongs closest to semantic risk\n\nThe project already ships `HostManagedIMEXDaemon` as a driver feature gate. That is the right shape: the mode changes safety and compatibility characteristics, so reviewers and operators need a driver-scoped gate, release note, docs, and validation matrix. Moving the \u201creal\u201d feature to GPU Operator while leaving only a thin driver hook would split accountability for semantics from accountability for compatibility. \ue200cite\ue202turn1view0\ue201\n\n## Why GPU Operator should still own part of the story\n\n### 1. Host-managed mode has strong node lifecycle and packaging dependencies\n\nNVIDIA documentation shows that IMEX can run as a host systemd service and that driver packages and startup ordering matter. The GPU Operator is the natural layer to validate host prerequisites, coordinate with host-driver installation choices, and provide cluster-level guidance for enabling or disabling `nvidia-imex.service`. This is operational ownership, not semantic ownership. \ue200cite\ue202turn2search1\ue202turn2search3\ue202turn2search7\ue201\n\n### 2. The operator is the right place for rollout policy and preflight checks\n\nIf a cluster wants host-managed mode, the operator should be able to:\n\n- surface the corresponding driver Helm/operator values,\n- run preflight checks for required IMEX packages or service presence,\n- ensure supported combinations with GPU driver versions,\n- warn on unsafe upgrades or config flips while workloads are active,\n- and set a conservative default posture.\n\nThese are packaging and day-2 operations concerns that belong in GPU Operator even when the feature itself remains driver-owned. The current GPU Operator docs already frame DRA deployment and prerequisites this way. \ue200cite\ue202turn2search1\ue202turn1view1\ue201\n\n### 3. Operator integration lets us keep the driver generic enough\n\nKeeping host-managed mode in the driver does not require the driver to become a full host-service manager. The driver can assume a declarative contract such as \u201chost IMEX is present and conformant\u201d while GPU Operator is the preferred automation mechanism that satisfies that contract. That preserves a clean split:\n\n- driver validates and consumes the mode,\n- operator prepares the node environment.\n\n## Why it does not belong upstream in Kubernetes\n\n### 1. IMEX is not a generic Kubernetes resource model today\n\nKubernetes DRA intentionally delegates device-specific behavior to vendors. The upstream APIs model claims, slices, classes, and driver-populated scheduling data; they do not model NVIDIA-specific daemons, channels, or NVLink domain membership. Host-managed IMEX does not currently require a new generic scheduling primitive or kubelet API. \ue200cite\ue202turn1view2\ue202turn0search7\ue201\n\n### 2. No proven cross-vendor abstraction exists yet\n\nTo justify upstreaming, we would need evidence that multiple vendors share the same need for a host-managed, out-of-band isolation daemon whose lifecycle partially escapes the driver but whose claim semantics remain part of device allocation. This review has no such evidence. Upstreaming NVIDIA-specific concepts now would likely produce leaky APIs or premature abstraction.\n\n### 3. Existing DRA extension points are sufficient\n\nThe driver can express placement and accounting data through existing DRA objects, and can keep IMEX realization details internal. The current issue is about ownership of orchestration and guarantees, not lack of an upstream API surface. Until the driver hits a real blocker that cannot be represented through existing ResourceClaims, ResourceSlices, DeviceClasses, or kubelet plugin behavior, upstream Kubernetes should stay unchanged. \ue200cite\ue202turn1view2\ue201\n\n## Goals\n\n- Preserve a single authoritative owner for ComputeDomain semantics and safety guarantees.\n- Support environments that require or strongly prefer a pre-installed, host-managed `nvidia-imex` service.\n- Make the reduced isolation properties of host-managed mode explicit, testable, and impossible to miss.\n- Keep Kubernetes upstream unchanged unless a reusable cross-vendor need emerges.\n- Let GPU Operator provide a smooth operational path for enabling the mode.\n\n## Non-goals\n\n- Introduce new upstream Kubernetes APIs for IMEX domains or channels.\n- Promise equivalence between host-managed mode and driver-managed mode.\n- Let GPU Operator redefine ComputeDomain semantics independently of the driver.\n- Expand host-managed mode to guarantee per-workload channel isolation before the underlying architecture supports it.\n\n## User-facing example\n\nA cluster operator runs NVIDIA GPU drivers and `nvidia-imex.service` directly on GB200 nodes because the site has strict host-service controls. They still want users to request ComputeDomains through standard DRA workflows.\n\nIn the recommended design:\n\n- the operator enables a GPU Operator or Helm value that in turn sets the driver\u2019s `resources.computeDomains.imex.mode=hostManaged` and the `HostManagedIMEXDaemon` gate,\n- the driver validates that host-managed mode is alpha and carries only domain isolation,\n- the docs and status clearly state that per-channel multi-user isolation is not provided in this mode,\n- the driver refuses unsupported transitions while active ComputeDomains exist,\n- and GPU Operator preflights host prerequisites and warns if the host service is absent or misconfigured.\n\n## Layer ownership model\n\n### Driver-owned responsibilities\n\n- Define `hostManaged` as a ComputeDomain IMEX mode.\n- Gate it with a driver feature gate and mark stage/default.\n- Validate incompatible combinations such as unsupported isolation requests or unsafe config transitions.\n- Reflect reduced guarantees in status, events, docs, and release notes.\n- Own interactions with claim lifecycle, pod admission assumptions, kubelet plugin behavior, and any channel/device injection semantics.\n- Own any future compatibility logic with `ComputeDomainClique`, DNS mapping, or per-node daemon assumptions.\n\n### GPU Operator-owned responsibilities\n\n- Surface the mode through supported deployment values.\n- Validate node prerequisites, package presence, and supported GPU driver/environment floors.\n- Integrate with host-driver-managed clusters and lifecycle hooks.\n- Provide upgrade guidance and preflight checks for config flips.\n- Offer opinionated defaults and support posture for production enablement.\n\n### Upstream Kubernetes responsibilities\n\n- None specific to IMEX for this proposal.\n- Continue providing generic DRA primitives.\n- Revisit only if a future generic API gap is demonstrated.\n\n## Smallest valuable slice\n\nThe smallest useful slice is the one that already appears to be emerging publicly:\n\n- alpha driver gate,\n- driver configuration knob for `hostManaged`,\n- explicit limitation to domain isolation only,\n- no `ComputeDomainClique` tracking or driver-managed DNS naming in this mode,\n- operator and docs support for prerequisite validation,\n- and a strong warning against live mode transitions with active workloads. \ue200cite\ue202turn1view0\ue201\n\nThat slice is valuable because it enables constrained environments without falsely promising parity with driver-managed IMEX.\n\n## Upgrade and downgrade implications\n\nHost-managed mode should remain opt-in and alpha until maintainers can validate its behavior across node reboot, driver restart, IMEX service restart, and workload churn. Because current release notes already warn that changing IMEX mode or isolation while ComputeDomain workloads are active is unsupported, upgrades should preserve the existing mode unless the cluster is drained and ComputeDomains are removed first. GPU Operator should carry this warning into preflight and rollout UX. \ue200cite\ue202turn1view0\ue202turn2search0\ue202turn2search3\ue201\n\nDowngrade behavior must also be explicit:\n\n- downgrading to a version without the gate or mode should be blocked or require prior reversion to driver-managed mode,\n- stale host IMEX state must not be interpreted as active ComputeDomain ownership by an older driver,\n- and docs should state whether any cleanup of channels or service configuration is manual.\n\n## Environment floor and assumptions\n\n- Kubernetes with DRA enabled and a supported driver version for this project.\n- NVIDIA platforms that support ComputeDomains / MNNVL.\n- `nvidia-imex` packages present on nodes when using host-managed mode.\n- A conformant host IMEX service lifecycle outside the DRA driver.\n- Clear understanding that current host-managed mode provides domain isolation only, not channel isolation. \ue200cite\ue202turn2search1\ue202turn2search3\ue202turn1view0\ue201\n\n## Risks and failure modes\n\n### Semantic confusion\n\nThe biggest product risk is users assuming \u201chost-managed\u201d is merely a deployment optimization. It is not; it changes isolation properties. Mitigation: keep the gate alpha, document reduced guarantees everywhere, and require explicit configuration.\n\n### Split-brain ownership\n\nIf GPU Operator were to own the mode semantics while the driver merely consumed side effects, compatibility bugs would become harder to root-cause. Mitigation: keep semantics in the driver and operationalization in the operator.\n\n### Service readiness / startup ordering\n\nNVIDIA documentation notes startup ordering sensitivity for `nvidia-imex.service`, especially around network readiness and IMEX domain configuration. Mitigation: operator preflight and node-level docs; driver fail fast with actionable events when host IMEX is not ready. \ue200cite\ue202turn2search7\ue202turn2search3\ue201\n\n### Weaker multi-tenant isolation\n\nShared channel 0 within an IMEX domain is weaker than per-user or per-workload channel assignment. Mitigation: document host-managed mode as unsuitable for tenants that require channel isolation; consider namespace or trust-boundary restrictions in guidance. \ue200cite\ue202turn1view0\ue202turn2search0\ue202turn2search15\ue201\n\n### Unsupported live reconfiguration\n\nChanging mode or isolation while workloads are active can strand claims or create mismatched assumptions. Mitigation: driver validation and operator drain checks. \ue200cite\ue202turn1view0\ue201\n\n## Alternatives considered\n\n### Alternative A: Put the feature entirely in GPU Operator\n\nRejected. GPU Operator can package and validate the environment, but it cannot be the authoritative owner of ComputeDomain semantics. The driver still has to understand the mode, expose limitations, and reconcile claim lifecycle implications.\n\n### Alternative B: Move the concept upstream into Kubernetes\n\nRejected for now. No generic abstraction gap has been demonstrated, and DRA already expects vendor drivers to own device-specific behavior. Upstreaming now would likely encode NVIDIA-specific semantics too early. \ue200cite\ue202turn1view2\ue201\n\n### Alternative C: Keep only driver-managed IMEX and refuse host-managed environments\n\nPartially attractive for simplicity, but too restrictive operationally. NVIDIA\u2019s own documentation shows valid environments where IMEX is managed as a host service, and the project has already introduced an alpha host-managed gate, indicating legitimate demand. \ue200cite\ue202turn2search3\ue202turn1view0\ue201\n\n### Alternative D: Treat host-managed mode as equivalent to driver-managed mode\n\nRejected. Current public limitations contradict that equivalence, especially around channel isolation and omitted `ComputeDomainClique` tracking. \ue200cite\ue202turn1view0\ue201\n\n## Test and validation plan\n\nThis is a design review, not an implementation plan, but the decision implies the following validation expectations:\n\n- Unit tests in driver config validation for gate enforcement, unsupported transitions, and incompatible IMEX/isolation combinations.\n- Controller tests for ComputeDomain lifecycle when the mode is `hostManaged`, especially absence of per-ComputeDomain DaemonSet assumptions.\n- Kubelet/plugin tests for host-IMEX readiness failure surfacing and channel/device injection behavior.\n- Helm/operator tests ensuring the mode is wired correctly and preflight warnings surface.\n- Upgrade tests covering drain-required config changes and downgrade rejection/guardrails.\n- Real-hardware validation on MNNVL-capable systems, because host IMEX behavior cannot be fully proven in generic CI.\n\nUnavailable or limited coverage should be stated explicitly; ComputeDomain and IMEX paths already have hardware-sensitive behavior that generic CI cannot fully exercise. \ue200cite\ue202turn0search6\ue201\n\n## Drawbacks\n\n- Responsibility is split across driver and operator, which increases coordination overhead.\n- The driver must carry explicit degraded-mode semantics instead of keeping IMEX entirely hidden as an implementation detail.\n- Documentation and support burden increase because the mode is easier to misconfigure.\n\n## Maintainer-facing recommendation\n\nAdopt and communicate the following boundary:\n\n> Host-managed IMEX isolation mode is a ComputeDomain feature of the NVIDIA DRA driver, because it changes the contract the driver offers to workloads. GPU Operator is the preferred mechanism to deploy and validate the host prerequisites for that feature. Upstream Kubernetes remains unchanged unless future cross-vendor evidence shows a generic API gap.\n\nThis boundary matches the current DRA architecture, aligns with the already published alpha feature gate, and keeps the owner of the user-visible guarantee the same as the owner of the resource abstraction.\n\n## Open questions\n\n- Should host-managed mode be restricted by policy or docs to trusted single-tenant or same-trust-boundary namespaces until channel isolation exists?\n- Does the driver need an explicit status condition or event reason that says \u201cdomain isolation only\u201d for host-managed ComputeDomains?\n- Should GPU Operator block enablement unless it can verify host IMEX service presence and a minimum supported driver package version?\n- What is the graduation bar from alpha, given the current limitation that all workloads in a domain receive channel 0?\n- Is there any future generic DRA API need around externally managed per-node services, or is this fully representable as driver-local behavior indefinitely?\nEOF",
+            "login": true,
+            "max_output_tokens": 12000,
+            "yield_time_ms": 10000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_8ZPR81D18nB77qpEQqyXuIf2",
+            "content": "Chunk ID: 65c5c5\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 0\nOutput:\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cat > input/host-managed-imex-design-review.md <<'EOF'\\n# Design Review: Placement of Host-Managed IMEX Isolation Mode\\n\\n- Status: provisional design review\\n- Audience: DRA maintainers, GPU Operator maintainers, Kubernetes DRA reviewers, documentation/release owners\\n- Scope: decide whether host-managed IMEX isolation mode belongs in the NVIDIA GPU DRA driver, NVIDIA GPU Operator, or upstream Kubernetes\\n- Date: 2026-08-22\\n\\n## Summary\\n\\nHost-managed IMEX isolation mode belongs primarily in the NVIDIA GPU DRA driver as a driver-owned, explicitly limited integration mode, with deployment wiring and lifecycle UX surfaced by GPU Operator, and without any new upstream Kubernetes API or core behavior requirement.\\n\\nIn short:\\n\\n1. The DRA driver should remain the authoritative owner of ComputeDomain semantics, admission-time guarantees, and container-visible IMEX channel handling.\\n2. GPU Operator should own packaging, node prerequisites, rollout policy, and host-service integration ergonomics for clusters that prefer a pre-installed or host-managed `nvidia-imex` daemon.\\n3. Upstream Kubernetes should not grow IMEX-specific APIs or logic for this mode unless a future requirement generalizes beyond NVIDIA and cannot be represented through existing DRA driver contracts.\\n\\nThis means the feature is correctly split as:\\n\\n- Driver: feature gate, validation, degraded-capability semantics, kubelet/plugin/controller behavior, documentation of guarantees and limitations.\\n- GPU Operator: install/upgrade orchestration, host package expectations, systemd/service readiness checks, and policy defaults.\\n- Kubernetes upstream: no immediate changes; only generic DRA enhancements if future needs prove reusable.\\n\\n## Related work and current state\\n\\nThe DRA driver already defines ComputeDomains as the abstraction that guarantees MNNVL reachability and secure isolation between pods in different namespaces, while treating IMEX as an implementation detail that the driver launches and/or reconfigures as needed. The GPU Operator documentation presents the same model and positions the driver as the component doing the \u201cheavy lifting\u201d for ComputeDomains. Kubernetes DRA, by contrast, provides generic APIs and explicitly leaves device-specific configuration and scheduling information to the DRA driver. \ue200cite\ue202turn0search0\ue202turn1view1\ue202turn1view2\ue201\\n\\nThe project\u2019s current public release state already includes `HostManagedIMEXDaemon` as an alpha feature gate, disabled by default, which allows `resources.computeDomains.imex.mode=hostManaged`. The release notes also make two constraints explicit: in host-managed mode, driver-managed DNS daemon naming and `ComputeDomainClique` tracking are not used; and host-managed IMEX currently supports domain isolation only, not per-channel isolation, so all workloads in the same IMEX domain receive channel 0. The same release notes warn that switching IMEX mode or isolation configuration while ComputeDomain workloads are active is unsupported. \ue200cite\ue202turn1view0\ue201\\n\\nNVIDIA\u2019s IMEX documentation and CUDA documentation reinforce why this matters: IMEX channels are the primitive used for multi-user isolation inside an IMEX domain, and when multi-user isolation is desired, separate channels are required per user; channel 0 shared broadly is therefore an intentionally weaker isolation model than driver-managed per-workload channel assignment. NVIDIA\u2019s IMEX service docs also show that `nvidia-imex` can be deployed as a host service managed outside Kubernetes, which makes a host-managed mode operationally plausible but not a reason to move semantic ownership away from the DRA driver. \ue200cite\ue202turn2search0\ue202turn2search3\ue202turn2search15\ue201\\n\\n## Problem statement\\n\\nWe need to decide the architectural home for \u201chost-managed IMEX isolation mode\u201d: a mode where the host runs and manages `nvidia-imex`, while Kubernetes workloads still request ComputeDomains through DRA.\\n\\nThe main question is not where a daemon binary runs. The real question is which layer should own:\\n\\n- the meaning of the mode,\\n- the safety boundary and user-visible guarantees,\\n- validation of unsupported combinations,\\n- upgrade and downgrade behavior,\\n- reconciliation against ComputeDomain lifecycle,\\n- and documentation of the reduced isolation properties.\\n\\nBecause this mode changes the way ComputeDomain guarantees are realized, it is not just packaging. But because it depends on host packages, systemd ordering, and cluster rollout policy, it is also not purely a driver-internal runtime concern.\\n\\n## Decision\\n\\n### Recommended placement\\n\\nHost-managed IMEX isolation mode should be implemented and owned as a driver-level ComputeDomain mode, exposed through the driver\u2019s configuration and feature-gated by the driver, while GPU Operator provides the preferred distribution and operational integration for that mode.\\n\\n### Explicit non-decision\\n\\nThis review does **not** recommend moving ComputeDomain or IMEX semantics into upstream Kubernetes APIs, scheduler logic, kubelet core, or a generic cluster API extension at this time.\\n\\n## Why it belongs in the DRA driver\\n\\n### 1. ComputeDomain semantics are already driver-owned\\n\\nComputeDomain is a vendor-specific abstraction provided by this driver, not a native Kubernetes concept. The driver already owns the mapping from a ResourceClaim to IMEX primitives, as well as the guarantees made to users about reachability and isolation. A host-managed variant changes how those guarantees are implemented and weakens part of the isolation model; that is squarely in the driver\u2019s semantic boundary, not merely in an installer boundary. \ue200cite\ue202turn0search0\ue202turn1view1\ue202turn1view2\ue201\\n\\n### 2. The feature changes user-visible guarantees, not just deployment mechanics\\n\\nThe release notes state that host-managed mode provides only domain isolation and not channel isolation, with all workloads in the same IMEX domain receiving channel 0. That limitation directly affects the security and multi-tenancy properties exposed by ComputeDomains. If the meaning and admissibility of this mode lived only in GPU Operator, the driver would still need to understand and enforce the degraded guarantee, because the driver is what allocates claims, configures kubelet-facing behavior, and injects runtime state into workloads. \ue200cite\ue202turn1view0\ue202turn2search0\ue202turn2search15\ue201\\n\\n### 3. The driver is the only layer with the full reconciliation context\\n\\nOnly the driver naturally sees all of the following together:\\n\\n- ComputeDomain CR lifecycle,\\n- ResourceClaim / pod binding intent,\\n- per-node plugin state,\\n- IMEX-related CDI or device injection behavior,\\n- and feature interactions like `ComputeDomainClique` tracking being unavailable in host-managed mode.\\n\\nGPU Operator can install and configure components, but it does not own claim-time semantics. Kubernetes core sees generic DRA objects, not NVIDIA-specific IMEX invariants. Therefore the driver must remain the authoritative place to reject unsupported combinations and to document the actual contract. \ue200cite\ue202turn1view0\ue202turn1view1\ue202turn1view2\ue201\\n\\n### 4. Feature gating belongs closest to semantic risk\\n\\nThe project already ships `HostManagedIMEXDaemon` as a driver feature gate. That is the right shape: the mode changes safety and compatibility characteristics, so reviewers and operators need a driver-scoped gate, release note, docs, and validation matrix. Moving the \u201creal\u201d feature to GPU Operator while leaving only a thin driver hook would split accountability for semantics from accountability for compatibility. \ue200cite\ue202turn1view0\ue201\\n\\n## Why GPU Operator should still own part of the story\\n\\n### 1. Host-managed mode has strong node lifecycle and packaging dependencies\\n\\nNVIDIA documentation shows that IMEX can run as a host systemd service and that driver packages and startup ordering matter. The GPU Operator is the natural layer to validate host prerequisites, coordinate with host-driver installation choices, and provide cluster-level guidance for enabling or disabling `nvidia-imex.service`. This is operational ownership, not semantic ownership. \ue200cite\ue202turn2search1\ue202turn2search3\ue202turn2search7\ue201\\n\\n### 2. The operator is the right place for rollout policy and preflight checks\\n\\nIf a cluster wants host-managed mode, the operator should be able to:\\n\\n- surface the corresponding driver Helm/operator values,\\n- run preflight checks for required IMEX packages or service presence,\\n- ensure supported combinations with GPU driver versions,\\n- warn on unsafe upgrades or config flips while workloads are active,\\n- and set a conservative default posture.\\n\\nThese are packaging and day-2 operations concerns that belong in GPU Operator even when the feature itself remains driver-owned. The current GPU Operator docs already frame DRA deployment and prerequisites this way. \ue200cite\ue202turn2search1\ue202turn1view1\ue201\\n\\n### 3. Operator integration lets us keep the driver generic enough\\n\\nKeeping host-managed mode in the driver does not require the driver to become a full host-service manager. The driver can assume a declarative contract such as \u201chost IMEX is present and conformant\u201d while GPU Operator is the preferred automation mechanism that satisfies that contract. That preserves a clean split:\\n\\n- driver validates and consumes the mode,\\n- operator prepares the node environment.\\n\\n## Why it does not belong upstream in Kubernetes\\n\\n### 1. IMEX is not a generic Kubernetes resource model today\\n\\nKubernetes DRA intentionally delegates device-specific behavior to vendors. The upstream APIs model claims, slices, classes, and driver-populated scheduling data; they do not model NVIDIA-specific daemons, channels, or NVLink domain membership. Host-managed IMEX does not currently require a new generic scheduling primitive or kubelet API. \ue200cite\ue202turn1view2\ue202turn0search7\ue201\\n\\n### 2. No proven cross-vendor abstraction exists yet\\n\\nTo justify upstreaming, we would need evidence that multiple vendors share the same need for a host-managed, out-of-band isolation daemon whose lifecycle partially escapes the driver but whose claim semantics remain part of device allocation. This review has no such evidence. Upstreaming NVIDIA-specific concepts now would likely produce leaky APIs or premature abstraction.\\n\\n### 3. Existing DRA extension points are sufficient\\n\\nThe driver can express placement and accounting data through existing DRA objects, and can keep IMEX realization details internal. The current issue is about ownership of orchestration and guarantees, not lack of an upstream API surface. Until the driver hits a real blocker that cannot be represented through existing ResourceClaims, ResourceSlices, DeviceClasses, or kubelet plugin behavior, upstream Kubernetes should stay unchanged. \ue200cite\ue202turn1view2\ue201\\n\\n## Goals\\n\\n- Preserve a single authoritative owner for ComputeDomain semantics and safety guarantees.\\n- Support environments that require or strongly prefer a pre-installed, host-managed `nvidia-imex` service.\\n- Make the reduced isolation properties of host-managed mode explicit, testable, and impossible to miss.\\n- Keep Kubernetes upstream unchanged unless a reusable cross-vendor need emerges.\\n- Let GPU Operator provide a smooth operational path for enabling the mode.\\n\\n## Non-goals\\n\\n- Introduce new upstream Kubernetes APIs for IMEX domains or channels.\\n- Promise equivalence between host-managed mode and driver-managed mode.\\n- Let GPU Operator redefine ComputeDomain semantics independently of the driver.\\n- Expand host-managed mode to guarantee per-workload channel isolation before the underlying architecture supports it.\\n\\n## User-facing example\\n\\nA cluster operator runs NVIDIA GPU drivers and `nvidia-imex.service` directly on GB200 nodes because the site has strict host-service controls. They still want users to request ComputeDomains through standard DRA workflows.\\n\\nIn the recommended design:\\n\\n- the operator enables a GPU Operator or Helm value that in turn sets the driver\u2019s `resources.computeDomains.imex.mode=hostManaged` and the `HostManagedIMEXDaemon` gate,\\n- the driver validates that host-managed mode is alpha and carries only domain isolation,\\n- the docs and status clearly state that per-channel multi-user isolation is not provided in this mode,\\n- the driver refuses unsupported transitions while active ComputeDomains exist,\\n- and GPU Operator preflights host prerequisites and warns if the host service is absent or misconfigured.\\n\\n## Layer ownership model\\n\\n### Driver-owned responsibilities\\n\\n- Define `hostManaged` as a ComputeDomain IMEX mode.\\n- Gate it with a driver feature gate and mark stage/default.\\n- Validate incompatible combinations such as unsupported isolation requests or unsafe config transitions.\\n- Reflect reduced guarantees in status, events, docs, and release notes.\\n- Own interactions with claim lifecycle, pod admission assumptions, kubelet plugin behavior, and any channel/device injection semantics.\\n- Own any future compatibility logic with `ComputeDomainClique`, DNS mapping, or per-node daemon assumptions.\\n\\n### GPU Operator-owned responsibilities\\n\\n- Surface the mode through supported deployment values.\\n- Validate node prerequisites, package presence, and supported GPU driver/environment floors.\\n- Integrate with host-driver-managed clusters and lifecycle hooks.\\n- Provide upgrade guidance and preflight checks for config flips.\\n- Offer opinionated defaults and support posture for production enablement.\\n\\n### Upstream Kubernetes responsibilities\\n\\n- None specific to IMEX for this proposal.\\n- Continue providing generic DRA primitives.\\n- Revisit only if a future generic API gap is demonstrated.\\n\\n## Smallest valuable slice\\n\\nThe smallest useful slice is the one that already appears to be emerging publicly:\\n\\n- alpha driver gate,\\n- driver configuration knob for `hostManaged`,\\n- explicit limitation to domain isolation only,\\n- no `ComputeDomainClique` tracking or driver-managed DNS naming in this mode,\\n- operator and docs support for prerequisite validation,\\n- and a strong warning against live mode transitions with active workloads. \ue200cite\ue202turn1view0\ue201\\n\\nThat slice is valuable because it enables constrained environments without falsely promising parity with driver-managed IMEX.\\n\\n## Upgrade and downgrade implications\\n\\nHost-managed mode should remain opt-in and alpha until maintainers can validate its behavior across node reboot, driver restart, IMEX service restart, and workload churn. Because current release notes already warn that changing IMEX mode or isolation while ComputeDomain workloads are active is unsupported, upgrades should preserve the existing mode unless the cluster is drained and ComputeDomains are removed first. GPU Operator should carry this warning into preflight and rollout UX. \ue200cite\ue202turn1view0\ue202turn2search0\ue202turn2search3\ue201\\n\\nDowngrade behavior must also be explicit:\\n\\n- downgrading to a version without the gate or mode should be blocked or require prior reversion to driver-managed mode,\\n- stale host IMEX state must not be interpreted as active ComputeDomain ownership by an older driver,\\n- and docs should state whether any cleanup of channels or service configuration is manual.\\n\\n## Environment floor and assumptions\\n\\n- Kubernetes with DRA enabled and a supported driver version for this project.\\n- NVIDIA platforms that support ComputeDomains / MNNVL.\\n- `nvidia-imex` packages present on nodes when using host-managed mode.\\n- A conformant host IMEX service lifecycle outside the DRA driver.\\n- Clear understanding that current host-managed mode provides domain isolation only, not channel isolation. \ue200cite\ue202turn2search1\ue202turn2search3\ue202turn1view0\ue201\\n\\n## Risks and failure modes\\n\\n### Semantic confusion\\n\\nThe biggest product risk is users assuming \u201chost-managed\u201d is merely a deployment optimization. It is not; it changes isolation properties. Mitigation: keep the gate alpha, document reduced guarantees everywhere, and require explicit configuration.\\n\\n### Split-brain ownership\\n\\nIf GPU Operator were to own the mode semantics while the driver merely consumed side effects, compatibility bugs would become harder to root-cause. Mitigation: keep semantics in the driver and operationalization in the operator.\\n\\n### Service readiness / startup ordering\\n\\nNVIDIA documentation notes startup ordering sensitivity for `nvidia-imex.service`, especially around network readiness and IMEX domain configuration. Mitigation: operator preflight and node-level docs; driver fail fast with actionable events when host IMEX is not ready. \ue200cite\ue202turn2search7\ue202turn2search3\ue201\\n\\n### Weaker multi-tenant isolation\\n\\nShared channel 0 within an IMEX domain is weaker than per-user or per-workload channel assignment. Mitigation: document host-managed mode as unsuitable for tenants that require channel isolation; consider namespace or trust-boundary restrictions in guidance. \ue200cite\ue202turn1view0\ue202turn2search0\ue202turn2search15\ue201\\n\\n### Unsupported live reconfiguration\\n\\nChanging mode or isolation while workloads are active can strand claims or create mismatched assumptions. Mitigation: driver validation and operator drain checks. \ue200cite\ue202turn1view0\ue201\\n\\n## Alternatives considered\\n\\n### Alternative A: Put the feature entirely in GPU Operator\\n\\nRejected. GPU Operator can package and validate the environment, but it cannot be the authoritative owner of ComputeDomain semantics. The driver still has to understand the mode, expose limitations, and reconcile claim lifecycle implications.\\n\\n### Alternative B: Move the concept upstream into Kubernetes\\n\\nRejected for now. No generic abstraction gap has been demonstrated, and DRA already expects vendor drivers to own device-specific behavior. Upstreaming now would likely encode NVIDIA-specific semantics too early. \ue200cite\ue202turn1view2\ue201\\n\\n### Alternative C: Keep only driver-managed IMEX and refuse host-managed environments\\n\\nPartially attractive for simplicity, but too restrictive operationally. NVIDIA\u2019s own documentation shows valid environments where IMEX is managed as a host service, and the project has already introduced an alpha host-managed gate, indicating legitimate demand. \ue200cite\ue202turn2search3\ue202turn1view0\ue201\\n\\n### Alternative D: Treat host-managed mode as equivalent to driver-managed mode\\n\\nRejected. Current public limitations contradict that equivalence, especially around channel isolation and omitted `ComputeDomainClique` tracking. \ue200cite\ue202turn1view0\ue201\\n\\n## Test and validation plan\\n\\nThis is a design review, not an implementation plan, but the decision implies the following validation expectations:\\n\\n- Unit tests in driver config validation for gate enforcement, unsupported transitions, and incompatible IMEX/isolation combinations.\\n- Controller tests for ComputeDomain lifecycle when the mode is `hostManaged`, especially absence of per-ComputeDomain DaemonSet assumptions.\\n- Kubelet/plugin tests for host-IMEX readiness failure surfacing and channel/device injection behavior.\\n- Helm/operator tests ensuring the mode is wired correctly and preflight warnings surface.\\n- Upgrade tests covering drain-required config changes and downgrade rejection/guardrails.\\n- Real-hardware validation on MNNVL-capable systems, because host IMEX behavior cannot be fully proven in generic CI.\\n\\nUnavailable or limited coverage should be stated explicitly; ComputeDomain and IMEX paths already have hardware-sensitive behavior that generic CI cannot fully exercise. \ue200cite\ue202turn0search6\ue201\\n\\n## Drawbacks\\n\\n- Responsibility is split across driver and operator, which increases coordination overhead.\\n- The driver must carry explicit degraded-mode semantics instead of keeping IMEX entirely hidden as an implementation detail.\\n- Documentation and support burden increase because the mode is easier to misconfigure.\\n\\n## Maintainer-facing recommendation\\n\\nAdopt and communicate the following boundary:\\n\\n> Host-managed IMEX isolation mode is a ComputeDomain feature of the NVIDIA DRA driver, because it changes the contract the driver offers to workloads. GPU Operator is the preferred mechanism to deploy and validate the host prerequisites for that feature. Upstream Kubernetes remains unchanged unless future cross-vendor evidence shows a generic API gap.\\n\\nThis boundary matches the current DRA architecture, aligns with the already published alpha feature gate, and keeps the owner of the user-visible guarantee the same as the owner of the resource abstraction.\\n\\n## Open questions\\n\\n- Should host-managed mode be restricted by policy or docs to trusted single-tenant or same-trust-boundary namespaces until channel isolation exists?\\n- Does the driver need an explicit status condition or event reason that says \u201cdomain isolation only\u201d for host-managed ComputeDomains?\\n- Should GPU Operator block enablement unless it can verify host IMEX service presence and a minimum supported driver package version?\\n- What is the graduation bar from alpha, given the current limitation that all workloads in a domain receive channel 0?\\n- Is there any future generic DRA API need around externally managed per-node services, or is this fully representable as driver-local behavior indefinitely?\\nEOF\",\"login\":true,\"max_output_tokens\":12000,\"yield_time_ms\":10000}"
+      }
+    },
+    {
+      "step_id": 20,
+      "timestamp": "2026-08-23T01:50:53.204Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_hGzGZTtWtqs5wGZiloSKQGd0",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Inspect repo guidance and context",
+                "status": "completed"
+              },
+              {
+                "step": "Review design-review skill instructions",
+                "status": "completed"
+              },
+              {
+                "step": "Gather IMEX architecture context",
+                "status": "completed"
+              },
+              {
+                "step": "Draft placement decision review",
+                "status": "completed"
+              },
+              {
+                "step": "Polish and save review doc",
+                "status": "in_progress"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_hGzGZTtWtqs5wGZiloSKQGd0",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Inspect repo guidance and context\",\"status\":\"completed\"},{\"step\":\"Review design-review skill instructions\",\"status\":\"completed\"},{\"step\":\"Gather IMEX architecture context\",\"status\":\"completed\"},{\"step\":\"Draft placement decision review\",\"status\":\"completed\"},{\"step\":\"Polish and save review doc\",\"status\":\"in_progress\"}]}"
+      }
+    },
+    {
+      "step_id": 21,
+      "timestamp": "2026-08-23T01:50:54.707Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "Draft is down; I\u2019m doing a quick pass for clarity and structure."
+    },
+    {
+      "step_id": 22,
+      "timestamp": "2026-08-23T01:50:55.100Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_91UBLFYyXfB2BBzcyTIonLNT",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "sed -n '1,260p' input/host-managed-imex-design-review.md",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 10000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_91UBLFYyXfB2BBzcyTIonLNT",
+            "content": "Chunk ID: 16ad08\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 4876\nOutput:\nWarning: truncated output (original token count: 4876)\nTotal output lines: 260\n\n# Design Review: Placement of Host-Managed IMEX Isolation Mode\n\n- Status: provisional design review\n- Audience: DRA maintainers, GPU Operator maintainers, Kubernetes DRA reviewers, documentation/release owners\n- Scope: decide whether host-managed IMEX isolation mode belongs in the NVIDIA GPU DRA driver, NVIDIA GPU Operator, or upstream Kubernetes\n- Date: 2026-08-22\n\n## Summary\n\nHost-managed IMEX isolation mode belongs primarily in the NVIDIA GPU DRA driver as a driver-owned, explicitly limited integration mode, with deployment wiring and lifecycle UX surfaced by GPU Operator, and without any new upstream Kubernetes API or core behavior requirement.\n\nIn short:\n\n1. The DRA driver should remain the authoritative owner of ComputeDomain semantics, admission-time guarantees, and container-visible IMEX channel handling.\n2. GPU Operator should own packaging, node prerequisites, rollout policy, and host-service integration ergonomics for clusters that prefer a pre-installed or host-managed `nvidia-imex` daemon.\n3. Upstream Kubernetes should not grow IMEX-specific APIs or logic for this mode unless a future requirement generalizes beyond NVIDIA and cannot be represented through existing DRA driver contracts.\n\nThis means the feature is correctly split as:\n\n- Driver: feature gate, validation, degraded-capability semantics, kubelet/plugin/controller behavior, documentation of guarantees and limitations.\n- GPU Operator: install/upgrade orchestration, host package expectations, systemd/service readiness checks, and policy defaults.\n- Kubernetes upstream: no immediate changes; only generic DRA enhancements if future needs prove reusable.\n\n## Related work and current state\n\nThe DRA driver already defines ComputeDomains as the abstraction that guarantees MNNVL reachability and secure isolation between pods in different namespaces, while treating IMEX as an implementation detail that the driver launches and/or reconfigures as needed. The GPU Operator documentation presents the same model and positions the driver as the component doing the \u201cheavy lifting\u201d for ComputeDomains. Kubernetes DRA, by contrast, provides generic APIs and explicitly leaves device-specific configuration and scheduling information to the DRA driver. \ue200cite\ue202turn0search0\ue202turn1view1\ue202turn1view2\ue201\n\nThe project\u2019s current public release state already includes `HostManagedIMEXDaemon` as an alpha feature gate, disabled by default, which allows `resources.computeDomains.imex.mode=hostManaged`. The release notes also make two constraints explicit: in host-managed mode, driver-managed DNS daemon naming and `ComputeDomainClique` tracking are not used; and host-managed IMEX currently supports domain isolation only, not per-channel isolation, so all workloads in the same IMEX domain receive channel 0. The same release notes warn that switching IMEX mode or isolation configuration while ComputeDomain workloads are active is unsupported. \ue200cite\ue202turn1view0\ue201\n\nNVIDIA\u2019s IMEX documentation and CUDA documentation reinforce why this matters: IMEX channels are the primitive used for multi-user isolation inside an IMEX domain, and when multi-user isolation is desired, separate channels are required per user; channel 0 shared broadly is therefore an intentionally weaker isolation model than driver-managed per-workload channel assignment. NVIDIA\u2019s IMEX service docs also show that `nvidia-imex` can be deployed as a host service managed outside Kubernetes, which makes a host-managed mode operationally plausible but not a reason to move semantic ownership away from the DRA driver. \ue200cite\ue202turn2search0\ue202turn2search3\ue202turn2search15\ue201\n\n## Problem statement\n\nWe need to decide the architectural home for \u201chost-managed IMEX isolation mode\u201d: a mode where the host runs and manages `nvidia-imex`, while Kubernetes workloads still request ComputeDomains through DRA.\n\nThe main question is not where a daemon binary runs. The real question is which layer should own:\n\n- the meaning of the mode,\n- the safety boundary and user-visible guarantees,\n- validation of unsupported combinations,\n- upgrade and downgrade behavior,\n- reconciliation against ComputeDomain lifecycle,\n- and documentation of the reduced isolation properties.\n\nBecause this mode changes the way ComputeDomain guarantees are realized, it is not just packaging. But because it depends on host packages, systemd ordering, and cluster rollout policy, it is also not purely a driver-internal runtime concern.\n\n## Decision\n\n### Recommended placement\n\nHost-managed IMEX isolation mode should be implemented and owned as a driver-level ComputeDomain mode, exposed through the driver\u2019s configuration and feature-gated by the driver, while GPU Operator provides the preferred distribution and operational integration for that mode.\n\n### Explicit non-decision\n\nThis review does **not** recommend moving ComputeDomain or IMEX semantics into upstream Kubernetes APIs, scheduler logic, kubelet core, or a generic cluster API extensi\u20262376 tokens truncated\u2026s are active is unsupported, upgrades should preserve the existing mode unless the cluster is drained and ComputeDomains are removed first. GPU Operator should carry this warning into preflight and rollout UX. \ue200cite\ue202turn1view0\ue202turn2search0\ue202turn2search3\ue201\n\nDowngrade behavior must also be explicit:\n\n- downgrading to a version without the gate or mode should be blocked or require prior reversion to driver-managed mode,\n- stale host IMEX state must not be interpreted as active ComputeDomain ownership by an older driver,\n- and docs should state whether any cleanup of channels or service configuration is manual.\n\n## Environment floor and assumptions\n\n- Kubernetes with DRA enabled and a supported driver version for this project.\n- NVIDIA platforms that support ComputeDomains / MNNVL.\n- `nvidia-imex` packages present on nodes when using host-managed mode.\n- A conformant host IMEX service lifecycle outside the DRA driver.\n- Clear understanding that current host-managed mode provides domain isolation only, not channel isolation. \ue200cite\ue202turn2search1\ue202turn2search3\ue202turn1view0\ue201\n\n## Risks and failure modes\n\n### Semantic confusion\n\nThe biggest product risk is users assuming \u201chost-managed\u201d is merely a deployment optimization. It is not; it changes isolation properties. Mitigation: keep the gate alpha, document reduced guarantees everywhere, and require explicit configuration.\n\n### Split-brain ownership\n\nIf GPU Operator were to own the mode semantics while the driver merely consumed side effects, compatibility bugs would become harder to root-cause. Mitigation: keep semantics in the driver and operationalization in the operator.\n\n### Service readiness / startup ordering\n\nNVIDIA documentation notes startup ordering sensitivity for `nvidia-imex.service`, especially around network readiness and IMEX domain configuration. Mitigation: operator preflight and node-level docs; driver fail fast with actionable events when host IMEX is not ready. \ue200cite\ue202turn2search7\ue202turn2search3\ue201\n\n### Weaker multi-tenant isolation\n\nShared channel 0 within an IMEX domain is weaker than per-user or per-workload channel assignment. Mitigation: document host-managed mode as unsuitable for tenants that require channel isolation; consider namespace or trust-boundary restrictions in guidance. \ue200cite\ue202turn1view0\ue202turn2search0\ue202turn2search15\ue201\n\n### Unsupported live reconfiguration\n\nChanging mode or isolation while workloads are active can strand claims or create mismatched assumptions. Mitigation: driver validation and operator drain checks. \ue200cite\ue202turn1view0\ue201\n\n## Alternatives considered\n\n### Alternative A: Put the feature entirely in GPU Operator\n\nRejected. GPU Operator can package and validate the environment, but it cannot be the authoritative owner of ComputeDomain semantics. The driver still has to understand the mode, expose limitations, and reconcile claim lifecycle implications.\n\n### Alternative B: Move the concept upstream into Kubernetes\n\nRejected for now. No generic abstraction gap has been demonstrated, and DRA already expects vendor drivers to own device-specific behavior. Upstreaming now would likely encode NVIDIA-specific semantics too early. \ue200cite\ue202turn1view2\ue201\n\n### Alternative C: Keep only driver-managed IMEX and refuse host-managed environments\n\nPartially attractive for simplicity, but too restrictive operationally. NVIDIA\u2019s own documentation shows valid environments where IMEX is managed as a host service, and the project has already introduced an alpha host-managed gate, indicating legitimate demand. \ue200cite\ue202turn2search3\ue202turn1view0\ue201\n\n### Alternative D: Treat host-managed mode as equivalent to driver-managed mode\n\nRejected. Current public limitations contradict that equivalence, especially around channel isolation and omitted `ComputeDomainClique` tracking. \ue200cite\ue202turn1view0\ue201\n\n## Test and validation plan\n\nThis is a design review, not an implementation plan, but the decision implies the following validation expectations:\n\n- Unit tests in driver config validation for gate enforcement, unsupported transitions, and incompatible IMEX/isolation combinations.\n- Controller tests for ComputeDomain lifecycle when the mode is `hostManaged`, especially absence of per-ComputeDomain DaemonSet assumptions.\n- Kubelet/plugin tests for host-IMEX readiness failure surfacing and channel/device injection behavior.\n- Helm/operator tests ensuring the mode is wired correctly and preflight warnings surface.\n- Upgrade tests covering drain-required config changes and downgrade rejection/guardrails.\n- Real-hardware validation on MNNVL-capable systems, because host IMEX behavior cannot be fully proven in generic CI.\n\nUnavailable or limited coverage should be stated explicitly; ComputeDomain and IMEX paths already have hardware-sensitive behavior that generic CI cannot fully exercise. \ue200cite\ue202turn0search6\ue201\n\n## Drawbacks\n\n- Responsibility is split across driver and operator, which increases coordination overhead.\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"sed -n '1,260p' input/host-managed-imex-design-review.md\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":10000}"
+      }
+    },
+    {
+      "step_id": 23,
+      "timestamp": "2026-08-23T01:50:57.613Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "The draft reads well. I\u2019m marking the plan complete and handing it over."
+    },
+    {
+      "step_id": 24,
+      "timestamp": "2026-08-23T01:50:58.280Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_slMlzd3DMNTIsTexsZ4SNfNM",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Inspect repo guidance and context",
+                "status": "completed"
+              },
+              {
+                "step": "Review design-review skill instructions",
+                "status": "completed"
+              },
+              {
+                "step": "Gather IMEX architecture context",
+                "status": "completed"
+              },
+              {
+                "step": "Draft placement decision review",
+                "status": "completed"
+              },
+              {
+                "step": "Polish and save review doc",
+                "status": "completed"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_slMlzd3DMNTIsTexsZ4SNfNM",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Inspect repo guidance and context\",\"status\":\"completed\"},{\"step\":\"Review design-review skill instructions\",\"status\":\"completed\"},{\"step\":\"Gather IMEX architecture context\",\"status\":\"completed\"},{\"step\":\"Draft placement decision review\",\"status\":\"completed\"},{\"step\":\"Polish and save review doc\",\"status\":\"completed\"}]}"
+      }
+    },
+    {
+      "step_id": 25,
+      "timestamp": "2026-08-23T01:51:00.966Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "**Done**\n- I wrote the design review to `input/host-managed-imex-design-review.md:1`.\n\n**Recommendation**\n- Keep host-managed IMEX isolation mode in the NVIDIA DRA driver as a driver-owned ComputeDomain mode.\n- Let GPU Operator own deployment UX, host prerequisite checks, and rollout policy.\n- Do not push IMEX-specific behavior into upstream Kubernetes unless a real cross-vendor API gap appears.\n\n**What the review covers**\n- Why the semantic owner has to be the driver, not just the installer.\n- Why GPU Operator still owns the operational path.\n- Why upstream Kubernetes should stay unchanged for now.\n- Goals, non-goals, risks, alternatives, upgrade/downgrade concerns, and validation expectations.\n\n**Key nuance**\n- The review calls out that host-managed mode is not just packaging; it weakens isolation semantics versus driver-managed IMEX, so the driver must own the contract.\n\nIf you want, I can next turn this into a maintainer-ready proposal draft in the repository template style."
+    }
+  ],
+  "final_metrics": {
+    "total_prompt_tokens": 225350,
+    "total_completion_tokens": 5962,
+    "total_cached_tokens": 193408,
+    "total_steps": 25,
+    "extra": {
+      "reasoning_output_tokens": 261,
+      "total_tokens": 231312,
+      "last_token_usage": {
+        "input_tokens": 25147,
+        "cached_input_tokens": 24192,
+        "output_tokens": 212,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 25359
+      }
+    }
+  }
+}

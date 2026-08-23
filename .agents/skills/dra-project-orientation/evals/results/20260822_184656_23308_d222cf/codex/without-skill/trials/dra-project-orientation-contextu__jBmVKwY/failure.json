@@ -1,0 +1,23 @@
+{
+  "status": "unscored",
+  "trial": "dra-project-orientation-contextu__jBmVKwY",
+  "agent": "codex",
+  "variant": "without_skill",
+  "artifacts": [
+    "result.json",
+    "config.json",
+    "trial.log",
+    "verifier/aces_reward.json",
+    "trajectory.json",
+    "codex.txt"
+  ],
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "task_id": {
+    "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/evals/results/20260822_184656_23308_d222cf/_harbor-tasks-baseline/dra-project-orientation-contextual-001"
+  },
+  "task_name": "nvidia/skill-eval-dra-project-orientation-contextual-001",
+  "trial_name": "dra-project-orientation-contextu__jBmVKwY",
+  "started_at": "2026-08-23T01:47:01.004680Z",
+  "finished_at": "2026-08-23T01:48:31.742063Z"
+}

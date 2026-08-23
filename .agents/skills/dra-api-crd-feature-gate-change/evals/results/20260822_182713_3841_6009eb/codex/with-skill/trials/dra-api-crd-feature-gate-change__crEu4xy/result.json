@@ -1,0 +1,99 @@
+{
+  "id": "289baf88-3e84-4b54-89a8-317c4e667148",
+  "task_name": "nvidia/skill-eval-dra-api-crd-feature-gate-change-explicit-001",
+  "trial_name": "dra-api-crd-feature-gate-change__crEu4xy",
+  "trial_uri": "file:///Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_182713_3841_6009eb/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__crEu4xy",
+  "task_id": {
+    "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_182713_3841_6009eb/_harbor-tasks/dra-api-crd-feature-gate-change-explicit-001"
+  },
+  "source": "_harbor-tasks",
+  "task_checksum": "f10d449a62fc63ff7c54584ee9266dfaa834168e8462dd0b9960f717850ddcaa",
+  "config": {
+    "task": {
+      "path": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_182713_3841_6009eb/_harbor-tasks/dra-api-crd-feature-gate-change-explicit-001",
+      "git_url": null,
+      "git_commit_id": null,
+      "name": null,
+      "ref": null,
+      "overwrite": false,
+      "download_dir": null,
+      "source": "_harbor-tasks"
+    },
+    "trial_name": "dra-api-crd-feature-gate-change__crEu4xy",
+    "trials_dir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_182713_3841_6009eb/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with",
+    "timeout_multiplier": 2.0,
+    "agent_timeout_multiplier": null,
+    "verifier_timeout_multiplier": null,
+    "agent_setup_timeout_multiplier": null,
+    "environment_build_timeout_multiplier": null,
+    "agent": {
+      "name": "codex",
+      "import_path": null,
+      "model_name": "openai/openai/gpt-5.4",
+      "skills": [],
+      "override_timeout_sec": null,
+      "override_setup_timeout_sec": null,
+      "max_timeout_sec": null,
+      "extra_allowed_hosts": [],
+      "kwargs": {},
+      "env": {
+        "ANTHROPIC_BASE_URL": "https://inference-api.nvidia.com",
+        "OPENAI_BASE_URL": "https://inference-api.nvidia.com/v1"
+      },
+      "mcp_servers": []
+    },
+    "environment": {
+      "type": "docker",
+      "import_path": null,
+      "force_build": false,
+      "delete": true,
+      "cpu_enforcement_policy": "auto",
+      "memory_enforcement_policy": "auto",
+      "override_cpus": null,
+      "override_memory_mb": null,
+      "override_storage_mb": null,
+      "override_gpus": null,
+      "override_tpu": null,
+      "mounts": null,
+      "extra_docker_compose": [],
+      "env": {},
+      "kwargs": {},
+      "extra_allowed_hosts": []
+    },
+    "verifier": {
+      "override_timeout_sec": null,
+      "max_timeout_sec": null,
+      "env": {},
+      "disable": false
+    },
+    "artifacts": [],
+    "extra_instruction_paths": [],
+    "job_id": "076595d7-4034-4e09-8975-b17f7e5092d0"
+  },
+  "agent_info": {
+    "name": "codex",
+    "version": "unknown",
+    "model_info": {
+      "name": "openai/gpt-5.4",
+      "provider": "openai"
+    }
+  },
+  "agent_result": null,
+  "verifier_result": null,
+  "exception_info": {
+    "exception_type": "RuntimeError",
+    "exception_message": "Docker compose command failed for environment skill-eval-dra-api-crd-feature-gate-change-explicit-001. Command: docker compose --project-name dra-api-crd-feature-gate-change__creu4xy --project-directory /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_182713_3841_6009eb/_harbor-tasks/dra-api-crd-feature-gate-change-explicit-001/environment -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpabjjxu74/dra-api-crd-feature-gate-change__crEu4xy-docker-compose-resources.json -f /Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker-compose-build.yaml -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpaxxf2wsd/docker-compose-mounts.json build. Return code: 125. Stdout: unknown flag: --project-name\n\nUsage:  docker [OPTIONS] COMMAND [ARG...]\n\nRun 'docker --help' for more information\n. Stderr: None. ",
+    "exception_traceback": "Traceback (most recent call last):\n  File \"/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 291, in run\n    await self._prepare()\n  File \"/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 318, in _prepare\n    await self._setup_agent_environment()\n  File \"/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 782, in _setup_agent_environment\n    await self._start_agent_environment()\n  File \"/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 788, in _start_agent_environment\n    await asyncio.wait_for(\n  File \"/Users/bmozaffari/.local/share/astra-skill-eval/uv-python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker.py\", line 520, in start\n    await self._run_docker_compose_command([\"build\"])\n  File \"/Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker.py\", line 417, in _run_docker_compose_command\n    raise RuntimeError(\nRuntimeError: Docker compose command failed for environment skill-eval-dra-api-crd-feature-gate-change-explicit-001. Command: docker compose --project-name dra-api-crd-feature-gate-change__creu4xy --project-directory /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_182713_3841_6009eb/_harbor-tasks/dra-api-crd-feature-gate-change-explicit-001/environment -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpabjjxu74/dra-api-crd-feature-gate-change__crEu4xy-docker-compose-resources.json -f /Users/bmozaffari/.local/share/astra-skill-eval/venv/lib/python3.12/site-packages/harbor/environments/docker/docker-compose-build.yaml -f /private/var/folders/vv/xfnl60x955n59pfsjjtjgvwr0000gn/T/tmpaxxf2wsd/docker-compose-mounts.json build. Return code: 125. Stdout: unknown flag: --project-name\n\nUsage:  docker [OPTIONS] COMMAND [ARG...]\n\nRun 'docker --help' for more information\n. Stderr: None. \n",
+    "occurred_at": "2026-08-22T18:28:42.487553"
+  },
+  "started_at": "2026-08-23T01:28:42.293566Z",
+  "finished_at": "2026-08-23T01:28:42.673619Z",
+  "environment_setup": {
+    "started_at": "2026-08-23T01:28:42.401242Z",
+    "finished_at": "2026-08-23T01:28:42.485392Z"
+  },
+  "agent_setup": null,
+  "agent_execution": null,
+  "verifier": null,
+  "step_results": null
+}

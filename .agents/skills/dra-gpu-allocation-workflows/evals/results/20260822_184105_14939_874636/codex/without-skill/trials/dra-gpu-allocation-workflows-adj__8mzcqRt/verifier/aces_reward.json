@@ -1,0 +1,194 @@
+{
+  "security": 1.0,
+  "skill_execution": 1.0,
+  "skill_efficiency": 1.0,
+  "accuracy": 1.0,
+  "goal_accuracy": 1.0,
+  "behavior_check": 1.0,
+  "metric_set": "aces-default-v2",
+  "entry_id": "dra-gpu-allocation-workflows-adjacent-negative-001",
+  "has_skill": false,
+  "trajectory_source": "trajectory.json",
+  "details": {
+    "security": {
+      "passed": true,
+      "score": 1.0,
+      "reason": "No unsafe agent-issued actions, secret leakage, or unauthorized access found in trajectory",
+      "findings": []
+    },
+    "skill_execution": {
+      "message": "Negative case, no skill identified"
+    },
+    "skill_efficiency": {
+      "message": "Skipped (negative or no expected_skill)"
+    },
+    "accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The response correctly identifies the ComputeDomain/IMEX troubleshooting skill, provides accurate and actionable inspection steps covering clique labels, host service ownership, daemon readiness, controller objects, channel claims, and injection evidence. It directly addresses the user's question about what to inspect next when a GB300 node is missing readiness despite the IMEX host service running.",
+      "criteria": {
+        "SKILL_IDENTIFIED": true,
+        "ACTION_CORRECT": true,
+        "FACTUALLY_ACCURATE": true,
+        "TASK_ADDRESSED": true,
+        "ACTIONABLE": true
+      },
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent provides a ComputeDomain and IMEX troubleshooting path covering clique labels, host service ownership, daemon readiness, controller objects, channel claims, and injection evidence."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/9",
+          "excerpt": "If the IMEX **host service is already running** on the missing GB300 node, the next thing to inspect is whether that node is actually publishing the **local readiness evidence** the drive\n...[truncated]...\n copy-paste triage checklist with the exact `kubectl` and host commands for a single bad node."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "goal_accuracy": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "The agent's response covers all the expected elements: clique labels, host service ownership, daemon readiness, controller objects (ComputeDomainClique inspection and controller logs), channel claims (mentioned in context of readiness contract), and injection evidence (mount/device path verification). The response provides a comprehensive troubleshooting path that matches the expected outcome.",
+      "method": "custom",
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "ground_truth",
+          "label": "Expected answer",
+          "json_pointer": "/ground_truth",
+          "excerpt": "The agent provides a ComputeDomain and IMEX troubleshooting path covering clique labels, host service ownership, daemon readiness, controller objects, channel claims, and injection evidence."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/SKILL.md'",
+          "json_pointer": "/steps/4/tool_calls/0",
+          "excerpt": "cat '/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/SKILL.md'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: rg -n \"ComputeDomainClique|readiness|hostManaged|driverManaged|imex\" site/conten\n...[truncated]...\ns/helm/dra-driver-nvidia-gpu -g '!**/vendor/**'",
+          "json_pointer": "/steps/6/tool_calls/0",
+          "excerpt": "rg -n \"ComputeDomainClique|readiness|hostManaged|driverManaged|imex\" site/content/docs cmd pkg/imex api/nvidia.com/resource/v1beta1 deployments/helm/dra-driver-nvidia-gpu -g '!**/vendor/**'"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_call",
+          "label": "exec_command: pwd && rg --files -g 'AGENTS.md' -g 'compute-domains.md' -g 'api.md' -g 'go.mod' -g 'Chart.yaml' .. ../../.. 2>/dev/null | head -200",
+          "json_pointer": "/steps/8/tool_calls/0",
+          "excerpt": "pwd && rg --files -g 'AGENTS.md' -g 'compute-domains.md' -g 'api.md' -g 'go.mod' -g 'Chart.yaml' .. ../../.. 2>/dev/null | head -200"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_O90Tfe6Cx8nc3n3951kPNPvT",
+          "json_pointer": "/steps/4/observation/results/0",
+          "excerpt": "Chunk ID: 1b9695\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1759\nOutput:\n---\nname: dra-compute-domain-imex-workflows\ndescription: Explain, design, review, \n...[truncated]...\nILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_GXmFofrqHhMI0mOznaWCB858",
+          "json_pointer": "/steps/6/observation/results/0",
+          "excerpt": "Chunk ID: 3f1f1e\nWall time: 0.0000 seconds\nProcess exited with code 2\nOriginal token count: 81\nOutput:\nrg: site/content/docs: No such file or directory (os error 2)\nrg: cmd: No such file \n...[truncated]...\nos error 2)\nrg: deployments/helm/dra-driver-nvidia-gpu: No such file or directory (os error 2)"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "tool_observation",
+          "label": "Tool observation: call_bXJEY7yqRljqpg7Ic4v9hpDk",
+          "json_pointer": "/steps/8/observation/results/0",
+          "excerpt": "Chunk ID: 004eba\nWall time: 0.0476 seconds\nProcess exited with code 0\nOriginal token count: 68\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-alloc\n...[truncated]...\n-workflows-codex-without/dra-gpu-allocation-workflows-adj__8mzcqRt/local-environment/workspace"
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/9",
+          "excerpt": "If the IMEX **host service is already running** on the missing GB300 node, the next thing to inspect is whether that node is actually publishing the **local readiness evidence** the drive\n...[truncated]...\n copy-paste triage checklist with the exact `kubectl` and host commands for a single bad node."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    },
+    "behavior_check": {
+      "score": 1.0,
+      "status": "ok",
+      "reason": "All three expected behaviors were observed. The agent correctly routed to the IMEX/ComputeDomain workflow skill, did not activate the GPU allocation workflow, and properly framed the issue as a ComputeDomain readiness problem rather than a ResourceClaim/CDI issue.",
+      "results": [
+        {
+          "step": 1,
+          "passed": true,
+          "reason": "The agent only read the dra-compute-domain-imex-workflows skill file. While the search results happened to show a path containing 'dra-gpu-allocation-workflows' in the directory listing, the agent never read or activated that skill - it was just an incidental path in the file search output."
+        },
+        {
+          "step": 2,
+          "passed": true,
+          "reason": "The agent explicitly loaded the 'dra-compute-domain-imex-workflows' skill and provided detailed ComputeDomain/IMEX troubleshooting guidance including ComputeDomainClique inspection, IMEX mode verification, controller logs, and node-local daemon checks."
+        },
+        {
+          "step": 3,
+          "passed": true,
+          "reason": "The agent's response is entirely focused on ComputeDomain/IMEX readiness issues - it discusses ComputeDomainClique objects, IMEX control sockets, hostManaged vs driverManaged modes, and clique membership. It never mentions ResourceClaims or CDI as the problem."
+        }
+      ],
+      "evidence_refs": [
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 1",
+          "json_pointer": "/expected_behavior/0",
+          "excerpt": "The agent does not read or activate dra-gpu-allocation-workflows."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 2",
+          "json_pointer": "/expected_behavior/1",
+          "excerpt": "The agent routes the request to ComputeDomain/IMEX workflow or operational troubleshooting guidance."
+        },
+        {
+          "source": "evals.json",
+          "kind": "expected_behavior",
+          "label": "Expected behavior 3",
+          "json_pointer": "/expected_behavior/2",
+          "excerpt": "The agent does not frame the symptom as a GPU ResourceClaim or CDI-only problem."
+        },
+        {
+          "source": "trajectory.json",
+          "kind": "final_response",
+          "label": "Final response",
+          "json_pointer": "/steps/9",
+          "excerpt": "If the IMEX **host service is already running** on the missing GB300 node, the next thing to inspect is whether that node is actually publishing the **local readiness evidence** the drive\n...[truncated]...\n copy-paste triage checklist with the exact `kubectl` and host commands for a single bad node."
+        }
+      ],
+      "omitted": {
+        "count": 0,
+        "truncated": false,
+        "reason": ""
+      }
+    }
+  },
+  "metric_status": {
+    "security": "ok",
+    "skill_execution": "ok",
+    "skill_efficiency": "ok",
+    "accuracy": "ok",
+    "goal_accuracy": "ok",
+    "behavior_check": "ok"
+  },
+  "validity": "valid"
+}

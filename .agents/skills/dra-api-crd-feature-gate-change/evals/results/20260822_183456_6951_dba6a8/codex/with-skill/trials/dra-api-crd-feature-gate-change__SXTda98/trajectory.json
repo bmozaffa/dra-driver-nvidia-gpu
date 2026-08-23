@@ -1,0 +1,720 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "session_id": "01a02c41-c119-7c20-ba38-8df5255fcb90",
+  "agent": {
+    "name": "codex",
+    "version": "0.142.5",
+    "model_name": "openai/openai/gpt-5.4",
+    "extra": {
+      "originator": "codex_exec",
+      "cwd": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/workspace",
+      "git": {
+        "commit_hash": "f5d8e5e379881b2abb03be9e63c2df56148d243a",
+        "branch": "astra-evals",
+        "repository_url": "https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu"
+      }
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-08-23T01:35:02.606Z",
+      "source": "system",
+      "message": "<permissions instructions>\nFilesystem sandboxing defines which files can be read or written. `sandbox_mode` is `danger-full-access`: No filesystem sandboxing - all commands are permitted. Network access is enabled.\nApproval policy is currently never. Do not provide the `sandbox_permissions` for any reason, commands will be rejected.\n</permissions instructions><skills_instructions>\n## Skills\nA skill is a set of instructions provided through a `SKILL.md` source. Below is the list of skills that can be used. Each entry includes a name, description, and source locator. `file` locators are on the host filesystem, `environment resource` locators are owned by an execution environment, `orchestrator resource` locators are opaque non-filesystem resources, and `custom resource` locators use their provider's access mechanism.\n### Available skills\n- imagegen: Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/agent/codex-home/skills/.system/imagegen/SKILL.md)\n- openai-docs: Use when the user asks how to build with OpenAI products or APIs, asks about Codex itself or choosing Codex surfaces, needs up-to-date official documentation with citations, help choosing the latest model for a use case, or model upgrade and prompt-upgrade guidance; use OpenAI docs MCP tools for non-Codex docs questions, use the Codex manual helper first for broad Codex self-knowledge, and restrict fallback browsing to official OpenAI domains. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/agent/codex-home/skills/.system/openai-docs/SKILL.md)\n- plugin-creator: Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, valid manifest defaults, and personal-marketplace entries by default. Use when Codex needs to create a new personal plugin, add optional plugin structure, generate or update marketplace entries for plugin ordering and availability metadata, or update an existing local plugin during development with the CLI-driven cachebuster and reinstall flow. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/agent/codex-home/skills/.system/plugin-creator/SKILL.md)\n- skill-creator: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/agent/codex-home/skills/.system/skill-creator/SKILL.md)\n- skill-installer: Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos). (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/agent/codex-home/skills/.system/skill-installer/SKILL.md)\n- dra-api-crd-feature-gate-change: Plan, implement, review, or validate NVIDIA GPU DRA driver API, CRD, opaque configuration, ResourceSlice attribute, Helm value, CLI flag, checkpoint schema, feature-gate, and compatibility changes. Use when work touches api/nvidia.com, generated CRDs or clients, validation, DeviceClasses, public configuration, feature-gate stages or dependencies, or upgrade and downgrade behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md)\n- dra-build-test-codegen-ci: Select, run, and interpret the NVIDIA GPU DRA driver's local build, formatting, lint, code generation, unit, Helm, BATS, Ginkgo e2e, mock-NVML, and CI checks. Use when preparing a PR, validating a patch, reproducing CI, debugging a failed check, or mapping changed files to the minimum credible test set. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/SKILL.md)\n- dra-compute-domain-imex-workflows: Explain, design, review, or troubleshoot NVIDIA DRA ComputeDomain workflows across MNNVL hardware, IMEX daemon lifecycle, driver-managed or host-managed mode, ComputeDomain and ComputeDomainClique resources, per-domain DaemonSets, channel claims, readiness, kubelet prepare, and workload device or mount injection. Use when asked about GB200 or GB300 fabrics, clique state, IMEX channels, or multi-node workload failures. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/SKILL.md)\n- dra-gpu-allocation-workflows: Explain, design, review, or troubleshoot NVIDIA GPU DRA allocation across full GPUs, MIG, dynamic MIG, VFIO, time-slicing, MPS, DeviceClasses, ResourceClaims, ResourceSlices, scheduler binding, kubelet prepare/unprepare, checkpoints, and CDI injection. Use when asked about GPU selectors, attributes, capacity, sharing, passthrough, scheduling, allocation failures, or container-visible devices. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/SKILL.md)\n- dra-helm-demo-sample-workloads: Plan, render, install, upgrade, or validate NVIDIA GPU DRA driver Helm deployments, local kind or nvkind demos, and GPU or ComputeDomain sample workloads. Use when asked for chart values, prerequisites, demo clusters, quickstarts, sample manifests, DeviceClasses, ResourceSlices, or basic allocation validation, while separating standalone community flows from GPU Operator-managed deployment. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md)\n- dra-operations-troubleshooting-observability: Triage NVIDIA GPU DRA driver installation, scheduling, allocation, prepare/unprepare, CDI, checkpoint, GPU, MIG, VFIO, ComputeDomain, IMEX, upgrade, health, log, event, and Prometheus metric failures. Use when given failed pods or claims, missing devices, broken ResourceSlices, controller or daemon symptoms, upgrade regressions, or a support escalation that needs a bounded evidence plan. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-operations-troubleshooting-observability/SKILL.md)\n- dra-project-orientation: Orient contributors and reviewers to the NVIDIA GPU DRA driver repository, its runtime components, documentation, ownership, and source layout. Use when asked what the project does, how GPU and ComputeDomain paths fit together, where code or docs live, who owns review, or how to onboard without inventing repository paths. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/SKILL.md)\n- dra-proposal-and-design-review: Draft or review maintainer-ready proposals, ADRs, design notes, feature-gate plans, and implementation plans for the NVIDIA GPU DRA driver. Use when a change affects user-facing APIs, CRDs, Helm values, ResourceSlice attributes, checkpoint schemas, feature gates, dependencies, upstream coordination, or multi-node ComputeDomain and IMEX behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md)\n- dra-release-support-docs-readiness: Assess and prepare NVIDIA GPU DRA driver release, support, documentation, known-issue, compatibility, and handoff readiness. Use when asked for a release checklist, changelog or release-note impact, version matrix, docs updates, support caveats, image/chart promotion review, upgrade guidance, or stale-source refresh across the repository and GPU Operator documentation. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-support-docs-readiness/SKILL.md)\n- dra-api-crd-feature-gate-change: Plan, implement, review, or validate NVIDIA GPU DRA driver API, CRD, opaque configuration, ResourceSlice attribute, Helm value, CLI flag, checkpoint schema, feature-gate, and compatibility changes. Use when work touches api/nvidia.com, generated CRDs or clients, validation, DeviceClasses, public configuration, feature-gate stages or dependencies, or upgrade and downgrade behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/home/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md)\n### How to use skills\n- Discovery: The list above is the skills available in this session (name + description + source locator). `file` entries live on the host filesystem, `environment resource` entries are owned by their execution environment, `orchestrator resource` entries must be accessed through `skills.list` and `skills.read`, and `custom resource` entries use their provider's access mechanism.\n- Trigger rules: If the user names a skill (with `$SkillName` or plain text) OR the task clearly matches a skill's description shown above, you must use that skill for that turn. Multiple mentions mean use them all. Do not carry skills across turns unless re-mentioned.\n- Missing/blocked: If a named skill isn't in the list or its source can't be read, say so briefly and continue with the best fallback.\n- How to use a skill (progressive disclosure):\n  1) After deciding to use a skill, the main agent must read its `SKILL.md` completely before taking task actions. For a `file` entry, open the listed path. For an `environment resource`, use the filesystem of the owning environment. For an `orchestrator resource`, call `skills.list` with `{\"authority\":{\"kind\":\"orchestrator\"}}`, select the matching package, and pass its `main_resource` to `skills.read`. If a read is truncated or paginated, continue until EOF.\n  2) When `SKILL.md` references another resource, use the same access mechanism. Resolve relative paths against a filesystem-backed skill directory. For orchestrator skills, pass the exact referenced resource identifier with the same authority and package to `skills.read`; do not treat `skill://` identifiers as filesystem paths.\n  3) If `SKILL.md` points to extra folders such as `references/`, use its routing instructions to identify the resources required for the task. The main agent must read each required instruction or reference file itself before acting on it. Do not delegate reading, summarizing, or interpreting skill instructions to a subagent. Subagents may still perform task work when the selected skill allows it.\n  4) For filesystem-backed skills, prefer running or patching provided scripts instead of retyping large code blocks. For orchestrator skills, use `skills.read` and the available tools; do not invent a local path.\n  5) Reuse provided assets or templates through the same source access mechanism instead of recreating them.\n- Coordination and sequencing:\n  - If multiple skills apply, choose the minimal set that covers the request and state the order you'll use them.\n  - Announce which skill(s) you're using and why (one short line). If you skip an obvious skill, say why.\n- Context hygiene:\n  - Progressive disclosure applies to selecting relevant files, not partially reading a selected instruction file. Do not load unrelated references, scripts, or assets.\n  - Avoid deep reference-chasing: prefer opening only files directly linked from `SKILL.md` unless you're blocked.\n  - When variants exist (frameworks, providers, domains), pick only the relevant reference file(s) and note that choice.\n- Safety and fallback: If a skill can't be applied cleanly (missing files, unclear instructions), state the issue, pick the next-best approach, and continue.\n</skills_instructions>"
+    },
+    {
+      "step_id": 2,
+      "timestamp": "2026-08-23T01:35:02.606Z",
+      "source": "user",
+      "message": "<environment_context>\n  <cwd>/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/workspace</cwd>\n  <shell>zsh</shell>\n  <current_date>2026-08-22</current_date>\n  <timezone>America/Los_Angeles</timezone>\n  <filesystem><workspace_roots><root>/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/workspace</root></workspace_roots><permission_profile type=\"disabled\"><file_system type=\"unrestricted\" /></permission_profile></filesystem>\n</environment_context>"
+    },
+    {
+      "step_id": 3,
+      "timestamp": "2026-08-23T01:35:02.621Z",
+      "source": "user",
+      "message": "A new ResourceSlice attribute is needed so DeviceClasses can select H100 SXM GPUs by NVLink fabric generation. Sketch the safe implementation and review checklist for this repository.\n"
+    },
+    {
+      "step_id": 4,
+      "timestamp": "2026-08-23T01:35:04.576Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019m using the `dra-api-crd-feature-gate-change` skill first, then repo docs to ground the implementation sketch."
+    },
+    {
+      "step_id": 5,
+      "timestamp": "2026-08-23T01:35:05.448Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_n8SQtJgsWCHNcOrdga1e8Ac6",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "pwd && ls -la && cat AGENTS.md && cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md",
+            "workdir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/workspace",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 12000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_n8SQtJgsWCHNcOrdga1e8Ac6",
+            "content": "Chunk ID: 19f7b1\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 135\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/workspace\ntotal 0\ndrwxr-xr-x  4 bmozaffari  staff  128 Aug 22 18:35 .\ndrwxr-xr-x  8 bmozaffari  staff  256 Aug 22 18:35 ..\ndrwxr-xr-x  2 bmozaffari  staff   64 Aug 22 18:35 input\ndrwxr-xr-x  3 bmozaffari  staff   96 Aug 22 18:34 skills\ncat: AGENTS.md: No such file or directory\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"pwd && ls -la && cat AGENTS.md && cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md\",\"workdir\":\"/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/workspace\",\"yield_time_ms\":1000,\"max_output_tokens\":12000}"
+      }
+    },
+    {
+      "step_id": 6,
+      "timestamp": "2026-08-23T01:35:08.490Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_sCeFFX7vhURN80zdBsWYSr0l",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Read skill and repo inputs",
+                "status": "in_progress"
+              },
+              {
+                "step": "Inspect existing attribute patterns",
+                "status": "pending"
+              },
+              {
+                "step": "Draft safe implementation sketch",
+                "status": "pending"
+              },
+              {
+                "step": "Produce review checklist",
+                "status": "pending"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_sCeFFX7vhURN80zdBsWYSr0l",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Read skill and repo inputs\",\"status\":\"in_progress\"},{\"step\":\"Inspect existing attribute patterns\",\"status\":\"pending\"},{\"step\":\"Draft safe implementation sketch\",\"status\":\"pending\"},{\"step\":\"Produce review checklist\",\"status\":\"pending\"}]}"
+      }
+    },
+    {
+      "step_id": 7,
+      "timestamp": "2026-08-23T01:35:12.263Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "Quick snag: no root `AGENTS.md` here. I\u2019m reading the skill and input materials directly, then I\u2019ll inspect existing attribute patterns."
+    },
+    {
+      "step_id": 8,
+      "timestamp": "2026-08-23T01:35:15.225Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_kvU4QyGWlPYaPaPsrLi5v1uZ",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md && printf '\\n---INPUTS---\\n' && find input -maxdepth 2 -type f | sort | xargs -I{} sh -c 'printf \"\\n### %s ###\\n\" \"$1\"; sed -n \"1,220p\" \"$1\"' sh {} && printf '\\n---WORKSPACE---\\n' && find . -maxdepth 3 -type f | sort | sed -n '1,200p'",
+            "workdir": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/workspace",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_kvU4QyGWlPYaPaPsrLi5v1uZ",
+            "content": "Chunk ID: 23e9d6\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1729\nOutput:\n---\nname: dra-api-crd-feature-gate-change\ndescription: Plan, implement, review, or validate NVIDIA GPU DRA driver API, CRD, opaque configuration, ResourceSlice attribute, Helm value, CLI flag, checkpoint schema, feature-gate, and compatibility changes. Use when work touches api/nvidia.com, generated CRDs or clients, validation, DeviceClasses, public configuration, feature-gate stages or dependencies, or upgrade and downgrade behavior.\n---\n\n# DRA API, CRD, and Feature Gate Change\n\n## Purpose\n\nCarry a user-visible or persisted contract change through design alignment, authoritative source edits, generated artifacts, compatibility analysis, documentation, and validation.\n\n## Triggers\n\n- Add or change a CRD, API field, opaque config type, validation rule, DeviceClass, ResourceSlice attribute, Helm value, or CLI flag.\n- Add, remove, graduate, default, compose, or constrain a feature gate.\n- Change kubelet-plugin checkpoint data or migration behavior.\n- Review backward compatibility, Kubernetes resource API versions, or release-note impact.\n\n## Audience\n\n- DRA contributors and maintainers\n- Release owners\n- API and compatibility reviewers\n\n## Inputs\n\n- Proposed behavior and user-facing example\n- Target release and supported Kubernetes versions\n- Affected resource family and binaries\n- Upgrade/downgrade and stored-state expectations\n- Adjacent feature gates and hardware/runtime constraints\n\n## Workflow\n\n1. Inspect the worktree and preserve unrelated changes. Record the target branch, `VERSION`, Kubernetes module versions in `go.mod`, and chart version.\n2. Read the proposal process. Require design alignment for any user-facing API, gate, Helm value, ResourceSlice attribute, checkpoint, dependency, or significant behavior change.\n3. Identify each contract and its authority:\n   - Handwritten API types and validation: `api/nvidia.com/resource/v1beta1/`\n   - Feature definitions/defaults/dependencies: `pkg/featuregates/featuregates.go`\n   - Generated deepcopy, clients, listers, informers, and CRDs: generated outputs under `api/`, `pkg/nvidia.com/`, and `deployments/helm/dra-driver-nvidia-gpu/crds/`\n   - Helm defaults and rendering: `deployments/helm/dra-driver-nvidia-gpu/values.yaml` and `templates/`\n   - Admission validation: `cmd/webhook/`\n   - Kubelet checkpoints and migrations: checkpoint files in both kubelet-plugin command directories\n   - Public reference docs: `site/content/docs/reference/`\n4. Search all readers, writers, defaults, validators, serializers, tests, templates, examples, and docs before editing. Identify the single authoritative state owner.\n5. Define compatibility:\n   - Preserve wire names and semantics unless a reviewed migration exists.\n   - Use optional fields and safe zero values for additive checkpoint changes; document old/new binary behavior.\n   - Account for the Kubernetes DRA API level used by each supported Kubernetes minor.\n   - Treat ResourceSlice attribute names and CEL access paths as public contracts.\n   - State CRD update ordering and Helm's CRD upgrade limitations.\n6. For a feature gate, define stage, default, introduction version, dependencies, mutual exclusions, composition with adjacent gates, graduation evidence, and removal plan. Compare the code registry with the feature-gate docs and report drift.\n7. Implement handwritten sources first. Never hand-edit generated files as the source of truth.\n8. Regenerate with the repository workflow. Review the generated diff for unintended schema, default, required-field, RBAC, or client changes.\n9. Update Helm values/templates, webhook validation, DeviceClasses, examples, API/feature-gate/Helm/ResourceSlice docs, upgrade guidance, and PR release notes as applicable.\n10. Run the change-appropriate validation from `$dra-build-test-codegen-ci`, including focused unit tests, `make generate`, `make check-generate`, `make test`, `make check`, and `make helm-lint` where relevant.\n11. Add upgrade/downgrade and negative tests. Include real-cluster coverage only after explicit approval.\n12. Return a contract-change summary, compatibility matrix, generated-file list, validation evidence, docs/release impact, and open risks.\n\n## Expected Outputs\n\n- API or feature-gate change plan\n- Implementation patch and generated artifacts\n- Compatibility and migration matrix\n- Review findings and release-note text\n\n## References\n\n- Public API reference: `site/content/docs/reference/api.md`\n- Public feature gates: `site/content/docs/reference/feature-gates.md`\n- Public ResourceSlice attributes: `site/content/docs/reference/resourceslice-attributes.md`\n- Public Helm values: `site/content/docs/reference/helm-values.md`\n- Public proposal process: `site/content/contribute/proposals/_index.md`\n- Public Kubernetes DRA concepts: https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/\n- Public Kubernetes API reference for ResourceSlice: https://kubernetes.io/docs/reference/kubernetes-api/resource/resource-slice-v1/\n- Internal supplemental: none provided by this skill\n\n## Validation\n\n- Verify handwritten and generated sources agree.\n- Verify API validation accepts supported old objects and rejects new invalid combinations.\n- Verify `make check-generate` leaves no unexplained generated diff.\n- Verify Helm defaults, template validation, binary flags, and feature-gate docs agree with code.\n- Verify upgrade, rollback, in-flight claim, restart, and checkpoint behavior is explicit.\n- For the scenario \"add an optional field to `GpuConfig`\", trace it through Go types, validation, webhook decoding, plugin consumption, generated artifacts, docs, samples, unit tests, and release notes.\n- Report any existing drift encountered; do not normalize it silently outside the requested scope.\n\n## Safety Constraints\n\n- Inspect the current diff before and after generation; never discard unrelated work.\n- Ask before running live-cluster tests or applying CRDs, charts, or workloads.\n- Do not delete or rewrite checkpoint files as a troubleshooting shortcut without an approved recovery plan.\n- Never expose secrets, kubeconfigs, credentials, or customer data.\n\n## Non-Goals\n\n- Do not bypass proposal or maintainer review for public contracts.\n- Do not promise support solely because code compiles.\n- Do not manually edit generated outputs in place of changing their source.\n\n## Owners\n\n- DRA engineering\n- DRA API and release reviewers\n\n## Refresh Policy\n\n- Review every DRA driver release and Kubernetes dependency minor bump.\n- Review after CRD/codegen tool changes, feature-gate lifecycle changes, checkpoint format changes, or GPU Operator compatibility updates.\n- Reconcile code and public reference docs before relying on a gate list or default.\n\n## Registration Notes\n\nKeep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.\n\n---INPUTS---\n\n---WORKSPACE---\n./skills/dra-api-crd-feature-gate-change/SKILL.md\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md && printf '\\\\n---INPUTS---\\\\n' && find input -maxdepth 2 -type f | sort | xargs -I{} sh -c 'printf \\\"\\\\n### %s ###\\\\n\\\" \\\"$1\\\"; sed -n \\\"1,220p\\\" \\\"$1\\\"' sh {} && printf '\\\\n---WORKSPACE---\\\\n' && find . -maxdepth 3 -type f | sort | sed -n '1,200p'\",\"workdir\":\"/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-with/dra-api-crd-feature-gate-change__SXTda98/local-environment/workspace\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 9,
+      "timestamp": "2026-08-23T01:35:16.879Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019ve got the skill guidance. Next I\u2019m locating the actual repo and scanning current `ResourceSlice` attribute conventions."
+    },
+    {
+      "step_id": 10,
+      "timestamp": "2026-08-23T01:35:17.910Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_d8IjkVab40r5OKXwqfHc9fKc",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "repo=$(cd .. && find .. -maxdepth 6 -type d -name .git -prune -print | sed 's#/.git##' | head -n 1); echo \"$repo\"; cd \"$repo\" && (find .. -name AGENTS.md -print | sed -n '1,40p') && printf '\\n---top---\\n' && ls -la && printf '\\n---attr refs---\\n' && rg -n \"ResourceSlice|resourceslice|attribute|DeviceClass|fabric generation|NVLink|H100|SXM\" api pkg deployments site cmd -g '!**/vendor/**' | sed -n '1,260p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_d8IjkVab40r5OKXwqfHc9fKc",
+            "content": "Chunk ID: 50c09c\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 33\nOutput:\n../agent/codex-home/.tmp/plugins-clone-DgwZac\nzsh:cd:1: no such file or directory: ../agent/codex-home/.tmp/plugins-clone-DgwZac\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"repo=$(cd .. && find .. -maxdepth 6 -type d -name .git -prune -print | sed 's#/.git##' | head -n 1); echo \\\"$repo\\\"; cd \\\"$repo\\\" && (find .. -name AGENTS.md -print | sed -n '1,40p') && printf '\\\\n---top---\\\\n' && ls -la && printf '\\\\n---attr refs---\\\\n' && rg -n \\\"ResourceSlice|resourceslice|attribute|DeviceClass|fabric generation|NVLink|H100|SXM\\\" api pkg deployments site cmd -g '!**/vendor/**' | sed -n '1,260p'\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 11,
+      "timestamp": "2026-08-23T01:35:21.390Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "The repo path guess was wrong. I\u2019m searching upward for the actual checkout, then I\u2019ll inspect the attribute docs and constants."
+    },
+    {
+      "step_id": 12,
+      "timestamp": "2026-08-23T01:35:21.390Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_D3rjSbPmi33a6MmRq9HkcriX",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 6 \\( -name .git -o -name go.mod \\) -print | sed -n '1,120p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 12000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_D3rjSbPmi33a6MmRq9HkcriX",
+            "content": "Chunk ID: 31f7a4\nWall time: 0.2686 seconds\nProcess exited with code 0\nOriginal token count: 69\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/go.mod\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/site/go.mod\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.git\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/deployments/devel/go.mod\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"find /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu -maxdepth 6 \\\\( -name .git -o -name go.mod \\\\) -print | sed -n '1,120p'\",\"yield_time_ms\":1000,\"max_output_tokens\":12000}"
+      }
+    },
+    {
+      "step_id": 13,
+      "timestamp": "2026-08-23T01:35:23.830Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_CbcQonUxQVSdmLlB3CmF7aq3",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && find .. -name AGENTS.md -print | sed -n '1,80p' && printf '\\n---top---\\n' && ls -la && printf '\\n---attr refs---\\n' && rg -n \"ResourceSlice|resourceslice|attribute|DeviceClass|fabric generation|NVLink|H100|SXM\" api pkg deployments site cmd -g '!**/vendor/**' | sed -n '1,320p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_CbcQonUxQVSdmLlB3CmF7aq3",
+            "content": "Chunk ID: b3c6de\nWall time: 1.0017 seconds\nProcess running with session ID 15292\nOriginal token count: 0\nOutput:\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && find .. -name AGENTS.md -print | sed -n '1,80p' && printf '\\\\n---top---\\\\n' && ls -la && printf '\\\\n---attr refs---\\\\n' && rg -n \\\"ResourceSlice|resourceslice|attribute|DeviceClass|fabric generation|NVLink|H100|SXM\\\" api pkg deployments site cmd -g '!**/vendor/**' | sed -n '1,320p'\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 14,
+      "timestamp": "2026-08-23T01:35:27.040Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_xXwH8kFDeK22YoqmrJatkFzp",
+          "function_name": "write_stdin",
+          "arguments": {
+            "session_id": 15292,
+            "chars": "",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_xXwH8kFDeK22YoqmrJatkFzp",
+            "content": "Chunk ID: 799db4\nWall time: 5.0012 seconds\nProcess running with session ID 15292\nOriginal token count: 0\nOutput:\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"session_id\":15292,\"chars\":\"\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 15,
+      "timestamp": "2026-08-23T01:35:33.636Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_93oVpaJtlxzylsqS7pRfKmAf",
+          "function_name": "write_stdin",
+          "arguments": {
+            "session_id": 15292,
+            "chars": "\u0003",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_93oVpaJtlxzylsqS7pRfKmAf",
+            "content": "Chunk ID: c54699\nWall time: 0.0005 seconds\nProcess exited with code 130\nOriginal token count: 0\nOutput:\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"session_id\":15292,\"chars\":\"\\u0003\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 16,
+      "timestamp": "2026-08-23T01:35:36.003Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_DZu1tO6BC1m0jVPE9VfBZlyh",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '---AGENTS---\\n' && find .. -name AGENTS.md -print | sed -n '1,80p' && printf '\\n---attr refs---\\n' && rg -n \"ResourceSlice|resourceslice|DeviceClass|NVLink|H100|SXM|fabric generation|attribute\" api pkg deployments site cmd --glob '!**/vendor/**' --glob '!**/node_modules/**' | sed -n '1,260p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_DZu1tO6BC1m0jVPE9VfBZlyh",
+            "content": "Chunk ID: 5b709f\nWall time: 1.0012 seconds\nProcess running with session ID 43916\nOriginal token count: 4\nOutput:\n---AGENTS---\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '---AGENTS---\\\\n' && find .. -name AGENTS.md -print | sed -n '1,80p' && printf '\\\\n---attr refs---\\\\n' && rg -n \\\"ResourceSlice|resourceslice|DeviceClass|NVLink|H100|SXM|fabric generation|attribute\\\" api pkg deployments site cmd --glob '!**/vendor/**' --glob '!**/node_modules/**' | sed -n '1,260p'\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 17,
+      "timestamp": "2026-08-23T01:35:38.693Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_bnOfQTAoVDrMUfd4CgENPd8p",
+          "function_name": "write_stdin",
+          "arguments": {
+            "session_id": 43916,
+            "chars": "",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_bnOfQTAoVDrMUfd4CgENPd8p",
+            "content": "Chunk ID: 7c23c8\nWall time: 5.0020 seconds\nProcess running with session ID 43916\nOriginal token count: 67\nOutput:\nfind: ../dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-without/dra-api-crd-feature-gate-change__vDpPVUV/agent/codex-secrets: No such file or directory\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"session_id\":43916,\"chars\":\"\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 18,
+      "timestamp": "2026-08-23T01:35:45.369Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_2WFjqGYUnrzTs0luF6bo95Ga",
+          "function_name": "write_stdin",
+          "arguments": {
+            "session_id": 43916,
+            "chars": "\u0003",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 12000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_2WFjqGYUnrzTs0luF6bo95Ga",
+            "content": "Chunk ID: 92fd67\nWall time: 0.0006 seconds\nProcess exited with code 130\nOriginal token count: 67\nOutput:\nfind: ../dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/evals/results/20260822_183456_6951_dba6a8/_harbor-jobs/dra-api-crd-feature-gate-change-codex-without/dra-api-crd-feature-gate-change__xNWaM92/agent/codex-secrets: No such file or directory\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"session_id\":43916,\"chars\":\"\\u0003\",\"yield_time_ms\":1000,\"max_output_tokens\":12000}"
+      }
+    },
+    {
+      "step_id": 19,
+      "timestamp": "2026-08-23T01:35:47.285Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "Found the repo, and there\u2019s noisy filesystem churn outside it. I\u2019m narrowing to repo-local files now."
+    },
+    {
+      "step_id": 20,
+      "timestamp": "2026-08-23T01:35:47.993Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_dBhFiKDG6GZSozZeK1g0ZajR",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '\\n---repo AGENTS---\\n' && rg --files -g 'AGENTS.md' . && printf '\\n---key refs---\\n' && rg -n \"ResourceSlice|DeviceClass|NVLink|H100|SXM|fabric generation|attribute\" api pkg deployments site cmd --glob '!**/vendor/**' --glob '!**/node_modules/**' | sed -n '1,260p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_dBhFiKDG6GZSozZeK1g0ZajR",
+            "content": "Chunk ID: bf16e8\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 5\nOutput:\n\n---repo AGENTS---\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '\\\\n---repo AGENTS---\\\\n' && rg --files -g 'AGENTS.md' . && printf '\\\\n---key refs---\\\\n' && rg -n \\\"ResourceSlice|DeviceClass|NVLink|H100|SXM|fabric generation|attribute\\\" api pkg deployments site cmd --glob '!**/vendor/**' --glob '!**/node_modules/**' | sed -n '1,260p'\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 21,
+      "timestamp": "2026-08-23T01:35:50.367Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_07iXOJ38AEZw7sVW70QpLKMO",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '---resourceslice docs---\\n' && sed -n '1,240p' site/content/docs/reference/resourceslice-attributes.md && printf '\\n---feature gates---\\n' && sed -n '1,220p' pkg/featuregates/featuregates.go && printf '\\n---attr constants---\\n' && rg -n \"attribute.*=|const .*Attribute|ResourceSlice.*Attribute|Attributes\" api pkg cmd | sed -n '1,260p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_07iXOJ38AEZw7sVW70QpLKMO",
+            "content": "Chunk ID: d6d1d2\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 5117\nOutput:\nWarning: truncated output (original token count: 5117)\nTotal output lines: 502\n\n---resourceslice docs---\n---\ntitle: ResourceSlice device attributes\nlinkTitle: ResourceSlice attributes\nweight: 40\ndescription: NVIDIA GPU, MIG, and VFIO device attributes and capacity published by the DRA Driver for NVIDIA GPUs in ResourceSlices.\n---\n\nThe DRA Driver for NVIDIA GPUs publishes each allocatable device \u2014 full GPUs, MIG\nslices, and VFIO passthrough devices \u2014 as an entry under `spec.devices` in a\nnode's `ResourceSlice`. This page is a reference for the NVIDIA-specific\nattributes and capacity on those entries: what each field means and the exact\nnames you reference in CEL selectors.\n\nFor the generic `ResourceSlice` type schema \u2014 every field on `ResourceSlice`,\n`Device`, `DeviceAttribute`, `DeviceCapacity`, and related types \u2014 see the\n[Kubernetes API reference for ResourceSlice v1](https://kubernetes.io/docs/reference/kubernetes-api/resource/resource-slice-v1/).\nFor how the driver publishes slices, see\n[Publishing GPUs in ResourceSlices](../concepts/gpu-allocation.md#publishing-gpus-in-resourceslices).\nTo inspect the ResourceSlices on your own cluster, see\n[View available GPU resources](../guides/gpu-allocation/view-resources.md).\n\n## Device types\n\nThe DRA Driver for NVIDIA GPUs publishes all devices under a single driver,\n`gpu.nvidia.com`, with one pool per node. The NVIDIA-specific `type` attribute on\neach device identifies the kind of device, and the built-in DeviceClasses select\non it:\n\n| `type` | DeviceClass | Device |\n|---|---|---|\n| `gpu` | `gpu.nvidia.com` | Full physical GPU |\n| `mig` | `mig.nvidia.com` | MIG slice |\n| `vfio` | `vfio.gpu.nvidia.com` | VFIO passthrough device |\n\nThe sections below show a representative `spec.devices[]` entry for each type.\n`kubectl` prints map keys alphabetically (so `type` and `uuid` appear last), the\n`#` comments are annotations rather than part of the real output, and the values\nare illustrative \u2014 confirm them on your own cluster.\n\n## Full GPU (type: gpu)\n\n<!-- gpuModuleID with ID, cmd/gpu-kubelet-plugin/deviceinfo.go:236 -->\n\n```yaml\n- attributes:\n    addressingMode:\n      string: HMM                   # memory addressing mode, when available\n    architecture:\n      string: Ampere                # GPU architecture\n    brand:\n      string: Nvidia                # GPU brand\n    cudaComputeCapability:\n      version: 8.0.0                # CUDA compute capability\n    cudaDriverVersion:\n      version: 13.0.0              # CUDA driver version\n    driverVersion:\n      version: 580.126.20          # NVIDIA driver version\n    gpuModuleID:\n      int: 1                        # Fabric Manager GPU module ID, when enabled\n    partition2:\n      int: 4                        # ID of a reported size-2 FM partition\n    productName:\n      string: NVIDIA A100-PCIE-40GB # product name reported by NVML\n    resource.kubernetes.io/pciBusID:\n      string: 0000:65:00.0          # PCI bus address in BDF notation, when available\n    resource.kubernetes.io/pcieRoot:\n      string: pci0000:64            # PCIe root complex identifier, when available\n    resource.kubernetes.io/numaNode:\n      int: 0                         # NUMA node, when available\n    type:\n      string: gpu                   # device kind: gpu, mig, or vfio\n    uuid:\n      string: GPU-2fa81118-5a5f-aa66-7660-471eed407181\n  capacity:\n    memory:\n      value: 40Gi                   # total GPU memory\n    # On MIG-capable GPUs with partition metadata, additional capacities\n    # (multiprocessors, copyEngines, decoders, encoders, jpegEngines, ofaEngines)\n    # may also appear here.\n  name: gpu-0\n```\n\n## MIG slice (type: mig)\n\n```yaml\n- attributes:\n    addressingMode:\n      string: HMM\n    architecture:\n      string: Ampere                # inherited from the parent GPU\n    brand:\n      string: Nvidia\n    cudaComputeCapability:\n      version: 8.0.0\n    cudaDriverVersion:\n      version: 13.0.0\n    driverVersion:\n      version: 580.126.20\n    parentUUID:\n      string: GPU-2fa81118-5a5f-aa66-7660-471eed407181  # physical GPU hosting this instance\n    productName:\n      string: NVIDIA A100-PCIE-40GB # inherited from the parent GPU\n    profile:\n      string: 1g.5gb                # MIG profile, e.g. 1g.5gb or 3g.20gb\n    resource.kubernetes.io/pciBusID:\n      string: 0000:65:00.0\n    resource.kubernetes.io/pcieRoot:\n      string: pci0000:64\n    resource.kubernetes.io/numaNode:\n      int: 0                         # inherited from the parent GPU, when available\n    type:\n      string: mig                   # device kind\n    uuid:\n      string: MIG-1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d\n  capacity:\n    copyEngines:\n      value: \"1\"                    # dedicated copy engines\n    decoders:\n      value: \"0\"                    # dedicated video decoders\n    encoders:\n      value: \"0\"                    # dedicated video encoders\n    jpegEngines:\n      value: \"0\"                    # dedicated JPEG engines\n    memory:\n      value: 4864Mi                 # dedicated slice memory (usable amount, below the \"5gb\" label)\n  \u20262617 tokens truncated\u2026 version.MajorMinor(0, 4),\n\t\t},\n\t},\n\tFabricManagerPartitioning: {\n\t\t{\n\t\t\tDefault:    false,\n\t\t\tPreRelease: featuregate.Alpha,\n\t\t\tVersion:    version.MajorMinor(0, 5),\n\t\t},\n\t},\n\tHostManagedIMEXDaemon: {\n\t\t{\n\t\t\tDefault:    false,\n\t\t\tPreRelease: featuregate.Alpha,\n\t\t\tVersion:    version.MajorMinor(0, 5),\n\t\t},\n\t},\n\tDRAListTypeAttributes: {\n\t\t{\n\t\t\tDefault:    false,\n\t\t\tPreRelease: featuregate.Alpha,\n\t\t\tVersion:    version.MajorMinor(0, 4),\n\t\t},\n\t},\n\tConsumableShares: {\n\t\t{\n\t\t\tDefault:    false,\n\t\t\tPreRelease: featuregate.Alpha,\n\t\t\tVersion:    version.MajorMinor(0, 5),\n\t\t},\n\t},\n}\n\nvar (\n\tfeatureGatesOnce sync.Once\n\tfeatureGates     featuregate.MutableVersionedFeatureGate\n)\n\n// FeatureGates instantiates and returns the package-level singleton representing\n// the set of all feature gates and their values.\n// It contains both project-specific feature gates and standard Kubernetes logging feature gates.\nfunc FeatureGates() featuregate.MutableVersionedFeatureGate {\n\tif featureGates == nil {\n\t\tfeatureGatesOnce.Do(func() {\n\n---attr constants---\npkg/featuregates/featuregates.go:95:\t// DRAListTypeAttributes allows the GPU kubelet plugin to publish list-valued\npkg/featuregates/featuregates.go:98:\tDRAListTypeAttributes featuregate.Feature = \"DRAListTypeAttributes\"\npkg/featuregates/featuregates.go:194:\tDRAListTypeAttributes: {\ncmd/compute-domain-kubelet-plugin/deviceinfo.go:53:\t\tAttributes: map[resourceapi.QualifiedName]resourceapi.DeviceAttribute{\ncmd/compute-domain-kubelet-plugin/deviceinfo.go:68:\t\tAttributes: map[resourceapi.QualifiedName]resourceapi.DeviceAttribute{\ncmd/gpu-kubelet-plugin/numa.go:32:\tif featuregates.Enabled(featuregates.DRAListTypeAttributes) {\ncmd/gpu-kubelet-plugin/deviceinfo.go:168:func (d *GpuInfo) Attributes() map[resourceapi.QualifiedName]resourceapi.DeviceAttribute {\ncmd/gpu-kubelet-plugin/deviceinfo.go:207:\t\td.addFabricManagerAttributes(attrs)\ncmd/gpu-kubelet-plugin/deviceinfo.go:213:// addFabricManagerAttributes publishes the Fabric Manager-derived attributes\ncmd/gpu-kubelet-plugin/deviceinfo.go:216:func (d *GpuInfo) addFabricManagerAttributes(attrs map[resourceapi.QualifiedName]resourceapi.DeviceAttribute) {\ncmd/gpu-kubelet-plugin/deviceinfo.go:226:\tklog.V(4).Infof(\"Adding Fabric Manager attributes for %s: gpuModuleID=%d partitionsBySize=%v\",\ncmd/gpu-kubelet-plugin/deviceinfo.go:245:\t\tAttributes: d.Attributes(),\ncmd/gpu-kubelet-plugin/deviceinfo.go:253:\tattrs := CommonAttributesMig(d.parent, d.Profile)\ncmd/gpu-kubelet-plugin/deviceinfo.go:260:\t\tAttributes: attrs,\ncmd/gpu-kubelet-plugin/deviceinfo.go:279:\t\tAttributes: map[resourceapi.QualifiedName]resourceapi.DeviceAttribute{\ncmd/gpu-kubelet-plugin/deviceinfo.go:306:\taddDeviceAttribute(device.Attributes, d.pciBusIDAttr)\ncmd/gpu-kubelet-plugin/deviceinfo.go:307:\taddDeviceAttribute(device.Attributes, d.pcieRootAttr)\ncmd/gpu-kubelet-plugin/deviceinfo.go:313:\t\t\td.parent.addFabricManagerAttributes(device.Attributes)\ncmd/gpu-kubelet-plugin/deviceinfo.go:316:\taddDeviceAttribute(device.Attributes, d.numaNodeAttr)\ncmd/gpu-kubelet-plugin/partitions.go:105:\t\tAttributes:       d.Attributes(),\ncmd/gpu-kubelet-plugin/partitions.go:113:\t\tdev.Attributes[d.pcieRootAttr.Name] = d.pcieRootAttr.Value\ncmd/gpu-kubelet-plugin/partitions.go:123:\t\tAttributes:       i.Attributes(),\ncmd/gpu-kubelet-plugin/partitions.go:175:func (i MigSpec) Attributes() map[resourceapi.QualifiedName]resourceapi.DeviceAttribute {\ncmd/gpu-kubelet-plugin/partitions.go:176:\treturn CommonAttributesMig(i.Parent, i.Profile.String())\ncmd/gpu-kubelet-plugin/mig.go:137:// CommonAttributesMig returns device attributes for MIG devices that are\ncmd/gpu-kubelet-plugin/mig.go:139:func CommonAttributesMig(parent *GpuInfo, profileName string) map[resourceapi.QualifiedName]resourceapi.DeviceAttribute {\ncmd/gpu-kubelet-plugin/device_state.go:1067:\t\t\t\t\tfor k, v := range allocatableDevice.Vfio.GetDevice().Attributes {\ncmd/gpu-kubelet-plugin/device_state.go:1071:\t\t\t\t\t\tAttributes: attrs,\ncmd/gpu-kubelet-plugin/deviceinfo_test.go:79:func TestGpuInfoAttributesIncludeStandardNumaNode(t *testing.T) {\ncmd/gpu-kubelet-plugin/deviceinfo_test.go:82:\trequireNumaNodeAttribute(t, gpu.Attributes(), 1)\ncmd/gpu-kubelet-plugin/deviceinfo_test.go:85:func TestGpuInfoAttributesIncludeStandardNumaNodeList(t *testing.T) {\ncmd/gpu-kubelet-plugin/deviceinfo_test.go:88:\trequireNumaNodeListAttribute(t, gpu.Attributes(), []int64{1, 2})\ncmd/gpu-kubelet-plugin/deviceinfo_test.go:91:func TestCommonMigAttributesIncludeStandardNumaNode(t *testing.T) {\ncmd/gpu-kubelet-plugin/deviceinfo_test.go:94:\trequireNumaNodeAttribute(t, CommonAttributesMig(parent, \"1g.10gb\"), 2)\ncmd/gpu-kubelet-plugin/deviceinfo_test.go:108:\trequireNumaNodeAttribute(t, vfio.GetDevice().Attributes, 3)\ncmd/gpu-kubelet-plugin/nvlib.go:559:\tif attr, err := deviceattribute.GetPCIeRootAttributeByPCIBusID(pciBusID, machineModifiers...); err == nil {\ncmd/gpu-kubelet-plugin/nvlib.go:707:\tif attr, err := deviceattribute.GetPCIeRootAttributeByPCIBusID(device.Address); err == nil {\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && printf '---resourceslice docs---\\\\n' && sed -n '1,240p' site/content/docs/reference/resourceslice-attributes.md && printf '\\\\n---feature gates---\\\\n' && sed -n '1,220p' pkg/featuregates/featuregates.go && printf '\\\\n---attr constants---\\\\n' && rg -n \\\"attribute.*=|const .*Attribute|ResourceSlice.*Attribute|Attributes\\\" api pkg cmd | sed -n '1,260p'\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 22,
+      "timestamp": "2026-08-23T01:35:52.106Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I found the main publishing path. Now I\u2019m opening the exact files that define attributes, docs, and feature-gate expectations."
+    },
+    {
+      "step_id": 23,
+      "timestamp": "2026-08-23T01:35:52.858Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_Tf0KWP9I8YQd9iBFVMIyc5DZ",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,260p' cmd/gpu-kubelet-plugin/deviceinfo.go && printf '\\n---\\n' && sed -n '1,260p' cmd/gpu-kubelet-plugin/mig.go && printf '\\n---\\n' && sed -n '1,220p' cmd/gpu-kubelet-plugin/deviceinfo_test.go && printf '\\n---\\n' && sed -n '1,260p' site/content/docs/reference/resourceslice-attributes.md",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_Tf0KWP9I8YQd9iBFVMIyc5DZ",
+            "content": "Chunk ID: 71c6e8\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 7708\nOutput:\nWarning: truncated output (original token count: 7708)\nTotal output lines: 895\n\n/*\nCopyright The Kubernetes Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n*/\n\npackage main\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/Masterminds/semver/v3\"\n\t\"github.com/NVIDIA/go-nvml/pkg/nvml\"\n\tresourceapi \"k8s.io/api/resource/v1\"\n\t\"k8s.io/apimachinery/pkg/api/resource\"\n\t\"k8s.io/dynamic-resource-allocation/deviceattribute\"\n\t\"k8s.io/klog/v2\"\n\t\"k8s.io/utils/ptr\"\n\n\t\"sigs.k8s.io/dra-driver-nvidia-gpu/pkg/featuregates\"\n)\n\n// Represents a specific, full, physical GPU device.\ntype GpuInfo struct {\n\tUUID                  string `json:\"uuid\"`\n\tminor                 int\n\tmigCapable            bool\n\tmigEnabled            bool\n\tvfioEnabled           bool\n\tmemoryBytes           *uint64\n\tproductName           string\n\tbrand                 string\n\tarchitecture          string\n\tcudaComputeCapability string\n\tdriverVersion         string\n\tcudaDriverVersion     string\n\tpciBusID              string\n\tpciBusIDAttr          *deviceattribute.DeviceAttribute\n\tpcieRootAttr          *deviceattribute.DeviceAttribute\n\tnumaNodeAttr          *deviceattribute.DeviceAttribute\n\tmigProfiles           []*MigProfileInfo\n\taddressingMode        *string\n\n\t// The following properties that can only be known after inspecting MIG\n\t// profiles.\n\tmaxCapacities PartCapacityMap\n\tmemSliceCount int\n\n\t// Fabric Manager attributes. Populated only\n\t// when an FM Manager is available and the GPU is visible to NVML at\n\t// discovery time.\n\tgpuModuleID int\n\n\t// partitionsBySize maps an FM partition size (number of GPUs in the\n\t// partition) to the partitionId of the partition of that size that\n\t// includes this GPU. Used to publish the `partition1`/`partition2`/\n\t// `partition4`/`partition8` device attributes.\n\tpartitionsBySize map[int]int\n}\n\n// Represents a specific (concrete, incarnated, created) MIG device. Annotated\n// properties are stored in the checkpoint JSON upon prepare.\ntype MigDeviceInfo struct {\n\t// Selectively serialize some properties to the checkpoint JSON file (needed\n\t// mainly for controlled deletion in the unprepare flow).\n\n\tUUID        string `json:\"uuid\"`\n\tProfile     string `json:\"profile\"`\n\tParentUUID  string `json:\"parentUUID\"`\n\tGiProfileID int    `json:\"profileId\"`\n\n\t// TODO: maybe embed MigLiveTuple.\n\tParentMinor int `json:\"parentMinor\"`\n\tCIID        int `json:\"ciId\"`\n\tGIID        int `json:\"giId\"`\n\n\t// Store PlacementStart in the JSON checkpoint because in CanonicalName() we\n\t// rely on this -- and this must work after JSON deserialization.\n\tPlacementStart int `json:\"placementStart\"`\n\tPlacementSize  int `json:\"placementSize\"`\n\n\tgIInfo        *nvml.GpuInstanceInfo\n\tcIInfo        *nvml.ComputeInstanceInfo\n\tparent        *GpuInfo\n\tgiProfileInfo *nvml.GpuInstanceProfileInfo\n\tciProfileInfo *nvml.ComputeInstanceProfileInfo\n}\n\ntype VfioDeviceInfo struct {\n\tUUID        string `json:\"uuid\"`\n\tdeviceID    string\n\tvendorID    string\n\tindex       int\n\tparent      *GpuInfo\n\tproductName string\n\t// `omitempty`: postdates 25.12.0; emitting \"pciBusID\":\"\" would trip\n\t// CorruptCheckpointError on upgrade. See issue 1080.\n\tPciBusID               string `json:\"pciBusID,omitempty\"`\n\tpciBusIDAttr           *deviceattribute.DeviceAttribute\n\tpcieRootAttr           *deviceattribute.DeviceAttribute\n\tnumaNodeAttr           *deviceattribute.DeviceAttribute\n\tiommuGroup             int\n\tiommuFDEnabled         bool\n\taddressableMemoryBytes uint64\n\tvfioModule             string\n}\n\n// CanonicalName returns the nameused for device announcement (in ResourceSlice\n// objects). There is quite a bit of history to using the minor number for\n// device announcement. Some context can be found at\n// https://sigs.k8s.io/dra-driver-nvidia-gpu/issues/563#issuecomment-3345631087.\nfunc (d *GpuInfo) CanonicalName() DeviceName {\n\treturn fmt.Sprintf(\"gpu-%d\", d.minor)\n}\n\n// String returns both the GPU minor for easy recognizability, but also the\n// UUID for precision. It is intended for usage in log messages.\nfunc (d *GpuInfo) String() string {\n\treturn fmt.Sprintf(\"%s-%s\", d.CanonicalName(), d.UUID)\n}\n\nfunc (m *MigDeviceInfo) SpecTuple() *MigSpecTuple {\n\treturn &MigSpecTuple{\n\t\tParentMinor:    m.ParentMinor,\n\t\tProfileID:      m.GiProfileID,\n\t\tPlacementStart: m.PlacementStart,\n\t}\n}\n\nfunc (m *MigDeviceInfo) LiveTuple() *MigLiveTuple {\n\treturn &MigLiveTuple{\n\t\tParentMinor: m.ParentMinor,\n\t\tParentUUID:  m.ParentUUID,\n\t\tGIID:        m.GIID,\n\t\tCIID:        m.CIID,\n\t\tMigUUID:     m.UUID,\n\t}\n}\n\n// Return the canonical MIG device name. The name unambiguously defines the\n// physical configuration, but doesn't reflect the fact that\u20265208 tokens truncated\u2026ieRoot:\n      string: pci0000:64\n    resource.kubernetes.io/numaNode:\n      int: 0                         # inherited from the parent GPU, when available\n    type:\n      string: mig                   # device kind\n    uuid:\n      string: MIG-1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d\n  capacity:\n    copyEngines:\n      value: \"1\"                    # dedicated copy engines\n    decoders:\n      value: \"0\"                    # dedicated video decoders\n    encoders:\n      value: \"0\"                    # dedicated video encoders\n    jpegEngines:\n      value: \"0\"                    # dedicated JPEG engines\n    memory:\n      value: 4864Mi                 # dedicated slice memory (usable amount, below the \"5gb\" label)\n    multiprocessors:\n      value: \"14\"                   # streaming multiprocessors dedicated to the slice\n    ofaEngines:\n      value: \"0\"                    # dedicated optical-flow accelerators\n  name: gpu-0-mig-1g.5gb-0\n```\n\n## VFIO passthrough (type: vfio)\n\n```yaml\n- attributes:\n    deviceID:\n      string: \"0x20b0\"              # PCI device ID\n    gpuModuleID:\n      int: 1                         # Fabric Manager GPU module ID, when enabled\n    iommuFDEnabled:\n      bool: true                    # whether the IOMMUFD backend is enabled\n    partition1:\n      int: 8                         # ID of the size-1 Fabric Manager partition\n    partition2:\n      int: 4                         # ID of the size-2 Fabric Manager partition\n    partition4:\n      int: 2                         # ID of the size-4 Fabric Manager partition\n    partition8:\n      int: 1                         # ID of the size-8 Fabric Manager partition\n    productName:\n      string: NVIDIA A100-PCIE-40GB # product name reported by NVML\n    resource.kubernetes.io/numaNode:\n      int: 0                         # NUMA node, when available\n    resource.kubernetes.io/pciBusID:\n      string: 0000:65:00.0          # PCI bus address in BDF notation, when available\n    resource.kubernetes.io/pcieRoot:\n      string: pci0000:64            # PCIe root complex identifier, when available\n    type:\n      string: vfio                  # device kind\n    uuid:\n      string: GPU-2fa81118-5a5f-aa66-7660-471eed407181\n    vendorID:\n      string: \"0x10de\"             # PCI vendor ID (0x10de = NVIDIA)\n  capacity:\n    addressableMemory:\n      value: 40Gi                   # addressable device memory\n  name: gpu-vfio-0\n```\n\n## NUMA locality\n\nThe GPU kubelet plugin publishes the standard\n`resource.kubernetes.io/numaNode` attribute for full GPUs, MIG devices, and\nVFIO devices when the PCI NUMA node is available and non-negative.\n\nBy default, the attribute uses the scalar `int` form shown in the examples.\nWhen you enable both the driver and Kubernetes `DRAListTypeAttributes` feature\ngates, the ResourceSlice serialization changes to a one-element `ints` list:\n\n```yaml\nresource.kubernetes.io/numaNode:\n  ints:\n  - 0\n```\n\nThis representation change matters when inspecting or parsing ResourceSlices,\nbut it does not change the attribute name that you specify in ResourceClaims,\nlike the following example:\n\n```yaml\napiVersion: resource.k8s.io/v1\nkind: ResourceClaimTemplate\nmetadata:\n  name: same-numa-gpus\nspec:\n  spec:\n    devices:\n      requests:\n      - name: gpus\n        exactly:\n          deviceClassName: gpu.nvidia.com\n          allocationMode: ExactCount\n          count: 2\n      constraints:\n      - requests:\n        - gpus\n        matchAttribute: resource.kubernetes.io/numaNode\n```\n\nThis constraint requires all devices selected for `gpus` to have the same\npublished NUMA value. It uses the same\n`resource.kubernetes.io/numaNode` spelling for both the scalar `int` and\none-element `ints` representations.\n\n### Troubleshooting: verify the NUMA value\n\nList each GPU device with its node, PCI bus ID, and published NUMA value:\n\n```bash\nkubectl get resourceslices -o json | jq -r '\n  (\n    [\"NODE\", \"DEVICE\", \"PCI_BUS_ID\", \"PUBLISHED_NUMA\"],\n    (\n      .items[]\n      | select(.spec.driver == \"gpu.nvidia.com\")\n      | .spec.nodeName as $node\n      | .spec.devices[]\n      | .basic.attributes as $attrs\n      | select($attrs[\"resource.kubernetes.io/pciBusID\"] != null)\n      | ($attrs[\"resource.kubernetes.io/numaNode\"] // {}) as $numa\n      | [\n          $node,\n          .name,\n          $attrs[\"resource.kubernetes.io/pciBusID\"].string,\n          (\n            if $numa.int != null then ($numa.int | tostring)\n            elif $numa.ints != null then ($numa.ints | join(\",\"))\n            else \"omitted\"\n            end\n          )\n        ]\n    )\n  )\n  | @tsv'\n```\n\nFor one row, use its `NODE` and `PCI_BUS_ID` values to read the host PCI\ndevice's NUMA node:\n\n```bash\nNODE=<node-from-output>\nBDF=<pci-bus-id-from-output>\n\nkubectl debug \"node/${NODE}\" -it --image=ubuntu -- chroot /host \\\n  cat \"/sys/bus/pci/devices/${BDF}/numa_node\"\n```\n\nA non-negative host value must match `PUBLISHED_NUMA`. MIG devices report the\nlocality of their parent GPU and therefore use the parent's PCI bus ID. If the\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '1,260p' cmd/gpu-kubelet-plugin/deviceinfo.go && printf '\\\\n---\\\\n' && sed -n '1,260p' cmd/gpu-kubelet-plugin/mig.go && printf '\\\\n---\\\\n' && sed -n '1,220p' cmd/gpu-kubelet-plugin/deviceinfo_test.go && printf '\\\\n---\\\\n' && sed -n '1,260p' site/content/docs/reference/resourceslice-attributes.md\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 24,
+      "timestamp": "2026-08-23T01:35:55.776Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_PBxLl3bvFIheAkUZR28Jl2cf",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && rg -n \"gpuModuleID|partition1|partition2|partition4|partition8|productName|architecture|brand|addressingMode|cudaComputeCapability|cudaDriverVersion|driverVersion|type|uuid|parentUUID|profile\" cmd/gpu-kubelet-plugin/deviceinfo.go cmd/gpu-kubelet-plugin/mig.go cmd/gpu-kubelet-plugin/partitions.go | sed -n '1,220p' && printf '\\n---relevant chunk---\\n' && sed -n '160,260p' cmd/gpu-kubelet-plugin/deviceinfo.go && printf '\\n---fm chunk---\\n' && sed -n '213,245p' cmd/gpu-kubelet-plugin/deviceinfo.go",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 16000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_PBxLl3bvFIheAkUZR28Jl2cf",
+            "content": "Chunk ID: b35328\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3306\nOutput:\nWarning: truncated output (original token count: 3306)\nTotal output lines: 247\n\ncmd/gpu-kubelet-plugin/partitions.go:27:type PartCapacityMap map[resourceapi.QualifiedName]resourceapi.DeviceCapacity\ncmd/gpu-kubelet-plugin/partitions.go:46:// (uses information from looking at all MIG profiles beforehand).\ncmd/gpu-kubelet-plugin/partitions.go:48:// When MIG profiles have not been inspected for Full GPU (e.g. on Ampere\ncmd/gpu-kubelet-plugin/partitions.go:71:\t// Returns nil when no MIG profile data has been collected for this GPU\ncmd/gpu-kubelet-plugin/partitions.go:90:\t// Returns nil when no MIG profile data has been collected for this GPU\ncmd/gpu-kubelet-plugin/partitions.go:231:\t\tpanic(\"unexpected type for AllocatableDevice\")\ncmd/gpu-kubelet-plugin/partitions.go:256:// Helper for creating an integer-based DeviceCapacity. Accept any integer type.\ncmd/gpu-kubelet-plugin/deviceinfo.go:34:type GpuInfo struct {\ncmd/gpu-kubelet-plugin/deviceinfo.go:35:\tUUID                  string `json:\"uuid\"`\ncmd/gpu-kubelet-plugin/deviceinfo.go:41:\tproductName           string\ncmd/gpu-kubelet-plugin/deviceinfo.go:42:\tbrand                 string\ncmd/gpu-kubelet-plugin/deviceinfo.go:43:\tarchitecture          string\ncmd/gpu-kubelet-plugin/deviceinfo.go:44:\tcudaComputeCapability string\ncmd/gpu-kubelet-plugin/deviceinfo.go:45:\tdriverVersion         string\ncmd/gpu-kubelet-plugin/deviceinfo.go:46:\tcudaDriverVersion     string\ncmd/gpu-kubelet-plugin/deviceinfo.go:52:\taddressingMode        *string\ncmd/gpu-kubelet-plugin/deviceinfo.go:55:\t// profiles.\ncmd/gpu-kubelet-plugin/deviceinfo.go:62:\tgpuModuleID int\ncmd/gpu-kubelet-plugin/deviceinfo.go:66:\t// includes this GPU. Used to publish the `partition1`/`partition2`/\ncmd/gpu-kubelet-plugin/deviceinfo.go:67:\t// `partition4`/`partition8` device attributes.\ncmd/gpu-kubelet-plugin/deviceinfo.go:73:type MigDeviceInfo struct {\ncmd/gpu-kubelet-plugin/deviceinfo.go:77:\tUUID        string `json:\"uuid\"`\ncmd/gpu-kubelet-plugin/deviceinfo.go:78:\tProfile     string `json:\"profile\"`\ncmd/gpu-kubelet-plugin/deviceinfo.go:79:\tParentUUID  string `json:\"parentUUID\"`\ncmd/gpu-kubelet-plugin/deviceinfo.go:80:\tGiProfileID int    `json:\"profileId\"`\ncmd/gpu-kubelet-plugin/deviceinfo.go:99:type VfioDeviceInfo struct {\ncmd/gpu-kubelet-plugin/deviceinfo.go:100:\tUUID        string `json:\"uuid\"`\ncmd/gpu-kubelet-plugin/deviceinfo.go:105:\tproductName string\ncmd/gpu-kubelet-plugin/deviceinfo.go:162:// inspecting all individual MIG profiles associated with this physical GPU.\ncmd/gpu-kubelet-plugin/deviceinfo.go:170:\t\t\"type\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:173:\t\t\"uuid\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:176:\t\t\"productName\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:177:\t\t\tStringValue: &d.productName,\ncmd/gpu-kubelet-plugin/deviceinfo.go:179:\t\t\"brand\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:180:\t\t\tStringValue: &d.brand,\ncmd/gpu-kubelet-plugin/deviceinfo.go:182:\t\t\"architecture\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:183:\t\t\tStringValue: &d.architecture,\ncmd/gpu-kubelet-plugin/deviceinfo.go:185:\t\t\"cudaComputeCapability\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:186:\t\t\tVersionValue: ptr.To(semver.MustParse(d.cudaComputeCapability).String()),\ncmd/gpu-kubelet-plugin/deviceinfo.go:188:\t\t\"driverVersion\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:189:\t\t\tVersionValue: ptr.To(semver.MustParse(d.driverVersion).String()),\ncmd/gpu-kubelet-plugin/deviceinfo.go:191:\t\t\"cudaDriverVersion\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:192:\t\t\tVersionValue: ptr.To(semver.MustParse(d.cudaDriverVersion).String()),\ncmd/gpu-kubelet-plugin/deviceinfo.go:200:\tif d.addressingMode != nil {\ncmd/gpu-kubelet-plugin/deviceinfo.go:201:\t\tattrs[\"addressingMode\"] = resourceapi.DeviceAttribute{\ncmd/gpu-kubelet-plugin/deviceinfo.go:202:\t\t\tStringValue: d.addressingMode,\ncmd/gpu-kubelet-plugin/deviceinfo.go:214:// (`gpuModuleID` and `partitionN`) for this physical GPU. The values are\ncmd/gpu-kubelet-plugin/deviceinfo.go:221:\tif d.gpuModuleID == 0 && len(d.partitionsBySize) == 0 {\ncmd/gpu-kubelet-plugin/deviceinfo.go:226:\tklog.V(4).Infof(\"Adding Fabric Manager attributes for %s: gpuModuleID=%d partitionsBySize=%v\",\ncmd/gpu-kubelet-plugin/deviceinfo.go:227:\t\td.CanonicalName(), d.gpuModuleID, d.partitionsBySize)\ncmd/gpu-kubelet-plugin/deviceinfo.go:228:\tif d.gpuModuleID != 0 {\ncmd/gpu-kubelet-plugin/deviceinfo.go:229:\t\tattrs[\"gpuModuleID\"] = resourceapi.DeviceAttribute{\ncmd/gpu-kubelet-plugin/deviceinfo.go:230:\t\t\tIntValue: ptr.To(int64(d.gpuModuleID)),\ncmd/gpu-kubelet-plugin/deviceinfo.go:254:\tattrs[\"uuid\"] = resourceapi.DeviceAttribute{\ncmd/gpu-kubelet-plugin/deviceinfo.go:280:\t\t\t\"type\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:283:\t\t\t\"uuid\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:292:\t\t\t\"productName\": {\ncmd/gpu-kubelet-plugin/deviceinfo.go:293:\t\t\t\tStringValue: &d.productName,\ncmd/gpu-kubelet-plugin/mig.go:34:// (GI) MIG profile ID. The profile ID implies memory slice count. This\ncmd/gpu-kubelet-plugin/mig.go:37:type MigSpecTuple struct {\ncmd/gpu-kubelet-plugin/mig.go:40:\t// What is commonly called \"MIG profile ID\" typically refers to the GPU\ncmd\u2026806 tokens truncated\u2026lugin/mig.go:165:\t\t\"cudaDriverVersion\": {\ncmd/gpu-kubelet-plugin/mig.go:166:\t\t\tVersionValue: ptr.To(semver.MustParse(parent.cudaDriverVersion).String()),\ncmd/gpu-kubelet-plugin/mig.go:170:\tif parent.addressingMode != nil {\ncmd/gpu-kubelet-plugin/mig.go:171:\t\tattrs[\"addressingMode\"] = resourceapi.DeviceAttribute{\ncmd/gpu-kubelet-plugin/mig.go:172:\t\t\tStringValue: parent.addressingMode,\ncmd/gpu-kubelet-plugin/mig.go:193:\t// matches[2]: MIG profile name (ignore this for building the struct)\ncmd/gpu-kubelet-plugin/mig.go:201:\tprofileID, err2 := strconv.Atoi(matches[3])\ncmd/gpu-kubelet-plugin/mig.go:210:\t\tProfileID:      profileID,\ncmd/gpu-kubelet-plugin/mig.go:219:type MigProfileInfo struct {\ncmd/gpu-kubelet-plugin/mig.go:220:\tprofile    nvdev.MigProfile\ncmd/gpu-kubelet-plugin/mig.go:225:\treturn p.profile.String()\ncmd/gpu-kubelet-plugin/mig.go:228:type MigDevicePlacement struct {\n\n---relevant chunk---\n\n// Populate internal data structures -- detail that is only known after\n// inspecting all individual MIG profiles associated with this physical GPU.\nfunc (d *GpuInfo) AddDetailAfterWalkingMigProfiles(maxcap PartCapacityMap, memSliceCount int) {\n\td.maxCapacities = maxcap\n\td.memSliceCount = memSliceCount\n}\n\nfunc (d *GpuInfo) Attributes() map[resourceapi.QualifiedName]resourceapi.DeviceAttribute {\n\tattrs := map[resourceapi.QualifiedName]resourceapi.DeviceAttribute{\n\t\t\"type\": {\n\t\t\tStringValue: ptr.To(GpuDeviceType),\n\t\t},\n\t\t\"uuid\": {\n\t\t\tStringValue: &d.UUID,\n\t\t},\n\t\t\"productName\": {\n\t\t\tStringValue: &d.productName,\n\t\t},\n\t\t\"brand\": {\n\t\t\tStringValue: &d.brand,\n\t\t},\n\t\t\"architecture\": {\n\t\t\tStringValue: &d.architecture,\n\t\t},\n\t\t\"cudaComputeCapability\": {\n\t\t\tVersionValue: ptr.To(semver.MustParse(d.cudaComputeCapability).String()),\n\t\t},\n\t\t\"driverVersion\": {\n\t\t\tVersionValue: ptr.To(semver.MustParse(d.driverVersion).String()),\n\t\t},\n\t\t\"cudaDriverVersion\": {\n\t\t\tVersionValue: ptr.To(semver.MustParse(d.cudaDriverVersion).String()),\n\t\t},\n\t}\n\n\taddDeviceAttribute(attrs, d.pciBusIDAttr)\n\taddDeviceAttribute(attrs, d.pcieRootAttr)\n\taddDeviceAttribute(attrs, d.numaNodeAttr)\n\n\tif d.addressingMode != nil {\n\t\tattrs[\"addressingMode\"] = resourceapi.DeviceAttribute{\n\t\t\tStringValue: d.addressingMode,\n\t\t}\n\t}\n\n\tif featuregates.Enabled(featuregates.FabricManagerPartitioning) {\n\t\td.addFabricManagerAttributes(attrs)\n\t}\n\n\treturn attrs\n}\n\n// addFabricManagerAttributes publishes the Fabric Manager-derived attributes\n// (`gpuModuleID` and `partitionN`) for this physical GPU. The values are\n// resolved from NVML / FM at discovery time (see attachFabricManagerPartitions).\nfunc (d *GpuInfo) addFabricManagerAttributes(attrs map[resourceapi.QualifiedName]resourceapi.DeviceAttribute) {\n\tif d == nil {\n\t\treturn\n\t}\n\n\tif d.gpuModuleID == 0 && len(d.partitionsBySize) == 0 {\n\t\tklog.V(4).Infof(\"No Fabric Manager attributes for %s\", d.CanonicalName())\n\t\treturn\n\t}\n\n\tklog.V(4).Infof(\"Adding Fabric Manager attributes for %s: gpuModuleID=%d partitionsBySize=%v\",\n\t\td.CanonicalName(), d.gpuModuleID, d.partitionsBySize)\n\tif d.gpuModuleID != 0 {\n\t\tattrs[\"gpuModuleID\"] = resourceapi.DeviceAttribute{\n\t\t\tIntValue: ptr.To(int64(d.gpuModuleID)),\n\t\t}\n\t}\n\n\tfor size, partitionID := range d.partitionsBySize {\n\t\tkey := resourceapi.QualifiedName(fmt.Sprintf(\"partition%d\", size))\n\t\tattrs[key] = resourceapi.DeviceAttribute{\n\t\t\tIntValue: ptr.To(int64(partitionID)),\n\t\t}\n\t}\n}\n\nfunc (d *GpuInfo) GetDevice() resourceapi.Device {\n\tdevice := resourceapi.Device{\n\t\tName:       d.CanonicalName(),\n\t\tAttributes: d.Attributes(),\n\t\tCapacity:   d.fullGpuCapacity(),\n\t}\n\treturn device\n}\n\nfunc (d *MigDeviceInfo) GetDevice() resourceapi.Device {\n\n\tattrs := CommonAttributesMig(d.parent, d.Profile)\n\tattrs[\"uuid\"] = resourceapi.DeviceAttribute{\n\t\tStringValue: &d.UUID,\n\t}\n\n\tdevice := resourceapi.Device{\n\t\tName:       d.CanonicalName(),\n\t\tAttributes: attrs,\n\n---fm chunk---\n// addFabricManagerAttributes publishes the Fabric Manager-derived attributes\n// (`gpuModuleID` and `partitionN`) for this physical GPU. The values are\n// resolved from NVML / FM at discovery time (see attachFabricManagerPartitions).\nfunc (d *GpuInfo) addFabricManagerAttributes(attrs map[resourceapi.QualifiedName]resourceapi.DeviceAttribute) {\n\tif d == nil {\n\t\treturn\n\t}\n\n\tif d.gpuModuleID == 0 && len(d.partitionsBySize) == 0 {\n\t\tklog.V(4).Infof(\"No Fabric Manager attributes for %s\", d.CanonicalName())\n\t\treturn\n\t}\n\n\tklog.V(4).Infof(\"Adding Fabric Manager attributes for %s: gpuModuleID=%d partitionsBySize=%v\",\n\t\td.CanonicalName(), d.gpuModuleID, d.partitionsBySize)\n\tif d.gpuModuleID != 0 {\n\t\tattrs[\"gpuModuleID\"] = resourceapi.DeviceAttribute{\n\t\t\tIntValue: ptr.To(int64(d.gpuModuleID)),\n\t\t}\n\t}\n\n\tfor size, partitionID := range d.partitionsBySize {\n\t\tkey := resourceapi.QualifiedName(fmt.Sprintf(\"partition%d\", size))\n\t\tattrs[key] = resourceapi.DeviceAttribute{\n\t\t\tIntValue: ptr.To(int64(partitionID)),\n\t\t}\n\t}\n}\n\nfunc (d *GpuInfo) GetDevice() resourceapi.Device {\n\tdevice := resourceapi.Device{\n\t\tName:       d.CanonicalName(),\n\t\tAttributes: d.Attributes(),\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && rg -n \\\"gpuModuleID|partition1|partition2|partition4|partition8|productName|architecture|brand|addressingMode|cudaComputeCapability|cudaDriverVersion|driverVersion|type|uuid|parentUUID|profile\\\" cmd/gpu-kubelet-plugin/deviceinfo.go cmd/gpu-kubelet-plugin/mig.go cmd/gpu-kubelet-plugin/partitions.go | sed -n '1,220p' && printf '\\\\n---relevant chunk---\\\\n' && sed -n '160,260p' cmd/gpu-kubelet-plugin/deviceinfo.go && printf '\\\\n---fm chunk---\\\\n' && sed -n '213,245p' cmd/gpu-kubelet-plugin/deviceinfo.go\",\"yield_time_ms\":1000,\"max_output_tokens\":16000}"
+      }
+    },
+    {
+      "step_id": 25,
+      "timestamp": "2026-08-23T01:35:59.597Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_OphIn17ZFfMLh0zGQD12bElC",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '137,190p' cmd/gpu-kubelet-plugin/mig.go && printf '\\n---\\n' && sed -n '1,220p' cmd/gpu-kubelet-plugin/nvlib.go | sed -n '520,760p' && printf '\\n---selectors docs---\\n' && rg -n \"deviceClass|CEL|selector|select.*attribute|matchAttribute|resourceslice-attributes|gpu.nvidia.com\" site/content/docs api pkg deployments | sed -n '1,240p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 18000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_OphIn17ZFfMLh0zGQD12bElC",
+            "content": "Chunk ID: d55823\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 8704\nOutput:\nWarning: truncated output (original token count: 8704)\nTotal output lines: 298\n\n// CommonAttributesMig returns device attributes for MIG devices that are\n// in common among the 'static MIG' and 'dynamic MIG' cases.\nfunc CommonAttributesMig(parent *GpuInfo, profileName string) map[resourceapi.QualifiedName]resourceapi.DeviceAttribute {\n\tattrs := map[resourceapi.QualifiedName]resourceapi.DeviceAttribute{\n\t\t\"type\": {\n\t\t\tStringValue: ptr.To(\"mig\"),\n\t\t},\n\t\t\"parentUUID\": {\n\t\t\tStringValue: &parent.UUID,\n\t\t},\n\t\t\"profile\": {\n\t\t\tStringValue: ptr.To(profileName),\n\t\t},\n\t\t\"productName\": {\n\t\t\tStringValue: &parent.productName,\n\t\t},\n\t\t\"brand\": {\n\t\t\tStringValue: &parent.brand,\n\t\t},\n\t\t\"architecture\": {\n\t\t\tStringValue: &parent.architecture,\n\t\t},\n\t\t\"cudaComputeCapability\": {\n\t\t\tVersionValue: ptr.To(semver.MustParse(parent.cudaComputeCapability).String()),\n\t\t},\n\t\t\"driverVersion\": {\n\t\t\tVersionValue: ptr.To(semver.MustParse(parent.driverVersion).String()),\n\t\t},\n\t\t\"cudaDriverVersion\": {\n\t\t\tVersionValue: ptr.To(semver.MustParse(parent.cudaDriverVersion).String()),\n\t\t},\n\t}\n\n\tif parent.addressingMode != nil {\n\t\tattrs[\"addressingMode\"] = resourceapi.DeviceAttribute{\n\t\t\tStringValue: parent.addressingMode,\n\t\t}\n\t}\n\n\taddDeviceAttribute(attrs, parent.pciBusIDAttr)\n\taddDeviceAttribute(attrs, parent.pcieRootAttr)\n\taddDeviceAttribute(attrs, parent.numaNodeAttr)\n\n\treturn attrs\n}\n\n// NewMigSpecTupleFromCanonicalName() attempts to parse a canonical MIG device\n// name into a MigSpecTuple struct.\nfunc NewMigSpecTupleFromCanonicalName(n DeviceName) (*MigSpecTuple, error) {\n\tmatches := canonicalMigNameRegex.FindStringSubmatch(string(n))\n\tif matches == nil {\n\t\treturn nil, fmt.Errorf(\"failed to match MIG device name regex: '%s'\", n)\n\t}\n\n\n---\n\n---selectors docs---\npkg/featuregates/featuregates.go:79:\t// management for full-GPU (gpu.nvidia.com) devices and Passthrough VFIO\npkg/featuregates/featuregates.go:83:\t// matchAttribute on gpu.nvidia.com/partitionN. Requires Fabric Manager\npkg/metrics/dra_requests_test.go:27:\tInitializeDRARequestMetrics(\"gpu.nvidia.com\")\npkg/metrics/dra_requests_test.go:39:\t\t`nvidia_dra_requests_total{driver=\"gpu.nvidia.com\",operation=\"prepare\"} 0`,\npkg/metrics/dra_requests_test.go:40:\t\t`nvidia_dra_requests_total{driver=\"gpu.nvidia.com\",operation=\"unprepare\"} 0`,\npkg/metrics/dra_requests_test.go:41:\t\t`nvidia_dra_request_duration_seconds_count{driver=\"gpu.nvidia.com\",operation=\"prepare\"} 0`,\npkg/metrics/dra_requests_test.go:42:\t\t`nvidia_dra_requests_inflight{driver=\"gpu.nvidia.com\",operation=\"prepare\"} 0`,\npkg/nvidia.com/listers/resource/v1beta1/computedomainclique.go:33:\tList(selector labels.Selector) (ret []*v1beta1.ComputeDomainClique, err error)\npkg/nvidia.com/listers/resource/v1beta1/computedomainclique.go:50:func (s *computeDomainCliqueLister) List(selector labels.Selector) (ret []*v1beta1.ComputeDomainClique, err error) {\npkg/nvidia.com/listers/resource/v1beta1/computedomainclique.go:51:\terr = cache.ListAll(s.indexer, selector, func(m interface{}) {\npkg/nvidia.com/listers/resource/v1beta1/computedomainclique.go:67:\tList(selector labels.Selector) (ret []*v1beta1.ComputeDomainClique, err error)\npkg/nvidia.com/listers/resource/v1beta1/computedomainclique.go:82:func (s computeDomainCliqueNamespaceLister) List(selector labels.Selector) (ret []*v1beta1.ComputeDomainClique, err error) {\npkg/nvidia.com/listers/resource/v1beta1/computedomainclique.go:83:\terr = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {\npkg/nvidia.com/listers/resource/v1beta1/computedomain.go:33:\tList(selector labels.Selector) (ret []*v1beta1.ComputeDomain, err error)\npkg/nvidia.com/listers/resource/v1beta1/computedomain.go:50:func (s *computeDomainLister) List(selector labels.Selector) (ret []*v1beta1.ComputeDomain, err error) {\npkg/nvidia.com/listers/resource/v1beta1/computedomain.go:51:\terr = cache.ListAll(s.indexer, selector, func(m interface{}) {\npkg/nvidia.com/listers/resource/v1beta1/computedomain.go:67:\tList(selector labels.Selector) (ret []*v1beta1.ComputeDomain, err error)\npkg/nvidia.com/listers/resource/v1beta1/computedomain.go:82:func (s computeDomainNamespaceLister) List(selector labels.Selector) (ret []*v1beta1.ComputeDomain, err error) {\npkg/nvidia.com/listers/resource/v1beta1/computedomain.go:83:\terr = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {\npkg/nvidia.com/clientset/versioned/typed/resource/v1beta1/computedomainclique.go:79:// List takes label and field selectors, and returns the list of ComputeDomainCliques that match those selectors.\npkg/nvidia.com/clientset/versioned/typed/resource/v1beta1/fake/fake_computedomainclique.go:53:// List takes label and field selectors, and returns the list of ComputeDomainCliques that match those selectors.\npkg/nvidia.com/clientset/versioned/typed/resource/v1beta1/fake/fake_computedomain.go:53:// List takes label and field selectors, and returns the list of ComputeDomains that match those selectors.\npkg/nvidia.com/clientset/versioned/typed/resource/v1beta1/computedomain.go:80:// List takes label and field selectors, and\u20266204 tokens truncated\u2026ternal/typesinternal/errorcode.go:729:\t// MissingFieldOrMethod occurs when a selector references a field or method\ndeployments/devel/vendor/golang.org/x/tools/internal/typesinternal/errorcode.go:980:\t// that is not a selector expression.\ndeployments/devel/vendor/golang.org/x/tools/internal/typesinternal/errorcode.go:990:\t// selector, rather than a field selector, or when the field is embedded via\ndeployments/helm/dra-driver-nvidia-gpu/templates/networkpolicy-controller.yaml:12:      {{- include \"dra-driver-nvidia-gpu.selectorLabels\" (dict \"context\" . \"componentName\" \"controller\") | nindent 6 }}\ndeployments/helm/dra-driver-nvidia-gpu/templates/networkpolicy-controller.yaml:19:  # Therefore, we cannot filter egress traffic by destination using native network policies and pod selectors.\ndeployments/devel/vendor/golang.org/x/tools/internal/imports/fix.go:150:// collectReferences builds a map of selector expressions, from\ndeployments/devel/vendor/golang.org/x/tools/internal/imports/source.go:18:\t// left hand side of a selector expression, the second key is the right hand\ndeployments/helm/dra-driver-nvidia-gpu/templates/kubeletplugin.yaml:28:  selector:\ndeployments/helm/dra-driver-nvidia-gpu/templates/kubeletplugin.yaml:30:      {{- include \"dra-driver-nvidia-gpu.selectorLabels\" (dict \"context\" . \"componentName\" \"kubelet-plugin\") | nindent 6 }}\ndeployments/helm/dra-driver-nvidia-gpu/templates/kubeletplugin.yaml:43:        {{- include \"dra-driver-nvidia-gpu.selectorLabels\" (dict \"context\" . \"componentName\" \"kubelet-plugin\") | nindent 8 }}\nsite/content/docs/guides/gpu-allocation/mig.md:23:the `gpu.nvidia.com/type` attribute value `mig`. Beyond the parent-GPU\nsite/content/docs/guides/gpu-allocation/mig.md:28:For the full list of MIG attributes and capacity you can match with CEL\nsite/content/docs/guides/gpu-allocation/mig.md:29:selectors, refer to\nsite/content/docs/guides/gpu-allocation/mig.md:30:[ResourceSlice device attributes](../../reference/resourceslice-attributes.md#mig-slice-type-mig).\nsite/content/docs/guides/gpu-allocation/mig.md:37:how to write CEL selectors, refer to\nsite/content/docs/guides/gpu-allocation/mig.md:143:`mig.nvidia.com` DeviceClass with no selectors.\nsite/content/docs/guides/gpu-allocation/mig.md:159:             deviceClassName: mig.nvidia.com\nsite/content/docs/guides/gpu-allocation/mig.md:216:Use a CEL selector to request a specific profile. Profile strings are advertised\nsite/content/docs/guides/gpu-allocation/mig.md:217:by the driver and vary by GPU model. For CEL selector syntax, refer to\nsite/content/docs/guides/gpu-allocation/mig.md:232:          deviceClassName: mig.nvidia.com\nsite/content/docs/guides/gpu-allocation/mig.md:233:          selectors:\nsite/content/docs/guides/gpu-allocation/mig.md:235:              expression: \"device.attributes['gpu.nvidia.com'].profile == '1g.5gb'\"\nsite/content/docs/guides/gpu-allocation/mig.md:246:`matchAttribute: \"gpu.nvidia.com/parentUUID\"`:\nsite/content/docs/guides/gpu-allocation/mig.md:260:          deviceClassName: mig.nvidia.com\nsite/content/docs/guides/gpu-allocation/mig.md:261:          selectors:\nsite/content/docs/guides/gpu-allocation/mig.md:263:              expression: \"device.attributes['gpu.nvidia.com'].profile == '1g.5gb'\"\nsite/content/docs/guides/gpu-allocation/mig.md:266:          deviceClassName: mig.nvidia.com\nsite/content/docs/guides/gpu-allocation/mig.md:267:          selectors:\nsite/content/docs/guides/gpu-allocation/mig.md:269:              expression: \"device.attributes['gpu.nvidia.com'].profile == '2g.10gb'\"\nsite/content/docs/guides/gpu-allocation/mig.md:272:        matchAttribute: \"gpu.nvidia.com/parentUUID\"\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:11378:\t\t{\"ECANCELED\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:11630:\t\t{\"ETHERTYPE_EXCELAN\", Const, 1},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:11957:\t\t{\"F_CANCEL\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:12326:\t\t{\"IFT_CELLULAR\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:14797:\t\t{\"SYS_ACCEPT_NOCANCEL\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:14807:\t\t{\"SYS_AIO_CANCEL\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:14814:\t\t{\"SYS_AIO_SUSPEND_NOCANCEL\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:14872:\t\t{\"SYS_CLOSE_NOCANCEL\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:14875:\t\t{\"SYS_CONNECT_NOCANCEL\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:14935:\t\t{\"SYS_FCNTL_NOCANCEL\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:14976:\t\t{\"SYS_FSYNC_NOCANCEL\", Const, 0},\ndeployments/devel/vendor/golang.org/x/tools/internal/stdlib/manifest.go:15061:\t\t{\"SYS_IO_CANCEL\", Const, 0},\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '137,190p' cmd/gpu-kubelet-plugin/mig.go && printf '\\\\n---\\\\n' && sed -n '1,220p' cmd/gpu-kubelet-plugin/nvlib.go | sed -n '520,760p' && printf '\\\\n---selectors docs---\\\\n' && rg -n \\\"deviceClass|CEL|selector|select.*attribute|matchAttribute|resourceslice-attributes|gpu.nvidia.com\\\" site/content/docs api pkg deployments | sed -n '1,240p'\",\"yield_time_ms\":1000,\"max_output_tokens\":18000}"
+      }
+    },
+    {
+      "step_id": 26,
+      "timestamp": "2026-08-23T01:36:02.313Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_o0iFv8QcaFZSM8vZlhq2TBjQ",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '60,120p' pkg/featuregates/featuregates.go && printf '\\n---\\n' && sed -n '1,220p' site/content/docs/guides/gpu-allocation/mig.md && printf '\\n---\\n' && rg -n \"gpu.nvidia.com/.*partition|gpu.nvidia.com/type|gpu.nvidia.com/parentUUID|matchAttribute\" site/content/docs deployments | sed -n '1,220p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 16000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_o0iFv8QcaFZSM8vZlhq2TBjQ",
+            "content": "Chunk ID: b58c01\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 3390\nOutput:\nWarning: truncated output (original token count: 3390)\nTotal output lines: 301\n\n\t// NVMLDeviceHealthCheck allows Device Health Checking using NVML.\n\tNVMLDeviceHealthCheck featuregate.Feature = \"NVMLDeviceHealthCheck\"\n\n\t// Enable dynamic MIG device management.\n\tDynamicMIG featuregate.Feature = \"DynamicMIG\"\n\n\t// ComputeDomainCliques enables using ComputeDomainClique CRD objects instead of\n\t// storing daemon info directly in ComputeDomainStatus.Nodes.\n\tComputeDomainCliques featuregate.Feature = \"ComputeDomainCliques\"\n\n\t// CrashOnNVLinkFabricErrors causes the kubelet plugin to crash instead of\n\t// falling back to non-fabric mode when NVLink fabric errors are detected.\n\tCrashOnNVLinkFabricErrors featuregate.Feature = \"CrashOnNVLinkFabricErrors\"\n\n\t// DeviceMetadata allows the kubelet plugin to generate device metadata files\n\t// in the workloads for prepared devices.\n\tDeviceMetadata featuregate.Feature = \"DeviceMetadata\"\n\n\t// FabricManagerPartitioning enables Fabric Manager (NVSwitch) partition\n\t// management for full-GPU (gpu.nvidia.com) devices and Passthrough VFIO\n\t// devices. When enabled, Prepare activates the FM partition whose member\n\t// set exactly matches the claim's allocated physical GPUs; a non-matching\n\t// set fails Prepare. ResourceClaims should constrain allocation with\n\t// matchAttribute on gpu.nvidia.com/partitionN. Requires Fabric Manager\n\t// running with FABRIC_MODE=1. Independent of PassthroughSupport: with both\n\t// gates on, full-GPU and VFIO claims are partitioned; with only this gate\n\t// on, only full-GPU claims are.\n\tFabricManagerPartitioning featuregate.Feature = \"FabricManagerPartitioning\"\n\n\t// HostManagedIMEXDaemon gates whether the imex deployment mode\n\t// may be set to \"hostManaged\" (see pkg/imex). It does not directly change\n\t// driver behavior, it only unlocks the mode for clusters where\n\t// the cluster admin owns the host nvidia-imex daemon lifecycle.\n\tHostManagedIMEXDaemon featuregate.Feature = \"HostManagedIMEXDaemon\"\n\n\t// DRAListTypeAttributes allows the GPU kubelet plugin to publish list-valued\n\t// DRA device attributes. The cluster must have the Kubernetes feature gate\n\t// of the same name enabled before enabling this in the driver.\n\tDRAListTypeAttributes featuregate.Feature = \"DRAListTypeAttributes\"\n\n\t// ConsumableShares enables publishing consumable capacity and multi-allocation\n\t// (AllowMultipleAllocations) support for devices in ResourceSlices, allowing\n\t// multiple ResourceClaims to share the same GPU or MIG device when configured\n\t// via --consumable-shares. Note: MPS sharing is not supported when consumable\n\t// shares is enabled.\n\tConsumableShares featuregate.Feature = \"ConsumableShares\"\n)\n\n// Feature gate Version fields use driver SemVer major.minor.\n// Former calendar-based release lines map to SemVer minors for reference when\n// adding new VersionedSpecs or backport notes:\n//   ~25.3 -> 0.1, ~25.8 -> 0.2, ~25.12 -> 0.3, ~26.4 -> 0.4\n//\n\n// defaultFeatureGates contains the default settings for all project-specific feature gates.\n// These will be registered with the standard Kubernetes feature gate system.\nvar defaultFeatureGates = map[featuregate.Feature]featuregate.VersionedSpecs{\n\tTimeSlicingSettings: {\n\t\t{\n\t\t\tDefault:    false,\n\t\t\tPreRelease: featuregate.Alpha,\n\n---\n---\ntitle: MIG (Multi-Instance GPU)\nlinkTitle: MIG\nweight: 45\naliases:\n  - /docs/guides/mig/\n  - /docs/guides/dynamic-mig/\n  - /docs/guides/gpu-allocation/dynamic-mig/\ndescription: Allocate MIG slices to containers using static or dynamic MIG.\n---\n\nMIG lets you partition a single NVIDIA GPU into multiple isolated GPU instances,\neach with a fixed allocation of compute resources, memory, and memory bandwidth.\nUnlike time-slicing, MIG instances have hardware-level isolation. Each\ninstance's memory and compute are fully separate.\n\nUse MIG when you need predictable, isolated GPU resources for multiple concurrent\nworkloads on the same physical GPU. For how MIG compares to time-slicing and the\nother sharing modes, refer to\n[Choosing a resource type](../../concepts/gpu-allocation.md#choosing-a-resource-type).\n\nEach MIG instance is exposed under the `mig.nvidia.com` DeviceClass and carries\nthe `gpu.nvidia.com/type` attribute value `mig`. Beyond the parent-GPU\nattributes shared with full GPUs, MIG devices add a `profile` (for example\n`1g.5gb`) and a `parentUUID`, and advertise per-slice capacity such as `memory`\nand `multiprocessors`.\n\nFor the full list of MIG attributes and capacity you can match with CEL\nselectors, refer to\n[ResourceSlice device attributes](../../reference/resourceslice-attributes.md#mig-slice-type-mig).\n\nThis guide covers static and dynamic MIG setup and workload examples. For how\nstatic and dynamic MIG work in the driver, refer to\n[Static and dynamic MIG](../../concepts/gpu-allocation.md#static-and-dynamic-mig)\non the GPU allocation concept page. For how to inspect ResourceSlice\nobjects, refer to [View available GPU resources](view-resources.md). For\nhow to write CEL selectors, refer to\n[Request full GPUs](allocating-gpus.md#select-a-gpu-by-product-name).\n\n## Dynamic MIG \u2026890 tokens truncated\u2026ou want\n  to keep.\n- On dynamic MIG nodes, let the driver\n  create and destroy partitions through workload requests. Do not run\n  `mig-parted` or `nvidia-smi mig` while the GPU kubelet plugin is running, because\n  manual changes can conflict with the driver's partition state and cause pod\n  preparation or cleanup to fail.\n- On Ampere GPUs (for example, A100), enable MIG mode on the GPU before the\n  DRA Driver starts. Ampere cannot toggle MIG mode without a GPU reset. If MIG\n  mode is off, the driver falls back to full-GPU allocation and advertises no\n  MIG partitions. Hopper and later architectures enable MIG mode on demand.\n- Dynamic MIG is not supported on vGPU guests.\n\n## Examples\n\nThe following examples work with static or dynamic MIG.\n\n### Create the example namespace\n\nThe examples use the `mig-example` namespace. Create it first:\n\n```bash\nkubectl create namespace mig-example\n```\n\n### Request any MIG device\n\nTo request any available MIG device without constraining the profile, use the\n`mig.nvidia.com` DeviceClass with no selectors.\n\n1. Create the `ResourceClaimTemplate`:\n\n   ```yaml\n   apiVersion: resource.k8s.io/v1\n   kind: ResourceClaimTemplate\n   metadata:\n     namespace: mig-example\n     name: any-mig\n   spec:\n     spec:\n       devices:\n         requests:\n         - name: mig\n           exactly:\n             deviceClassName: mig.nvidia.com\n   ```\n\n   Save it as `any-mig.yaml`.\n\n2. Apply the manifest:\n\n   ```bash\n   kubectl apply -f any-mig.yaml\n   ```\n\n3. Create a pod that references the template:\n\n   ```yaml\n   apiVersion: v1\n   kind: Pod\n   metadata:\n     namespace: mig-example\n     name: mig-pod\n   spec:\n     containers:\n     - name: workload\n       image: ubuntu:22.04\n       command: [\"bash\", \"-c\"]\n       args: [\"nvidia-smi -L; sleep 9999\"]\n       resources:\n         claims:\n         - name: mig\n     resourceClaims:\n     - name: mig\n       resourceClaimTemplateName: any-mig\n     tolerations:\n     - key: \"nvidia.com/gpu\"\n       operator: \"Exists\"\n       effect: \"NoSchedule\"\n   ```\n\n   Save it as `mig-pod.yaml`. `ubuntu:22.04` doesn't include `nvidia-smi`;\n   the DRA Driver's CDI integration injects `nvidia-smi` and the host driver's\n   libraries into the container at start, so a plain OS image is sufficient\n   for verification.\n\n4. Apply the manifest:\n\n   ```bash\n   kubectl apply -f mig-pod.yaml\n   ```\n\n5. Verify that the pod received a MIG device:\n\n   ```bash\n   kubectl get pod -n mig-example mig-pod\n   kubectl exec -n mig-example mig-pod -c workload -- nvidia-smi -L\n   ```\n\n### Select a MIG profile\n\nUse a CEL selector to request a specific profile. Profile strings are advertised\nby the driver and vary by GPU model. For CEL selector syntax, refer to\n[Request full GPUs](allocating-gpus.md#select-a-gpu-by-product-name).\n\n```yaml\n\n---\nsite/content/docs/reference/resourceslice-attributes.md:208:        matchAttribute: resource.kubernetes.io/numaNode\nsite/content/docs/reference/resourceslice-attributes.md:290:  matchAttribute: gpu.nvidia.com/partition2\nsite/content/docs/reference/resourceslice-attributes.md:300:a `matchAttribute` constraint when you need portable co-placement instead of\nsite/content/docs/guides/gpu-allocation/mig.md:23:the `gpu.nvidia.com/type` attribute value `mig`. Beyond the parent-GPU\nsite/content/docs/guides/gpu-allocation/mig.md:246:`matchAttribute: \"gpu.nvidia.com/parentUUID\"`:\nsite/content/docs/guides/gpu-allocation/mig.md:272:        matchAttribute: \"gpu.nvidia.com/parentUUID\"\nsite/content/docs/guides/gpu-allocation/allocating-gpus.md:203:`matchAttribute: gpu.nvidia.com/partition2` when both GPUs must form one\nsite/content/docs/guides/gpu-allocation/kubevirt-vfio-gpu-passthrough.md:186:VFIO devices carry the `gpu.nvidia.com/type` attribute value `vfio`. For the VFIO\nsite/content/docs/guides/gpu-allocation/kubevirt-vfio-gpu-passthrough.md:265:    matchAttribute: gpu.nvidia.com/partition2\nsite/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md:60:Separate claims cannot use a `matchAttribute` constraint to ensure that their\nsite/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md:87:A request for `count: N` without a matching `gpu.nvidia.com/partitionN`\nsite/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md:166:Prefer `matchAttribute: gpu.nvidia.com/partitionN` over selecting a hardcoded\nsite/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md:193:        matchAttribute: gpu.nvidia.com/partition2\nsite/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md:196:`matchAttribute` requires the selected GPUs to have the same size-two\nsite/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md:252:    matchAttribute: gpu.nvidia.com/partition2\nsite/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md:297:| `GPU module set [...] does not match any FM partition` | Compare the allocated devices with their `partitionN` attributes. Use one claim with the correct `count: N` and `matchAttribute`. |\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '60,120p' pkg/featuregates/featuregates.go && printf '\\\\n---\\\\n' && sed -n '1,220p' site/content/docs/guides/gpu-allocation/mig.md && printf '\\\\n---\\\\n' && rg -n \\\"gpu.nvidia.com/.*partition|gpu.nvidia.com/type|gpu.nvidia.com/parentUUID|matchAttribute\\\" site/content/docs deployments | sed -n '1,220p'\",\"yield_time_ms\":1000,\"max_output_tokens\":16000}"
+      }
+    },
+    {
+      "step_id": 27,
+      "timestamp": "2026-08-23T01:36:04.868Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_ORNX5Gux7Sknk7tiQILoLtUF",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '260,340p' site/content/docs/reference/resourceslice-attributes.md && printf '\\n---\\n' && sed -n '180,240p' site/content/docs/guides/gpu-allocation/allocating-gpus.md && printf '\\n---\\n' && rg -n \"attachFabricManagerPartitions|gpuModuleID|partitionsBySize|Fabric Manager\" cmd/gpu-kubelet-plugin | sed -n '1,220p'",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 12000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_ORNX5Gux7Sknk7tiQILoLtUF",
+            "content": "Chunk ID: bab702\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 2731\nOutput:\nWarning: truncated output (original token count: 2731)\nTotal output lines: 188\n\nlocality of their parent GPU and therefore use the parent's PCI bus ID. If the\nhost reports `-1`, the PCI device has no NUMA locality, or discovery is\notherwise unavailable, the GPU kubelet plugin omits\n`resource.kubernetes.io/numaNode`; it does not publish `-1`.\n\n## Fabric Manager partition attributes\n\nWhen you enable `FabricManagerPartitioning`, the GPU kubelet plugin publishes\nFabric Manager attributes on full-GPU and VFIO devices when Fabric Manager\nreports the corresponding data.\nMIG devices do not receive these attributes.\n\n| Attribute | Meaning |\n|---|---|\n| `gpuModuleID` | Physical GPU module identifier reported by NVML and used by Fabric Manager. |\n| `partitionN` | Fabric Manager partition ID for the N-GPU partition that contains this GPU; for example, `partition2` identifies a reported two-GPU partition. |\n\nThe GPU kubelet plugin emits each `partitionN` attribute only when Fabric\nManager reports a partition of that size containing the GPU.\nThe attribute name uses the exact spelling `gpuModuleID`, including the\nuppercase `ID`.\n\nTo request two full GPUs or VFIO GPUs from the same two-GPU Fabric Manager\npartition, set the request count to `2` and add this constraint to the same\nclaim:\n\n```yaml\nconstraints:\n- requests:\n  - gpus\n  matchAttribute: gpu.nvidia.com/partition2\n```\n\nYou can also use a CEL selector for a known node-local module identifier:\n\n```text\ndevice.attributes['gpu.nvidia.com'].gpuModuleID == 1\n```\n\nPartition IDs and module IDs describe the local Fabric Manager topology, so use\na `matchAttribute` constraint when you need portable co-placement instead of\nselecting a hardcoded partition ID.\nThe allocated physical-GPU set must exactly match the reported partition when\nthe driver prepares the claim.\nRefer to\n[Fabric Manager partitioning](../guides/gpu-allocation/fabric-manager-partitioning.md)\nfor prerequisites and complete full-GPU and VFIO examples.\n\n## Attribute naming: bare keys vs CEL domain\n\nThe same attribute has two naming forms. In the serialized `ResourceSlice`,\ndriver attributes appear as **bare keys** (`type`, `productName`, and so on)\nbecause their domain is implied by the driver name. In a **CEL selector**, you\naddress them through that domain, `device.attributes['gpu.nvidia.com'].type`. The\nstandardized PCI attributes are the exception: they are stored fully qualified as\n`resource.kubernetes.io/pciBusID`, `resource.kubernetes.io/pcieRoot`, and\n`resource.kubernetes.io/numaNode`.\n\nIn selectors, attributes are read with\n`device.attributes['gpu.nvidia.com'].<name>` and capacity with\n`device.capacity['gpu.nvidia.com'].<name>`. For example, to match a GPU with more\nthan 40 GiB of memory:\n\n```\ndevice.capacity['gpu.nvidia.com'].memory.isGreaterThan(quantity(\"40Gi\"))\n```\n\nFor full selector examples, see\n[Request full GPUs](../guides/gpu-allocation/allocating-gpus.md#select-a-gpu-by-product-name).\nCEL-based device selection is a standard Kubernetes DRA feature; see the\n[Kubernetes DRA documentation](https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/)\nfor the complete selector syntax.\n\n---\n5. Verify that the pod received a GPU. Once the pod is `Running` (`kubectl get pods -n gpu-example`), list the GPUs visible to the container:\n\n   ```bash\n   kubectl exec -n gpu-example gpu-pod -- nvidia-smi -L\n   ```\n\n   Example output:\n\n   ```\n   GPU 0: NVIDIA A100-SXM4-40GB (UUID: GPU-00000000-0000-0000-0000-000000000000)\n   ```\n\n   The UUID output matches the `uuid` attribute of the corresponding device in the\n   node's `ResourceSlice`. Refer to [View available GPU resources](view-resources.md).\n\n## Request multiple GPUs in one pod\n\nThis example requires at least two allocatable GPUs in your cluster.\n\n{{% alert color=\"warning\" title=\"Fabric Manager partitions require one claim\" %}}\nThe example below creates two independent single-GPU claims. It does not request\none two-GPU Fabric Manager partition. On a node with\n`FabricManagerPartitioning` enabled, use one claim with `count: 2` and\n`matchAttribute: gpu.nvidia.com/partition2` when both GPUs must form one\nFabric Manager partition. Each independent single-GPU claim must instead match a\nreported single-GPU partition. See\n[Fabric Manager partitioning](fabric-manager-partitioning.md#request-a-full-gpu-partition).\n{{% /alert %}}\n\nTo give each container its own GPU, create separate device requests. This\nexample reuses the `single-gpu` `ResourceClaimTemplate` from [Request any GPU](#request-any-gpu).\n\n1. Create the pod manifest:\n\n   ```yaml\n   apiVersion: v1\n   kind: Pod\n   metadata:\n     namespace: gpu-example\n     name: multi-gpu-pod\n   spec:\n     containers:\n     - name: ctr0\n       image: ubuntu:22.04\n       command: [\"bash\", \"-c\"]\n       args: [\"nvidia-smi -L; sleep 9999\"]\n       resources:\n         claims:\n         - name: gpu0\n     - name: ctr1\n       image: ubuntu:22.04\n       command: [\"bash\", \"-c\"]\n       args: [\"nvidia-smi -L; sleep 9999\"]\n       resources:\n         claims:\n         - name: gpu1\n     resourceCla\u2026231 tokens truncated\u2026kubelet-plugin/device_state.go:102:\t\tklog.Infof(\"Mock NVML proc is in use; skipping Fabric Manager\")\ncmd/gpu-kubelet-plugin/device_state.go:111:\t\tklog.Infof(\"FabricManagerPartitioning enabled but no NVSwitch/NVLink5 fabric detected on this node; skipping Fabric Manager\")\ncmd/gpu-kubelet-plugin/device_state.go:121:\t\treturn nil, fmt.Errorf(\"FabricManagerPartitioning enabled but Fabric Manager could not be opened: %w\", err)\ncmd/gpu-kubelet-plugin/device_state.go:231:\t// Attach Fabric Manager partition mappings to every discovered GPU. The\ncmd/gpu-kubelet-plugin/device_state.go:232:\t// gpuModuleID was resolved from NVML during GPU discovery; the FM Manager\ncmd/gpu-kubelet-plugin/device_state.go:237:\t\t\tif err := state.attachFabricManagerPartitions(gpu); err != nil {\ncmd/gpu-kubelet-plugin/device_state.go:562:\t\t\t// back on the nvidia driver) with fresh Fabric Manager info.\ncmd/gpu-kubelet-plugin/device_state.go:1216:// nvidia driver. It intentionally does NOT deactivate the Fabric Manager\ncmd/gpu-kubelet-plugin/device_state.go:1219:// gpuModuleID resolved from NVML now that the GPU is visible again.\ncmd/gpu-kubelet-plugin/device_state.go:1266:\t\t// GpuInfo already carries the gpuModuleID (resolved from NVML in\ncmd/gpu-kubelet-plugin/device_state.go:1268:\t\tif err := s.attachFabricManagerPartitions(gpu.Gpu); err != nil {\ncmd/gpu-kubelet-plugin/device_state.go:1407:// set of physical GPUs, using each GPU's gpuModuleID (resolved from NVML at\ncmd/gpu-kubelet-plugin/device_state.go:1412:\t\tif gpu == nil || gpu.gpuModuleID == 0 {\ncmd/gpu-kubelet-plugin/device_state.go:1417:\t\t\treturn 0, fmt.Errorf(\"fabric manager: no gpuModuleID for GPU at PCI %q\", pci)\ncmd/gpu-kubelet-plugin/device_state.go:1419:\t\tmoduleIDs = append(moduleIDs, gpu.gpuModuleID)\ncmd/gpu-kubelet-plugin/device_state.go:1469:\t\t\t\tklog.V(4).Infof(\"Fabric Manager: GPU %s still in use by other claims, skipping partition deactivation\", gpu.UUID)\ncmd/gpu-kubelet-plugin/device_state.go:1481:\tklog.V(2).Infof(\"Fabric Manager: deactivating partition %d for %d-GPU claim %s/%s\", partitionID, len(gpus), pc.Namespace, pc.Name)\ncmd/gpu-kubelet-plugin/device_state.go:1488:// attachFabricManagerPartitions populates the given GPU's size->partitionId\ncmd/gpu-kubelet-plugin/device_state.go:1489:// mapping from its gpuModuleID using the FM Manager. It is a no-op when Fabric\ncmd/gpu-kubelet-plugin/device_state.go:1493:func (s *DeviceState) attachFabricManagerPartitions(gpu *GpuInfo) error {\ncmd/gpu-kubelet-plugin/device_state.go:1497:\tif gpu.gpuModuleID == 0 {\ncmd/gpu-kubelet-plugin/device_state.go:1498:\t\tklog.Warningf(\"GPU %s has no gpuModuleID; skipping Fabric Manager partition attributes. \"+\ncmd/gpu-kubelet-plugin/device_state.go:1503:\tbySize, err := s.fmManager.GetPartitionsBySizeByModuleID(gpu.gpuModuleID)\ncmd/gpu-kubelet-plugin/device_state.go:1505:\t\treturn fmt.Errorf(\"getting partition-by-size mapping for moduleID %d: %w\", gpu.gpuModuleID, err)\ncmd/gpu-kubelet-plugin/device_state.go:1507:\tgpu.partitionsBySize = bySize\ncmd/gpu-kubelet-plugin/device_state.go:1534:\tklog.V(2).Infof(\"Fabric Manager: activating partition %d for %d-GPU claim %s\", partitionID, len(gpus), ResourceClaimToString(claim))\ncmd/gpu-kubelet-plugin/deviceinfo.go:59:\t// Fabric Manager attributes. Populated only\ncmd/gpu-kubelet-plugin/deviceinfo.go:62:\tgpuModuleID int\ncmd/gpu-kubelet-plugin/deviceinfo.go:64:\t// partitionsBySize maps an FM partition size (number of GPUs in the\ncmd/gpu-kubelet-plugin/deviceinfo.go:68:\tpartitionsBySize map[int]int\ncmd/gpu-kubelet-plugin/deviceinfo.go:213:// addFabricManagerAttributes publishes the Fabric Manager-derived attributes\ncmd/gpu-kubelet-plugin/deviceinfo.go:214:// (`gpuModuleID` and `partitionN`) for this physical GPU. The values are\ncmd/gpu-kubelet-plugin/deviceinfo.go:215:// resolved from NVML / FM at discovery time (see attachFabricManagerPartitions).\ncmd/gpu-kubelet-plugin/deviceinfo.go:221:\tif d.gpuModuleID == 0 && len(d.partitionsBySize) == 0 {\ncmd/gpu-kubelet-plugin/deviceinfo.go:222:\t\tklog.V(4).Infof(\"No Fabric Manager attributes for %s\", d.CanonicalName())\ncmd/gpu-kubelet-plugin/deviceinfo.go:226:\tklog.V(4).Infof(\"Adding Fabric Manager attributes for %s: gpuModuleID=%d partitionsBySize=%v\",\ncmd/gpu-kubelet-plugin/deviceinfo.go:227:\t\td.CanonicalName(), d.gpuModuleID, d.partitionsBySize)\ncmd/gpu-kubelet-plugin/deviceinfo.go:228:\tif d.gpuModuleID != 0 {\ncmd/gpu-kubelet-plugin/deviceinfo.go:229:\t\tattrs[\"gpuModuleID\"] = resourceapi.DeviceAttribute{\ncmd/gpu-kubelet-plugin/deviceinfo.go:230:\t\t\tIntValue: ptr.To(int64(d.gpuModuleID)),\ncmd/gpu-kubelet-plugin/deviceinfo.go:234:\tfor size, partitionID := range d.partitionsBySize {\ncmd/gpu-kubelet-plugin/deviceinfo.go:311:\t\t\tklog.V(4).Infof(\"No parent GPU for %s; skipping Fabric Manager attributes\", d.CanonicalName())\ncmd/gpu-kubelet-plugin/nvlib.go:642:\t\t\tgpuInfo.gpuModuleID = moduleID\ncmd/gpu-kubelet-plugin/nvlib.go:644:\t\t\tklog.V(4).Infof(\"GPU %s: could not resolve gpuModuleID from NVML: %v\", gpuInfo.CanonicalName(), ret)\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '260,340p' site/content/docs/reference/resourceslice-attributes.md && printf '\\\\n---\\\\n' && sed -n '180,240p' site/content/docs/guides/gpu-allocation/allocating-gpus.md && printf '\\\\n---\\\\n' && rg -n \\\"attachFabricManagerPartitions|gpuModuleID|partitionsBySize|Fabric Manager\\\" cmd/gpu-kubelet-plugin | sed -n '1,220p'\",\"yield_time_ms\":1000,\"max_output_tokens\":12000}"
+      }
+    },
+    {
+      "step_id": 28,
+      "timestamp": "2026-08-23T01:36:07.070Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_n82XKrFE54kg3qfcqQEVUFtu",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '620,680p' cmd/gpu-kubelet-plugin/nvlib.go && printf '\\n---\\n' && sed -n '1488,1512p' cmd/gpu-kubelet-plugin/device_state.go",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 8000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_n82XKrFE54kg3qfcqQEVUFtu",
+            "content": "Chunk ID: d98eab\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 846\nOutput:\n\tgpuInfo := &GpuInfo{\n\t\tUUID:                  uuid,\n\t\tminor:                 minor,\n\t\tmigCapable:            migCapable,\n\t\tmigEnabled:            migEnabled,\n\t\tmemoryBytes:           memoryBytes,\n\t\tproductName:           productName,\n\t\tbrand:                 brand,\n\t\tarchitecture:          architecture,\n\t\tcudaComputeCapability: cudaComputeCapability,\n\t\tdriverVersion:         driverVersion,\n\t\tcudaDriverVersion:     fmt.Sprintf(\"%v.%v\", cudaDriverVersion/1000, (cudaDriverVersion%1000)/10),\n\t\tpciBusID:              pciBusID,\n\t\tpciBusIDAttr:          pciBusIDAttr,\n\t\tpcieRootAttr:          pcieRootAttr,\n\t\tnumaNodeAttr:          numaNodeAttr,\n\t\tmigProfiles:           migProfiles,\n\t\taddressingMode:        addressingMode,\n\t}\n\n\tif featuregates.Enabled(featuregates.FabricManagerPartitioning) {\n\t\tif moduleID, ret := device.GetModuleId(); ret == nvml.SUCCESS {\n\t\t\tgpuInfo.gpuModuleID = moduleID\n\t\t} else {\n\t\t\tklog.V(4).Infof(\"GPU %s: could not resolve gpuModuleID from NVML: %v\", gpuInfo.CanonicalName(), ret)\n\t\t}\n\t}\n\n\treturn gpuInfo, nil\n}\n\nfunc (l deviceLib) enumerateGpuVfioDevices(perGPUAllocatable *PerGPUAllocatableDevices) error {\n\t// Discover PCI devices.\n\tgpuPciDevices, err := l.nvpci.GetGPUs()\n\tif err != nil {\n\t\treturn fmt.Errorf(\"error getting GPU PCI devices: %w\", err)\n\t}\n\n\t// For each discovered PCI device, look up the corresponding full-GPU-device\n\t// and construct a corresponding new `AllocatableDevice` object.\n\tfor idx, pci := range gpuPciDevices {\n\t\tklog.Infof(\"Adding VFIO device for discovered GPU PCI device: %s\", pci.Address)\n\n\t\tparent := perGPUAllocatable.GetGPUDeviceByPCIBusID(pci.Address)\n\t\tif parent != nil && !parent.Gpu.vfioEnabled {\n\t\t\tklog.Infof(\"Skipping VFIO device for discovered GPU PCI device: %s, vfio is not enabled\", pci.Address)\n\t\t\tcontinue\n\t\t}\n\n\t\tvfioDeviceInfo, err := l.getVfioDeviceInfo(idx, pci)\n\t\tif err != nil {\n\t\t\treturn fmt.Errorf(\"error getting GPU info from PCI device: %w\", err)\n\t\t}\n\n\t\tif parent != nil {\n\t\t\tvfioDeviceInfo.parent = parent.Gpu\n\t\t} else {\n\t\t\t// Its likely that the parent is nil because the GPU is prepared in passthrough mode.\n\t\t\tklog.Warningf(\"Skipping association with parent GPU device for VFIO device: %s\", pci.Address)\n\t\t}\n\n\n---\n// attachFabricManagerPartitions populates the given GPU's size->partitionId\n// mapping from its gpuModuleID using the FM Manager. It is a no-op when Fabric\n// Manager partitioning is disabled. It gracefully skips GPUs whose module ID\n// could not be resolved from NVML (e.g. a GPU that was already bound to\n// vfio-pci at discovery time).\nfunc (s *DeviceState) attachFabricManagerPartitions(gpu *GpuInfo) error {\n\tif !s.fabricManagerPartitioningEnabled() || gpu == nil {\n\t\treturn nil\n\t}\n\tif gpu.gpuModuleID == 0 {\n\t\tklog.Warningf(\"GPU %s has no gpuModuleID; skipping Fabric Manager partition attributes. \"+\n\t\t\t\"This happens when the GPU was bound to vfio-pci before discovery (e.g. an active passthrough claim across a plugin restart).\",\n\t\t\tgpu.CanonicalName())\n\t\treturn nil\n\t}\n\tbySize, err := s.fmManager.GetPartitionsBySizeByModuleID(gpu.gpuModuleID)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"getting partition-by-size mapping for moduleID %d: %w\", gpu.gpuModuleID, err)\n\t}\n\tgpu.partitionsBySize = bySize\n\treturn nil\n}\n\nfunc (s *DeviceState) fabricManagerPartitioningEnabled() bool {\n\treturn featuregates.Enabled(featuregates.FabricManagerPartitioning) && s.fmManager != nil\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"cd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu && sed -n '620,680p' cmd/gpu-kubelet-plugin/nvlib.go && printf '\\\\n---\\\\n' && sed -n '1488,1512p' cmd/gpu-kubelet-plugin/device_state.go\",\"yield_time_ms\":1000,\"max_output_tokens\":8000}"
+      }
+    },
+    {
+      "step_id": 29,
+      "timestamp": "2026-08-23T01:36:08.896Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_QOZWCy3It960JcH9c7GiCOGe",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Read skill and repo inputs",
+                "status": "completed"
+              },
+              {
+                "step": "Inspect existing attribute patterns",
+                "status": "completed"
+              },
+              {
+                "step": "Draft safe implementation sketch",
+                "status": "in_progress"
+              },
+              {
+                "step": "Produce review checklist",
+                "status": "pending"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_QOZWCy3It960JcH9c7GiCOGe",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Read skill and repo inputs\",\"status\":\"completed\"},{\"step\":\"Inspect existing attribute patterns\",\"status\":\"completed\"},{\"step\":\"Draft safe implementation sketch\",\"status\":\"in_progress\"},{\"step\":\"Produce review checklist\",\"status\":\"pending\"}]}"
+      }
+    },
+    {
+      "step_id": 30,
+      "timestamp": "2026-08-23T01:36:23.155Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "**Implementation Sketch**\n- Add a new published `ResourceSlice` device attribute on full GPUs, and inherit it onto MIG devices, because DeviceClasses select through `device.attributes['gpu.nvidia.com'].<name>` and MIG already mirrors parent topology attributes in `cmd/gpu-kubelet-plugin/deviceinfo.go:168` and `cmd/gpu-kubelet-plugin/mig.go:137`.\n- Prefer a stable, semantic string key like `nvlinkFabricGeneration` over H100-specific naming; H100 SXM then selects with a value such as `nvlink4`, while future parts can reuse the same contract without another API change.\n- Keep it additive and ungated if it is simple discovery metadata, omitted when unknown; this matches current safe attribute behavior such as `addressingMode` and avoids feature-gate/doc drift unless the source is experimental or depends on optional FM-only plumbing.\n- Source the value from the GPU discovery path in `cmd/gpu-kubelet-plugin/nvlib.go:620`, store it on `GpuInfo`, publish it in `GpuInfo.Attributes()` at `cmd/gpu-kubelet-plugin/deviceinfo.go:168`, and copy it in `CommonAttributesMig()` at `cmd/gpu-kubelet-plugin/mig.go:137`.\n- Do not publish it on VFIO unless the team explicitly wants selector parity there; today VFIO gets a narrower attribute set in `cmd/gpu-kubelet-plugin/deviceinfo.go:279`, so adding it only to GPU/MIG is the least risky first cut.\n\n**Recommended Contract**\n- Attribute name: `gpu.nvidia.com/nvlinkFabricGeneration` in selectors, bare key `nvlinkFabricGeneration` in serialized `ResourceSlice`.\n- Type: string.\n- Example selector for H100 SXM: `device.attributes['gpu.nvidia.com'].productName.matches('.*H100.*SXM.*') && device.attributes['gpu.nvidia.com'].nvlinkFabricGeneration == 'nvlink4'`.\n- Omission rule: if detection is unavailable, unsupported, or ambiguous, omit the attribute rather than publishing `\"unknown\"`; this keeps CEL semantics clean and follows existing optional-attribute patterns.\n- Scope rule: define whether the value means \u201cGPU\u2019s highest supported NVLink fabric generation\u201d or \u201cnode fabric generation currently detected\u201d; pick one and document it precisely. For scheduling, hardware capability is usually safer than runtime topology state.\n\n**Safe Code Touch Points**\n- `cmd/gpu-kubelet-plugin/deviceinfo.go:34`\n  - Add a field on `GpuInfo`, likely `nvlinkFabricGeneration *string`.\n  - Publish it in `Attributes()` only when non-nil.\n- `cmd/gpu-kubelet-plugin/mig.go:137`\n  - Mirror the parent\u2019s value into MIG attributes.\n- `cmd/gpu-kubelet-plugin/nvlib.go:620`\n  - Resolve the value during GPU discovery, near other immutable hardware metadata.\n  - Keep detection best-effort: log at low verbosity and continue if unavailable.\n- `cmd/gpu-kubelet-plugin/deviceinfo_test.go:79`\n  - Add focused tests for full GPU publication, MIG inheritance, and omission when unset.\n- `site/content/docs/reference/resourceslice-attributes.md:1`\n  - Add the new attribute to the full-GPU and MIG sections and to the naming/selector guidance.\n- `site/content/docs/guides/gpu-allocation/allocating-gpus.md:180` or a nearby selector example\n  - Add an example DeviceClass/claim selector for H100 SXM by fabric generation.\n\n**Detection Strategy**\n- Best option: use authoritative NVML/Fabric Manager data if there is already a direct API exposing NVLink generation/capability.\n- Fallback option: derive from known product/platform facts only if the mapping is explicit and reviewed; avoid heuristic substring detection on `productName` as the sole source of truth.\n- If only H100 SXM matters right now and there is no reliable API, still define the generic attribute but gate publication on a conservative detector that returns value only for positively identified hardware.\n- Avoid coupling the value to `FabricManagerPartitioning`; users may want to schedule by fabric generation even when partitioning is off.\n\n**Compatibility Notes**\n- This is a public contract change even though it is \u201cjust\u201d a `ResourceSlice` attribute; docs and examples are part of the API surface.\n- Additive publication is backward compatible for old clients and old claims.\n- New DeviceClasses that depend on the attribute naturally require new enough kubelet-plugin binaries on nodes; document that mixed-version clusters may have some nodes where the attribute is absent.\n- Because omitted attributes simply fail selector matches, rollout is safe as long as operators understand that scheduling will prefer upgraded nodes.\n\n**Review Checklist**\n- Confirm the attribute name is generic, future-proof, and consistent with existing camelCase keys in `site/content/docs/reference/resourceslice-attributes.md:290`.\n- Confirm the source of truth is discovery-time hardware metadata, not mutable runtime state unless that mutability is intended.\n- Confirm unknown/unavailable values are omitted, not encoded as sentinel strings or zeroes.\n- Confirm full GPU and MIG behavior are intentionally aligned, and VFIO inclusion/exclusion is an explicit decision.\n- Confirm `ResourceSlice` docs, selector examples, and any built-in DeviceClass examples are updated together.\n- Confirm tests cover GPU publish, MIG inheritance, and negative/omission behavior.\n- Confirm no generated files or CRDs need changes; this should stay in handwritten kubelet-plugin and docs only.\n- Confirm no feature gate is added unless there is a real rollout/dependency reason; if one is added, update `pkg/featuregates/featuregates.go:60` and the feature-gate docs together.\n- Confirm logging is low-noise and does not turn missing capability into node-fatal behavior.\n- Confirm the implementation does not assume all H100s are SXM or all SXM systems expose the same runtime signals.\n- Confirm upgrade guidance notes that selectors depending on the new attribute only match nodes running the updated publisher.\n\n**Suggested Minimal PR Shape**\n- 1 code commit for discovery + publication in `cmd/gpu-kubelet-plugin/deviceinfo.go:168`, `cmd/gpu-kubelet-plugin/mig.go:137`, and `cmd/gpu-kubelet-plugin/nvlib.go:620`.\n- 1 test update in `cmd/gpu-kubelet-plugin/deviceinfo_test.go:79`.\n- 1 docs update in `site/content/docs/reference/resourceslice-attributes.md:1` plus one workload-selector example.\n\nIf you want, I can turn this sketch into a concrete patch plan with proposed field names, test cases, and exact doc wording."
+    }
+  ],
+  "final_metrics": {
+    "total_prompt_tokens": 492995,
+    "total_completion_tokens": 4066,
+    "total_cached_tokens": 444928,
+    "total_steps": 30,
+    "extra": {
+      "reasoning_output_tokens": 0,
+      "total_tokens": 497061,
+      "last_token_usage": {
+        "input_tokens": 38075,
+        "cached_input_tokens": 37504,
+        "output_tokens": 1382,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 39457
+      }
+    }
+  }
+}

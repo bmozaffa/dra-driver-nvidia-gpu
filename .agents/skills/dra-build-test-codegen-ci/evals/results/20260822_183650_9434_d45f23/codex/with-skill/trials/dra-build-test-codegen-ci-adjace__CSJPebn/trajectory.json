@@ -1,0 +1,490 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "session_id": "01a02c43-7d1e-7fa1-9b27-99ade3245a7d",
+  "agent": {
+    "name": "codex",
+    "version": "0.142.5",
+    "model_name": "openai/openai/gpt-5.4",
+    "extra": {
+      "originator": "codex_exec",
+      "cwd": "/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/local-environment/workspace",
+      "git": {
+        "commit_hash": "f5d8e5e379881b2abb03be9e63c2df56148d243a",
+        "branch": "astra-evals",
+        "repository_url": "https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu"
+      }
+    }
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "timestamp": "2026-08-23T01:36:56.085Z",
+      "source": "system",
+      "message": "<permissions instructions>\nFilesystem sandboxing defines which files can be read or written. `sandbox_mode` is `danger-full-access`: No filesystem sandboxing - all commands are permitted. Network access is enabled.\nApproval policy is currently never. Do not provide the `sandbox_permissions` for any reason, commands will be rejected.\n</permissions instructions><skills_instructions>\n## Skills\nA skill is a set of instructions provided through a `SKILL.md` source. Below is the list of skills that can be used. Each entry includes a name, description, and source locator. `file` locators are on the host filesystem, `environment resource` locators are owned by an execution environment, `orchestrator resource` locators are opaque non-filesystem resources, and `custom resource` locators use their provider's access mechanism.\n### Available skills\n- imagegen: Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/agent/codex-home/skills/.system/imagegen/SKILL.md)\n- openai-docs: Use when the user asks how to build with OpenAI products or APIs, asks about Codex itself or choosing Codex surfaces, needs up-to-date official documentation with citations, help choosing the latest model for a use case, or model upgrade and prompt-upgrade guidance; use OpenAI docs MCP tools for non-Codex docs questions, use the Codex manual helper first for broad Codex self-knowledge, and restrict fallback browsing to official OpenAI domains. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/agent/codex-home/skills/.system/openai-docs/SKILL.md)\n- plugin-creator: Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, valid manifest defaults, and personal-marketplace entries by default. Use when Codex needs to create a new personal plugin, add optional plugin structure, generate or update marketplace entries for plugin ordering and availability metadata, or update an existing local plugin during development with the CLI-driven cachebuster and reinstall flow. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/agent/codex-home/skills/.system/plugin-creator/SKILL.md)\n- skill-creator: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/agent/codex-home/skills/.system/skill-creator/SKILL.md)\n- skill-installer: Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos). (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/agent/codex-home/skills/.system/skill-installer/SKILL.md)\n- dra-api-crd-feature-gate-change: Plan, implement, review, or validate NVIDIA GPU DRA driver API, CRD, opaque configuration, ResourceSlice attribute, Helm value, CLI flag, checkpoint schema, feature-gate, and compatibility changes. Use when work touches api/nvidia.com, generated CRDs or clients, validation, DeviceClasses, public configuration, feature-gate stages or dependencies, or upgrade and downgrade behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-api-crd-feature-gate-change/SKILL.md)\n- dra-build-test-codegen-ci: Select, run, and interpret the NVIDIA GPU DRA driver's local build, formatting, lint, code generation, unit, Helm, BATS, Ginkgo e2e, mock-NVML, and CI checks. Use when preparing a PR, validating a patch, reproducing CI, debugging a failed check, or mapping changed files to the minimum credible test set. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/SKILL.md)\n- dra-compute-domain-imex-workflows: Explain, design, review, or troubleshoot NVIDIA DRA ComputeDomain workflows across MNNVL hardware, IMEX daemon lifecycle, driver-managed or host-managed mode, ComputeDomain and ComputeDomainClique resources, per-domain DaemonSets, channel claims, readiness, kubelet prepare, and workload device or mount injection. Use when asked about GB200 or GB300 fabrics, clique state, IMEX channels, or multi-node workload failures. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-compute-domain-imex-workflows/SKILL.md)\n- dra-gpu-allocation-workflows: Explain, design, review, or troubleshoot NVIDIA GPU DRA allocation across full GPUs, MIG, dynamic MIG, VFIO, time-slicing, MPS, DeviceClasses, ResourceClaims, ResourceSlices, scheduler binding, kubelet prepare/unprepare, checkpoints, and CDI injection. Use when asked about GPU selectors, attributes, capacity, sharing, passthrough, scheduling, allocation failures, or container-visible devices. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-gpu-allocation-workflows/SKILL.md)\n- dra-helm-demo-sample-workloads: Plan, render, install, upgrade, or validate NVIDIA GPU DRA driver Helm deployments, local kind or nvkind demos, and GPU or ComputeDomain sample workloads. Use when asked for chart values, prerequisites, demo clusters, quickstarts, sample manifests, DeviceClasses, ResourceSlices, or basic allocation validation, while separating standalone community flows from GPU Operator-managed deployment. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md)\n- dra-operations-troubleshooting-observability: Triage NVIDIA GPU DRA driver installation, scheduling, allocation, prepare/unprepare, CDI, checkpoint, GPU, MIG, VFIO, ComputeDomain, IMEX, upgrade, health, log, event, and Prometheus metric failures. Use when given failed pods or claims, missing devices, broken ResourceSlices, controller or daemon symptoms, upgrade regressions, or a support escalation that needs a bounded evidence plan. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-operations-troubleshooting-observability/SKILL.md)\n- dra-project-orientation: Orient contributors and reviewers to the NVIDIA GPU DRA driver repository, its runtime components, documentation, ownership, and source layout. Use when asked what the project does, how GPU and ComputeDomain paths fit together, where code or docs live, who owns review, or how to onboard without inventing repository paths. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-project-orientation/SKILL.md)\n- dra-proposal-and-design-review: Draft or review maintainer-ready proposals, ADRs, design notes, feature-gate plans, and implementation plans for the NVIDIA GPU DRA driver. Use when a change affects user-facing APIs, CRDs, Helm values, ResourceSlice attributes, checkpoint schemas, feature gates, dependencies, upstream coordination, or multi-node ComputeDomain and IMEX behavior. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-proposal-and-design-review/SKILL.md)\n- dra-release-support-docs-readiness: Assess and prepare NVIDIA GPU DRA driver release, support, documentation, known-issue, compatibility, and handoff readiness. Use when asked for a release checklist, changelog or release-note impact, version matrix, docs updates, support caveats, image/chart promotion review, upgrade guidance, or stale-source refresh across the repository and GPU Operator documentation. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-release-support-docs-readiness/SKILL.md)\n- dra-build-test-codegen-ci: Select, run, and interpret the NVIDIA GPU DRA driver's local build, formatting, lint, code generation, unit, Helm, BATS, Ginkgo e2e, mock-NVML, and CI checks. Use when preparing a PR, validating a patch, reproducing CI, debugging a failed check, or mapping changed files to the minimum credible test set. (file: /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/local-environment/home/.agents/skills/dra-build-test-codegen-ci/SKILL.md)\n### How to use skills\n- Discovery: The list above is the skills available in this session (name + description + source locator). `file` entries live on the host filesystem, `environment resource` entries are owned by their execution environment, `orchestrator resource` entries must be accessed through `skills.list` and `skills.read`, and `custom resource` entries use their provider's access mechanism.\n- Trigger rules: If the user names a skill (with `$SkillName` or plain text) OR the task clearly matches a skill's description shown above, you must use that skill for that turn. Multiple mentions mean use them all. Do not carry skills across turns unless re-mentioned.\n- Missing/blocked: If a named skill isn't in the list or its source can't be read, say so briefly and continue with the best fallback.\n- How to use a skill (progressive disclosure):\n  1) After deciding to use a skill, the main agent must read its `SKILL.md` completely before taking task actions. For a `file` entry, open the listed path. For an `environment resource`, use the filesystem of the owning environment. For an `orchestrator resource`, call `skills.list` with `{\"authority\":{\"kind\":\"orchestrator\"}}`, select the matching package, and pass its `main_resource` to `skills.read`. If a read is truncated or paginated, continue until EOF.\n  2) When `SKILL.md` references another resource, use the same access mechanism. Resolve relative paths against a filesystem-backed skill directory. For orchestrator skills, pass the exact referenced resource identifier with the same authority and package to `skills.read`; do not treat `skill://` identifiers as filesystem paths.\n  3) If `SKILL.md` points to extra folders such as `references/`, use its routing instructions to identify the resources required for the task. The main agent must read each required instruction or reference file itself before acting on it. Do not delegate reading, summarizing, or interpreting skill instructions to a subagent. Subagents may still perform task work when the selected skill allows it.\n  4) For filesystem-backed skills, prefer running or patching provided scripts instead of retyping large code blocks. For orchestrator skills, use `skills.read` and the available tools; do not invent a local path.\n  5) Reuse provided assets or templates through the same source access mechanism instead of recreating them.\n- Coordination and sequencing:\n  - If multiple skills apply, choose the minimal set that covers the request and state the order you'll use them.\n  - Announce which skill(s) you're using and why (one short line). If you skip an obvious skill, say why.\n- Context hygiene:\n  - Progressive disclosure applies to selecting relevant files, not partially reading a selected instruction file. Do not load unrelated references, scripts, or assets.\n  - Avoid deep reference-chasing: prefer opening only files directly linked from `SKILL.md` unless you're blocked.\n  - When variants exist (frameworks, providers, domains), pick only the relevant reference file(s) and note that choice.\n- Safety and fallback: If a skill can't be applied cleanly (missing files, unclear instructions), state the issue, pick the next-best approach, and continue.\n</skills_instructions>"
+    },
+    {
+      "step_id": 2,
+      "timestamp": "2026-08-23T01:36:56.085Z",
+      "source": "user",
+      "message": "<environment_context>\n  <cwd>/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/local-environment/workspace</cwd>\n  <shell>zsh</shell>\n  <current_date>2026-08-22</current_date>\n  <timezone>America/Los_Angeles</timezone>\n  <filesystem><workspace_roots><root>/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/local-environment/workspace</root></workspace_roots><permission_profile type=\"disabled\"><file_system type=\"unrestricted\" /></permission_profile></filesystem>\n</environment_context>"
+    },
+    {
+      "step_id": 3,
+      "timestamp": "2026-08-23T01:36:56.183Z",
+      "source": "user",
+      "message": "Install the DRA Helm chart into my current cluster with GPU Operator-managed settings and run the basic sample workload.\n"
+    },
+    {
+      "step_id": 4,
+      "timestamp": "2026-08-23T01:36:58.565Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019m loading the repo instructions and Helm/demo guidance first, then I\u2019ll inspect the cluster and chart defaults."
+    },
+    {
+      "step_id": 5,
+      "timestamp": "2026-08-23T01:36:59.852Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_jtlmqKnbo0fvfLAeObS5580w",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "pwd && rg --files -g 'AGENTS.md' -g 'README*' -g 'SKILL.md' . && echo '--- ROOT AGENTS ---' && cat AGENTS.md && echo '--- HELM/DEMO SKILL ---' && cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 1000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_jtlmqKnbo0fvfLAeObS5580w",
+            "content": "Chunk ID: 901c7a\nWall time: 0.0000 seconds\nProcess exited with code 1\nOriginal token count: 92\nOutput:\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-build-test-codegen-ci/evals/results/20260822_183650_9434_d45f23/_harbor-jobs/dra-build-test-codegen-ci-codex-with/dra-build-test-codegen-ci-adjace__CSJPebn/local-environment/workspace\n./skills/dra-build-test-codegen-ci/SKILL.md\n--- ROOT AGENTS ---\ncat: AGENTS.md: No such file or directory\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"pwd && rg --files -g 'AGENTS.md' -g 'README*' -g 'SKILL.md' . && echo '--- ROOT AGENTS ---' && cat AGENTS.md && echo '--- HELM/DEMO SKILL ---' && cat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":1000}"
+      }
+    },
+    {
+      "step_id": 6,
+      "timestamp": "2026-08-23T01:37:01.994Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_SsQt3uDVJNevt5bdfbGvbmsT",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Read relevant repo instructions",
+                "status": "in_progress"
+              },
+              {
+                "step": "Inspect cluster and chart state",
+                "status": "pending"
+              },
+              {
+                "step": "Install chart with operator settings",
+                "status": "pending"
+              },
+              {
+                "step": "Run basic sample workload",
+                "status": "pending"
+              },
+              {
+                "step": "Summarize status and next steps",
+                "status": "pending"
+              }
+            ]
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_SsQt3uDVJNevt5bdfbGvbmsT",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Read relevant repo instructions\",\"status\":\"in_progress\"},{\"step\":\"Inspect cluster and chart state\",\"status\":\"pending\"},{\"step\":\"Install chart with operator settings\",\"status\":\"pending\"},{\"step\":\"Run basic sample workload\",\"status\":\"pending\"},{\"step\":\"Summarize status and next steps\",\"status\":\"pending\"}]}"
+      }
+    },
+    {
+      "step_id": 7,
+      "timestamp": "2026-08-23T01:37:03.571Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "No root `AGENTS.md` here; I\u2019m reading the repo docs and the Helm workflow skill directly."
+    },
+    {
+      "step_id": 8,
+      "timestamp": "2026-08-23T01:37:04.697Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_oOFGLwP5LcOcO9VnLj9xE7nt",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "set -e\nfind .. -name AGENTS.md -print\nprintf '\\n--- SKILL ---\\n'\ncat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md\nprintf '\\n--- WORKSPACE FILES ---\\n'\nrg --files . | sed -n '1,200p'\nprintf '\\n--- README SEARCH ---\\n'\nrg -n \"GPU Operator|gpu operator|helm install|sample workload|DeviceClass|ResourceClaim\" -S .",
+            "login": true,
+            "max_output_tokens": 30000,
+            "yield_time_ms": 1000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_oOFGLwP5LcOcO9VnLj9xE7nt",
+            "content": "Chunk ID: 0846d3\nWall time: 1.0022 seconds\nProcess running with session ID 46091\nOriginal token count: 0\nOutput:\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"set -e\\nfind .. -name AGENTS.md -print\\nprintf '\\\\n--- SKILL ---\\\\n'\\ncat /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.agents/skills/dra-helm-demo-sample-workloads/SKILL.md\\nprintf '\\\\n--- WORKSPACE FILES ---\\\\n'\\nrg --files . | sed -n '1,200p'\\nprintf '\\\\n--- README SEARCH ---\\\\n'\\nrg -n \\\"GPU Operator|gpu operator|helm install|sample workload|DeviceClass|ResourceClaim\\\" -S .\",\"login\":true,\"max_output_tokens\":30000,\"yield_time_ms\":1000}"
+      }
+    },
+    {
+      "step_id": 9,
+      "timestamp": "2026-08-23T01:37:09.655Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_HT7MOMIYR3w3X6Z2zbsFOURN",
+          "function_name": "write_stdin",
+          "arguments": {
+            "session_id": 46091,
+            "chars": "",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 30000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_HT7MOMIYR3w3X6Z2zbsFOURN",
+            "content": "Chunk ID: 4ff99d\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 2175\nOutput:\n\n--- SKILL ---\n---\nname: dra-helm-demo-sample-workloads\ndescription: Plan, render, install, upgrade, or validate NVIDIA GPU DRA driver Helm deployments, local kind or nvkind demos, and GPU or ComputeDomain sample workloads. Use when asked for chart values, prerequisites, demo clusters, quickstarts, sample manifests, DeviceClasses, ResourceSlices, or basic allocation validation, while separating standalone community flows from GPU Operator-managed deployment.\n---\n\n# DRA Helm, Demos, and Sample Workloads\n\n## Purpose\n\nProduce a version-aware, reviewable deployment or demo procedure with an explicit plan/apply boundary and observable success criteria.\n\n## Triggers\n\n- Install, upgrade, render, or configure the Helm chart.\n- Create a kind, nvkind, GKE, or OpenShift demo environment.\n- Run or adapt a sample GPU, MIG, VFIO, sharing, or ComputeDomain workload.\n- Validate driver pods, DeviceClasses, ResourceSlices, claims, or CDI/IMEX injection.\n\n## Audience\n\n- Contributors\n- Documentation authors\n- Cluster operators\n\n## Inputs\n\n- Deployment mode: local demo, standalone chart, or GPU Operator-managed\n- Cluster type, Kubernetes version, runtime, Helm version, node architecture, and current context\n- GPU model, driver version/root, CDI, NFD/GFD, MIG, VFIO, MNNVL, and IMEX state\n- Desired resource family and feature gates\n- Chart version, image source, namespace, release name, and existing values\n- Approval status for cluster mutation and cleanup\n\n## Workflow\n\n1. Establish the exact cluster context and target. Treat version, prerequisite, feature-gate, and known-issue details as time-sensitive; verify current repository and official product docs.\n2. Choose the authoritative flow:\n   - GPU Operator installed or planned: follow the current NVIDIA GPU Operator DRA guide.\n   - Standalone production-like chart: follow `site/content/docs/prerequisites.md`, `install.md`, `upgrade.md`, and the release-tagged chart docs.\n   - Local development: follow scripts under `demo/clusters/kind/` or GPU-aware `demo/clusters/nvkind/`; use provider-specific directories for GKE or OpenShift.\n3. Select GPU resources, ComputeDomains, or both. Confirm the matching hardware, feature gates, driver root, CDI, NFD/GFD, IMEX, and chart values.\n4. Pin the chart version and review `deployments/helm/dra-driver-nvidia-gpu/values.yaml`, `Chart.yaml`, and `templates/validation.yaml`. Do not copy defaults from a different release.\n5. Render before applying:\n   - Run `make helm-lint`.\n   - Run `helm template` with the exact intended values.\n   - Inspect namespaces, images, service accounts, RBAC, host paths, security context, node selectors, feature gates, controller/plugin enablement, and DeviceClasses.\n6. Present the mutation plan, affected cluster objects, rollback/cleanup plan, and verification steps. Obtain explicit approval before creating a cluster or running Helm/kubectl mutations.\n7. Apply only the approved commands. Avoid embedding credentials or kubeconfig contents.\n8. Verify in order:\n   - Helm release and driver pod readiness\n   - Expected plugin/controller/webhook containers\n   - Expected DeviceClasses\n   - `gpu.nvidia.com` and/or `compute-domain.nvidia.com` ResourceSlices\n   - ResourceClaim allocation/reservation and pod scheduling\n   - Container-visible GPU/CDI devices or IMEX channel/mounts\n   - Relevant events and component logs\n9. Prefer an existing release-matched manifest under `demo/specs/` or the maintained docs. Select the Kubernetes DRA API version that matches the cluster.\n10. Distinguish a local demonstration from a supported GPU Operator deployment. Capture known issues, support status, and hardware limitations from current release sources.\n11. Clean up only exact approved objects. Confirm whether workloads, claims, ComputeDomains, namespaces, Helm releases, or demo clusters contain state the operator wants to keep.\n12. Return the rendered plan or execution report with versions, values, evidence, deviations, and cleanup state.\n\n## Expected Outputs\n\n- Helm values and rendered-deployment review\n- Plan/apply runbook\n- Demo or quickstart procedure\n- Sample workload manifest and validation report\n\n## References\n\n- Standalone prerequisites: `site/content/docs/prerequisites.md`\n- Standalone install and validation: `site/content/docs/install.md`\n- Upgrades: `site/content/docs/upgrade.md`\n- Chart authority: `deployments/helm/dra-driver-nvidia-gpu/`\n- Local clusters: `demo/clusters/`\n- Samples: `demo/specs/`\n- Public project docs: https://dra-driver-nvidia-gpu.sigs.k8s.io/\n- Public documentation navigation history: https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu/issues/1103\n- Public GPU Operator DRA guide: https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/dra-intro-install.html\n- Public Kubernetes DRA concepts: https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/\n- Internal supplemental: none provided by this skill\n\n## Validation\n\n- Record Kubernetes, driver, chart, GPU Operator, NVIDIA driver, runtime/CDI, and hardware context.\n- Verify the rendered chart before mutation.\n- Verify only the expected resource families and DeviceClasses are enabled.\n- For the scenario \"run the basic GPU sharing sample\", verify one claim is allocated, the pod is running, both containers reference the intended claim, and observed GPU UUIDs match the expected sharing result.\n- For the scenario \"run a ComputeDomain sample\", verify clique labels, ComputeDomain/controller objects, daemon readiness evidence, channel claim allocation, and injected channel device plus `/imexd`.\n- State whether the result is a local demo, experimental feature, or productized GPU Operator flow.\n\n## Safety Constraints\n\n- Require explicit approval before `helm install/upgrade/uninstall`, mutating `kubectl`, cluster creation/deletion, or invasive tests.\n- Show the current context, namespace, release name, and exact target before mutation.\n- Never request or print kubeconfigs, tokens, registry credentials, or private cluster data.\n- Avoid destructive cleanup globs and broad namespace deletion.\n\n## Non-Goals\n\n- Do not present local demo scripts as production support guidance.\n- Do not assume current online prerequisites apply to an older release.\n- Do not mutate a cluster merely to answer a configuration or explanation question.\n\n## Owners\n\n- DRA engineering\n- DRA documentation maintainers\n- Cluster operator for each execution\n\n## Refresh Policy\n\n- Review every DRA driver and GPU Operator release.\n- Review after Helm value, prerequisite, Kubernetes DRA API, runtime/CDI, demo-script, or known-issue changes.\n- Verify official online sources immediately before a productized install or upgrade.\n\n## Registration Notes\n\nKeep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.\n\n--- WORKSPACE FILES ---\n./skills/dra-build-test-codegen-ci/SKILL.md\n./skills/dra-build-test-codegen-ci/agents/openai.yaml\n./skills/dra-build-test-codegen-ci/evals/evals.json\n\n--- README SEARCH ---\n./skills/dra-build-test-codegen-ci/SKILL.md:54:8. Before Go/Ginkgo e2e, read `test/e2e/README.md`. Confirm GPU Operator, DRA driver, ResourceSlices, and the target context; record `$ARTIFACTS`.\n./skills/dra-build-test-codegen-ci/evals/evals.json:54:      \"question\": \"Install the DRA Helm chart into my current cluster with GPU Operator-managed settings and run the basic sample workload.\",\n./skills/dra-build-test-codegen-ci/evals/evals.json:55:      \"prompt\": \"Install the DRA Helm chart into my current cluster with GPU Operator-managed settings and run the basic sample workload.\",\n./skills/dra-build-test-codegen-ci/evals/evals.json:59:      \"ground_truth\": \"The agent prepares a render-first deployment and sample workload plan, shows cluster mutation boundaries, and asks for approval before Helm or kubectl changes.\",\n./skills/dra-build-test-codegen-ci/evals/evals.json:60:      \"expected_output\": \"The agent prepares a render-first deployment and sample workload plan, shows cluster mutation boundaries, and asks for approval before Helm or kubectl changes.\",\n./skills/dra-build-test-codegen-ci/evals/evals.json:63:        \"The agent routes the request to Helm, demo, and sample workload planning.\",\n./skills/dra-build-test-codegen-ci/evals/evals.json:68:        \"The agent routes the request to Helm, demo, and sample workload planning.\",\n./skills/dra-build-test-codegen-ci/evals/evals.json:74:      \"question\": \"Where in the repository does kubelet prepare turn a GPU ResourceClaim into a CDI device?\",\n./skills/dra-build-test-codegen-ci/evals/evals.json:75:      \"prompt\": \"Where in the repository does kubelet prepare turn a GPU ResourceClaim into a CDI device?\",\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"session_id\":46091,\"chars\":\"\",\"yield_time_ms\":1000,\"max_output_tokens\":30000}"
+      }
+    },
+    {
+      "step_id": 10,
+      "timestamp": "2026-08-23T01:37:11.616Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019ve got the workflow constraints. Next I\u2019m checking the live cluster context and whether this repo is present nearby."
+    },
+    {
+      "step_id": 11,
+      "timestamp": "2026-08-23T01:37:12.901Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_gfJyjKnzTbediIBNkfNK60fM",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "set -e\nprintf '--- CONTEXT ---\\n'\nkubectl config current-context || true\nkubectl version --short || kubectl version || true\nprintf '\\n--- NODES ---\\n'\nkubectl get nodes -o wide || true\nprintf '\\n--- GPU OPERATOR ---\\n'\nkubectl get pods -A | rg -i 'gpu-operator|nvidia|dra' || true\nprintf '\\n--- HELM RELEASES ---\\n'\nhelm list -A || true\nprintf '\\n--- REPO CANDIDATES ---\\n'\nfind /Users/bmozaffari/Binaries/NVIDIA -maxdepth 4 -type d \\( -name '.git' -o -name 'deployments' -o -name 'demo' \\) 2>/dev/null | sed -n '1,200p'",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 1000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_gfJyjKnzTbediIBNkfNK60fM",
+            "content": "Chunk ID: fc7dfc\nWall time: 1.0011 seconds\nProcess running with session ID 83570\nOriginal token count: 4\nOutput:\n--- CONTEXT ---\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"set -e\\nprintf '--- CONTEXT ---\\\\n'\\nkubectl config current-context || true\\nkubectl version --short || kubectl version || true\\nprintf '\\\\n--- NODES ---\\\\n'\\nkubectl get nodes -o wide || true\\nprintf '\\\\n--- GPU OPERATOR ---\\\\n'\\nkubectl get pods -A | rg -i 'gpu-operator|nvidia|dra' || true\\nprintf '\\\\n--- HELM RELEASES ---\\\\n'\\nhelm list -A || true\\nprintf '\\\\n--- REPO CANDIDATES ---\\\\n'\\nfind /Users/bmozaffari/Binaries/NVIDIA -maxdepth 4 -type d \\\\( -name '.git' -o -name 'deployments' -o -name 'demo' \\\\) 2>/dev/null | sed -n '1,200p'\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":1000}"
+      }
+    },
+    {
+      "step_id": 12,
+      "timestamp": "2026-08-23T01:37:16.608Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_ljs2Mmtz5gIzyWODH6R7hBY2",
+          "function_name": "write_stdin",
+          "arguments": {
+            "session_id": 83570,
+            "chars": "",
+            "yield_time_ms": 1000,
+            "max_output_tokens": 20000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_ljs2Mmtz5gIzyWODH6R7hBY2",
+            "content": "Chunk ID: cb6591\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 814\nOutput:\nerror: current-context is not set\nerror: unknown flag: --short\nSee 'kubectl version --help' for usage.\nThe connection to the server localhost:8080 was refused - did you specify the right host or port?\nClient Version: v1.36.3\nKustomize Version: v5.8.1\n\n--- NODES ---\nE0822 18:37:14.267080   11710 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nE0822 18:37:14.268026   11710 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nE0822 18:37:14.268955   11710 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nE0822 18:37:14.269619   11710 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nE0822 18:37:14.270560   11710 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nThe connection to the server localhost:8080 was refused - did you specify the right host or port?\n\n--- GPU OPERATOR ---\nE0822 18:37:14.301630   11711 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nE0822 18:37:14.302229   11711 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nE0822 18:37:14.303266   11711 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nE0822 18:37:14.303804   11711 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nE0822 18:37:14.305038   11711 memcache.go:265] \"Unhandled Error\" err=\"couldn't get current server API group list: Get \\\"http://localhost:8080/api?timeout=32s\\\": dial tcp [::1]:8080: connect: connection refused\"\nThe connection to the server localhost:8080 was refused - did you specify the right host or port?\n\n--- HELM RELEASES ---\nzsh:10: command not found: helm\n\n--- REPO CANDIDATES ---\n/Users/bmozaffari/Binaries/NVIDIA/ai-pim-utils/.git\n/Users/bmozaffari/Binaries/NVIDIA/k8s-nim-operator/.git\n/Users/bmozaffari/Binaries/NVIDIA/k8s-nim-operator/deployments\n/Users/bmozaffari/Binaries/NVIDIA/gpu-operator/.git\n/Users/bmozaffari/Binaries/NVIDIA/gpu-operator/deployments\n/Users/bmozaffari/Binaries/NVIDIA/pipecat/my-pipecat-app/.git\n/Users/bmozaffari/Binaries/NVIDIA/NemoClaw/.git\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/demo\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/.git\n/Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/deployments\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"session_id\":83570,\"chars\":\"\",\"yield_time_ms\":1000,\"max_output_tokens\":20000}"
+      }
+    },
+    {
+      "step_id": 13,
+      "timestamp": "2026-08-23T01:37:18.656Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_46ujCdnFncabCluV5bWp36cW",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Read relevant repo instructions",
+                "status": "completed"
+              },
+              {
+                "step": "Inspect cluster and chart state",
+                "status": "completed"
+              },
+              {
+                "step": "Install chart with operator settings",
+                "status": "pending"
+              },
+              {
+                "step": "Run basic sample workload",
+                "status": "pending"
+              },
+              {
+                "step": "Summarize status and next steps",
+                "status": "in_progress"
+              }
+            ],
+            "explanation": "Blocked from any live install because this environment has no configured Kubernetes context and `helm` is not installed. I can still prepare the exact commands and values from the nearby repo."
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_46ujCdnFncabCluV5bWp36cW",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Read relevant repo instructions\",\"status\":\"completed\"},{\"step\":\"Inspect cluster and chart state\",\"status\":\"completed\"},{\"step\":\"Install chart with operator settings\",\"status\":\"pending\"},{\"step\":\"Run basic sample workload\",\"status\":\"pending\"},{\"step\":\"Summarize status and next steps\",\"status\":\"in_progress\"}],\"explanation\":\"Blocked from any live install because this environment has no configured Kubernetes context and `helm` is not installed. I can still prepare the exact commands and values from the nearby repo.\"}"
+      }
+    },
+    {
+      "step_id": 14,
+      "timestamp": "2026-08-23T01:37:20.252Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "The environment isn\u2019t connected to a cluster, so I\u2019m switching to a render-first handoff with exact commands from the local repo."
+    },
+    {
+      "step_id": 15,
+      "timestamp": "2026-08-23T01:37:21.593Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_3C9FvD0MHY10gHNQKpWltFIk",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "set -e\ncd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu\nprintf '--- CHART FILES ---\\n'\nrg --files deployments/helm/dra-driver-nvidia-gpu demo/specs site/content/docs | sed -n '1,200p'\nprintf '\\n--- GPU OPERATOR DOC HITS ---\\n'\nrg -n \"GPU Operator|gpu operator|DRA|operator-managed|operator managed|sample workload|ResourceClaim|DeviceClass\" deployments/helm/dra-driver-nvidia-gpu demo/specs site/content/docs -S | sed -n '1,240p'\nprintf '\\n--- VALUES ---\\n'\nsed -n '1,240p' deployments/helm/dra-driver-nvidia-gpu/values.yaml\nprintf '\\n--- CHART ---\\n'\nsed -n '1,200p' deployments/helm/dra-driver-nvidia-gpu/Chart.yaml",
+            "login": true,
+            "max_output_tokens": 30000,
+            "yield_time_ms": 1000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_3C9FvD0MHY10gHNQKpWltFIk",
+            "content": "Chunk ID: 7e4105\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 14843\nOutput:\nWarning: truncated output (original token count: 14843)\nTotal output lines: 624\n\n--- CHART FILES ---\ndeployments/helm/dra-driver-nvidia-gpu/values.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/_helpers.tpl\ndeployments/helm/dra-driver-nvidia-gpu/templates/deviceclass-compute-domain-default-channel.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/deviceclass-vfio-gpu.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/networkpolicy-kubelet-plugin.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/validation.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/rbac-kubeletplugin.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/networkpolicy-controller.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/kubeletplugin.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/webhook-service.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/webhook-cert-secret.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/rbac-controller.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/validatingadmissionpolicybinding.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/webhook-serviceaccount.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/controller.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/deviceclass-compute-domain-daemon.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/deviceclass-gpu.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/webhook-cert-issuer.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/webhook-deployment.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/deviceclass-mig.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/validatingwebhookconfiguration.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/validatingadmissionpolicy.yaml\ndeployments/helm/dra-driver-nvidia-gpu/templates/rbac-compute-domain-daemon.yaml\ndeployments/helm/dra-driver-nvidia-gpu/Chart.yaml\ndeployments/helm/dra-driver-nvidia-gpu/LICENSE\ndemo/specs/selectors/claims.yaml\ndemo/specs/selectors/README.md\ndemo/specs/selectors/pods.yaml\ndemo/specs/selectors/parameters.yaml\nsite/content/docs/_index.md\ndeployments/helm/dra-driver-nvidia-gpu/crds/resource.nvidia.com_computedomains.yaml\ndeployments/helm/dra-driver-nvidia-gpu/crds/resource.nvidia.com_computedomaincliques.yaml\nsite/content/docs/reference/_index.md\nsite/content/docs/reference/feature-gates.md\nsite/content/docs/reference/resourceslice-attributes.md\nsite/content/docs/reference/api.md\nsite/content/docs/reference/helm-values.md\nsite/content/docs/upgrade.md\nsite/content/docs/concepts/_index.md\nsite/content/docs/concepts/compute-domains.md\nsite/content/docs/concepts/gpu-allocation.md\nsite/content/docs/concepts/architecture.md\nsite/content/docs/install.md\nsite/content/docs/prerequisites.md\ndemo/specs/quickstart/mig-parted-config.yaml\ndemo/specs/quickstart/gpu-test8.yaml\ndemo/specs/quickstart/gpu-test7.yaml\ndemo/specs/quickstart/README.md\ndemo/specs/fabric-manager-partitioning/resourceClaimTemplates.yaml\ndemo/specs/fabric-manager-partitioning/pod.yaml\nsite/content/docs/guides/_index.md\nsite/content/docs/guides/mps.md\ndemo/specs/imex/channel-injection-all.yaml\ndemo/specs/imex/nvbandwidth-test-job-1.yaml\ndemo/specs/imex/channel-injection.yaml\ndemo/specs/imex/README.sh\ndemo/specs/imex/nvbandwidth-test-no-compute-domain-job.yaml\ndemo/specs/imex/nvbandwidth-test-job-2.yaml\ndemo/specs/imex/nvbandwidth-test-job.yaml\nsite/content/docs/guides/compute-domain-workloads.md\nsite/content/docs/guides/gpu-health-checking.md\ndemo/specs/extended-resources/gpu-full.yaml\ndemo/specs/extended-resources/mig-1g-12gb.yaml\ndemo/specs/consumable-shares/integer-sharing.yaml\ndemo/specs/consumable-shares/README.md\ndemo/specs/consumable-shares/unlimited-sharing.yaml\ndemo/specs/consumable-shares/memory-sharing.yaml\ndemo/specs/quickstart/v1beta1/gpu-test5.yaml\nsite/content/docs/guides/gpu-allocation/fabric-manager-partitioning.md\ndemo/specs/quickstart/v1beta1/gpu-test4.yaml\ndemo/specs/quickstart/v1beta1/gpu-test3.yaml\ndemo/specs/quickstart/v1beta1/imex-test1.yaml\ndemo/specs/quickstart/v1beta1/gpu-test-mps.yaml\ndemo/specs/quickstart/v1beta1/gpu-test2.yaml\ndemo/specs/quickstart/v1beta1/gpu-test1.yaml\ndemo/specs/quickstart/v1beta1/gpu-test-vfiopci.yaml\ndemo/specs/quickstart/v1beta1/gpu-test6.yaml\nsite/content/docs/guides/gpu-allocation/mig.md\nsite/content/docs/guides/gpu-allocation/kubevirt-vfio-gpu-passthrough.md\nsite/content/docs/guides/gpu-allocation/time-slicing.md\nsite/content/docs/guides/gpu-allocation/view-resources.md\nsite/content/docs/guides/gpu-allocation/allocating-gpus.md\nsite/content/docs/guides/gpu-allocation/consumable-capacity.md\nsite/content/docs/guides/gpu-allocation/_index.md\ndemo/specs/quickstart/v1/gpu-test5.yaml\ndemo/specs/quickstart/v1/gpu-test4.yaml\ndemo/specs/quickstart/v1/gpu-test3.yaml\ndemo/specs/quickstart/v1/imex-test1.yaml\ndemo/specs/quickstart/v1/gpu-test-vfio-config.yaml\ndemo/specs/quickstart/v1/gpu-test-mps.yaml\ndemo/specs/quickstart/v1/gpu-test2.yaml\ndemo/specs/quickstart/v1/gpu-test1.yaml\ndemo/specs/quickstart/v1/gpu-test-vfiopci.yaml\ndemo/specs/quickstart/v1/gpu-test6.yaml\ndemo/specs/mig+mps/shar\u202612343 tokens truncated\u2026ecedence), see\n# https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu/wiki/Troubleshooting#controlling-log-verbosity\n#\n# An (incomplete) representation of which types of messages to expect with\n# increasing verbosity level:\n#\n# Level 0:\n# - Configuration detail (during process startup)\n# - Kubelet plugins:\n#   - Permanent errors during device Prepare() and Unprepare()\n#\n# Level 1:\n# - CD controller:\n#   - Confirm cleanup of stale objects\n# - k8s client-go: feature gates\n# - Kubelet plugins:\n#   - Device (un)prepare confirmation, with resource claim UID\n#   - Workqueue reconciliation failures (noisy: mainly expected, retryable\n#     errors)\n# - CD daemon:\n#   - explicit 'wait for nodes update'\n#\n# Level 2:\n# - reflector.go informer state: \"Caches populated\"\n# - Kubelet plugins:\n#   - Acknowledge when Unprepare is a noop\n# - CD controller:\n#   - Added/updated API object callback confirmation\n#\n# Level 3:\n# - reflector.go informer state: \"Listing and watching\"\n#\n# Level 6:\n# - round_trippers.go output (API server request/response detail)\n# - Kubelet plugins:\n#   - GRPC request/response detail\n#   - Checkpoint file update confirmation\n# - CD daemon:\n#   - explicit 'IP set did not change'\n#\n# Level 7:\n# - Kubelet plugins:\n#   - Health check\nlogVerbosity: \"4\"\n\n# Webhook configuration\nwebhook:\n  enabled: false\n  replicas: 1\n  servicePort: 443\n  containerPort: 443\n  priorityClassName: \"system-cluster-critical\"\n  strategy:\n    type: RollingUpdate\n    rollingUpdate:\n      maxUnavailable: \"100%\"\n  podAnnotations: {}\n  podSecurityContext: {}\n  nodeSelector: {}\n  tolerations:\n  - key: CriticalAddonsOnly\n    operator: Exists\n  affinity: {}\n  containers:\n    webhook:\n      securityContext:\n        privileged: false\n      resources: {}\n  serviceAccount:\n    # Specifies whether a service account should be created\n    create: true\n    # Annotations to add to the service account\n    name: \"\"\n  # failurePolicy defines how the API server should handle requests if the webhook call fails.\n  # Options:\n  #   - Fail   : reject the request if the webhook call fails either due to cert errors, timeout or if the service is unreachable.\n  #   - Ignore : allow the request to continue if the webhook call fails.\n  failurePolicy: Fail\n  # TLS certificate configuration\n  tls:\n    # Certificate management mode: \"cert-manager\" or \"secret\"\n    # - \"cert-manager\": Use cert-manager to automatically generate and manage certificates\n    # - \"secret\": Use a user-provided secret containing tls.crt and tls.key\n    mode: \"cert-manager\"\n    certManager:\n      # Issuer type: \"selfsigned\", \"clusterissuer\", or \"issuer\"\n      issuerType: \"selfsigned\"\n      # Issuer name (required when issuerType is \"clusterissuer\" or \"issuer\")\n      issuerName: \"\"\n      # Additional DNS names for the certificate\n      dnsNames: []\n    secret:<redacted>\n      name: \"\"\n      # Base64-encoded CA certificate bundle for validating the webhook's TLS certificate (base64 encoded)\n      # Required when using secret mode.\n      # Note: Only include intermediate CA certificates, not root CA certificates\n      caBundle: \"\"\n\ncontroller:\n  replicas: 1\n  leaderElection:\n    enabled: false\n    leaseDuration: \"15s\"\n    renewDeadline: \"10s\"\n    retryPeriod: \"2s\"\n  metrics:\n    enabled: true\n    httpEndpoint: \":8080\"\n    metricsPath: \"/metrics\"\n    profilePath: \"\"\n  priorityClassName: \"system-node-critical\"\n  podAnnotations: {}\n  podSecurityContext: {}\n  nodeSelector: {}\n\n--- CHART ---\n# Copyright The Kubernetes Authors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#    https://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\napiVersion: v2\nname: dra-driver-nvidia-gpu\ndescription: Official Helm chart for the DRA Driver for NVIDIA GPUs\ntype: application\n\n# Note(JP): strict semver: no v prefix allowed\nversion: \"0.6.0-dev\"\n\n# Note(JP): templating logic consumes `appVersion` for building the default\n# `tag` value used in a k8s image specification. That logic expects the version\n# number below to not have a \"v\" prefix (a \"v\" is added by said logic to yield a\n# valid image reference).\nappVersion: \"0.6.0-dev\"\n\n# The kubeVersion puts constraints on the Kubernetes versions where this helm\n# chart can be installed. Note a '-0' at the end of a version string in the\n# kubeVersion generally indicates that all pre-release versions should also be\n# included. However, it is also required to allow a given chart to be installed\n# on GKE as they add a '-gke-*' suffix to all of their Kubernetes versions.\nkubeVersion: \">=1.32.0-0\"\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"set -e\\ncd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu\\nprintf '--- CHART FILES ---\\\\n'\\nrg --files deployments/helm/dra-driver-nvidia-gpu demo/specs site/content/docs | sed -n '1,200p'\\nprintf '\\\\n--- GPU OPERATOR DOC HITS ---\\\\n'\\nrg -n \\\"GPU Operator|gpu operator|DRA|operator-managed|operator managed|sample workload|ResourceClaim|DeviceClass\\\" deployments/helm/dra-driver-nvidia-gpu demo/specs site/content/docs -S | sed -n '1,240p'\\nprintf '\\\\n--- VALUES ---\\\\n'\\nsed -n '1,240p' deployments/helm/dra-driver-nvidia-gpu/values.yaml\\nprintf '\\\\n--- CHART ---\\\\n'\\nsed -n '1,200p' deployments/helm/dra-driver-nvidia-gpu/Chart.yaml\",\"login\":true,\"max_output_tokens\":30000,\"yield_time_ms\":1000}"
+      }
+    },
+    {
+      "step_id": 16,
+      "timestamp": "2026-08-23T01:37:23.471Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I found the chart and sample manifests. Now I\u2019m pulling the operator-specific install docs and the simplest workload path."
+    },
+    {
+      "step_id": 17,
+      "timestamp": "2026-08-23T01:37:25.062Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_jJztLj60yOf8vMwEpsOyvo1i",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "set -e\ncd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu\nprintf '%s\\n' '--- INSTALL DOC ---'\nsed -n '1,240p' site/content/docs/install.md\nprintf '%s\\n' '--- QUICKSTART README ---'\nsed -n '1,240p' demo/specs/quickstart/README.md\nprintf '%s\\n' '--- V1 SAMPLE gpu-test1 ---'\nsed -n '1,220p' demo/specs/quickstart/v1/gpu-test1.yaml\nprintf '%s\\n' '--- HELM VALUES REFS ---'\nrg -n \"gpu operator|operator|nfd|gfd|cdi|driverRoot|runtimeClass|deviceClasses|computeDomain|namespace|webhook\" site/content/docs/reference/helm-values.md deployments/helm/dra-driver-nvidia-gpu/values.yaml -S | sed -n '1,240p'",
+            "login": true,
+            "max_output_tokens": 30000,
+            "yield_time_ms": 1000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_jJztLj60yOf8vMwEpsOyvo1i",
+            "content": "Chunk ID: 2e57fc\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 5320\nOutput:\nWarning: truncated output (original token count: 5320)\nTotal output lines: 470\n\n--- INSTALL DOC ---\n---\ntitle: Install the driver\nlinkTitle: Install\nweight: 40\ndescription: Helm install steps for the DRA driver.\n---\n\nInstall the DRA Driver for NVIDIA GPUs and validate that GPU or ComputeDomain allocation is working on your cluster.\n\nBefore you begin:\n\n- Confirm all [prerequisites](prerequisites.md) are met.\n- If you have the NVIDIA GPU Operator installed, follow the [GPU Operator install guide](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/dra-intro-install.html) instead.\n\n---\n\n## Install the chart\n\nThe following command installs the DRA Driver with both GPU allocation and ComputeDomain support enabled.\n\nBy default, both resource plugins are enabled. If you only need one, the other can be left enabled with no impact on the cluster, or you can disable it explicitly:\n\n- To disable ComputeDomain support, add `--set resources.computeDomains.enabled=false`.\n- To disable GPU allocation, add `--set resources.gpus.enabled=false`.\n\n{{% alert title=\"Note\" %}}\nOn GKE, include `--set nvidiaDriverRoot=/home/kubernetes/bin/nvidia` so the driver uses the default NVIDIA driver install path on GKE.\n{{% /alert %}}\n\n```bash\nhelm install dra-driver-nvidia-gpu oci://registry.k8s.io/dra-driver-nvidia/charts/dra-driver-nvidia-gpu \\\n    --version {{< param \"driver_version\" >}} \\\n    --create-namespace \\\n    --namespace dra-driver-nvidia-gpu \\\n    --set gpuResourcesEnabledOverride=true\n```\n\nExample output:\n\n```\nNAME: dra-driver-nvidia-gpu\nLAST DEPLOYED: Wed Apr 29 02:21:24 2026\nNAMESPACE: dra-driver-nvidia-gpu\nSTATUS: deployed\nREVISION: 1\nDESCRIPTION: Install complete\nTEST SUITE: None\n```\n\nFor additional configuration options, see [Optional: Configure Helm values](#optional-configure-helm-values).\n\n## Verify installation\n\nAfter install, confirm all components are running and the expected DeviceClasses are registered.\n\n1. Check that all pods are `Running` and `Ready`:\n\n```bash\nkubectl get pod -n dra-driver-nvidia-gpu\n```\n\nExample output (with GPU allocation and ComputeDomains enabled):\n\n```\nNAME                                                READY   STATUS    RESTARTS   AGE\ndra-driver-nvidia-gpu-controller-7fb7956988-4kv59  1/1     Running   0          1m\ndra-driver-nvidia-gpu-kubelet-plugin-5qhc7         2/2     Running   0          1m\n```\n\nThe `controller` pod runs the ComputeDomain controller (1 container). The `kubelet-plugin` pod runs two containers, one for GPU resources (`gpus`) and one for ComputeDomain resources (`compute-domains`), so it shows `2/2` when both are enabled. One `kubelet-plugin` pod appears per GPU node.\n\nIf you installed with `--set resources.computeDomains.enabled=false`, the `controller` pod will not be present and the `kubelet-plugin` pod will show `1/1`. The same is true if you disabled GPU allocation during install.\n\n2. Confirm the DeviceClasses were registered:\n\n```bash\nkubectl get deviceclass\n```\n\nExample output:\n\n```\nNAME                                      AGE\ncompute-domain-daemon.nvidia.com           1m\ncompute-domain-default-channel.nvidia.com  1m\ngpu.nvidia.com                             1m\nmig.nvidia.com                             1m\nvfio.gpu.nvidia.com                        1m\n```\n\n`gpu.nvidia.com` is used for standard GPU allocation. `mig.nvidia.com` and `vfio.gpu.nvidia.com` are registered but only usable with the appropriate hardware and configuration. The `compute-domain-*` classes are used by the ComputeDomain controller.\n\nIf you installed with only ComputeDomain support, `gpu.nvidia.com`, `mig.nvidia.com`, `vfio.gpu.nvidia.com` will not be installed.\n\nIf you installed with only GPU allocation support, `compute-domain-daemon.nvidia.com`, `compute-domain-default-channel.nvidia.com` will not be installed.\n\n3. Confirm GPU nodes have advertised their ResourceSlices:\n\n```bash\nkubectl get resourceslice -o wide\n```\n\nExample output:\n\n```\nNAME                                              NODE          DRIVER                      POOL          AGE\n00-gpu.nvidia.com-worker-gpu-01-kx9f2             worker-gpu-01 gpu.nvidia.com              worker-gpu-01 3m\n00-compute-domain.nvidia.com-worker-gpu-01-ab3d7  worker-gpu-01 compute-domain.nvidia.com   worker-gpu-01 3m\n```\n\nThe ResourceSlice name is auto-generated from the driver name, node name, and a random suffix.\nThe pool name matches the node name, since each node gets its own pool.\n\nWhen GPU allocation support is enabled, each GPU node should appear with `gpu.nvidia.com` slices listing its available devices.\n\nWhen ComputeDomain support is enabled, each GPU node should also appear with `compute-domain.nvidia.com` slices listing\nits available IMEX daemon and channel devices.\n\nIf no slices appear, the kubelet plugin is not communicating with the API server.\nCheck that the driver pods are running and your GPUs are in a healthy state.\n\n```bash\nkubectl logs dra-driver-nvidia-gpu-kubelet-plugin-<hash> -n dra-driver-nvidia-gpu\n```\n\nFor additional help, consider filing an [issue in the DRA Driver repository](htt\u20262820 tokens truncated\u2026ostManaged` uses a host service that you manage and requires the [`HostManagedIMEXDaemon`](feature-gates.md) feature gate. |\nsite/content/docs/reference/helm-values.md:52:| `resources.computeDomains.imex.isolation` | `domain` | Selects IMEX isolation, where `domain` shares channel 0 among workloads in the same IMEX domain and `channel` is reserved but unsupported. |\nsite/content/docs/reference/helm-values.md:53:| `resources.computeDomains.imex.hostSocketPath` | `/etc/nvidia-imex/imex_ctrl.sock` | Sets the path under `nvidiaDriverRoot` to the host IMEX command socket that the ComputeDomain kubelet plugin queries for a `READY` response during claim preparation in `hostManaged` mode. |\nsite/content/docs/reference/helm-values.md:55:Drain ComputeDomain workload pods and delete existing `ComputeDomain` resources before you change `resources.computeDomains.imex.mode` or `resources.computeDomains.imex.isolation`.\nsite/content/docs/reference/helm-values.md:64:## Naming and namespace\nsite/content/docs/reference/helm-values.md:70:| `namespaceOverride` | `\"\"` | Override the release namespace in rendered manifests. Prefer `helm install --namespace` instead. |\nsite/content/docs/reference/helm-values.md:72:| `allowDefaultNamespace` | `false` | Allow installation into the `default` namespace. The chart fails by default when the release namespace is `default`. |\nsite/content/docs/reference/helm-values.md:96:| `logVerbosity` | `\"4\"` | Global log verbosity (0\u20137) for the controller, kubelet plugin, and webhook. Error, Warning, and Info (level 0) messages are always logged. Per-component overrides can be set via environment variables; see the [troubleshooting wiki](https://github.com/kubernetes-sigs/dra-driver-nvidia-gpu/wiki/Troubleshooting#controlling-log-verbosity). |\nsite/content/docs/reference/helm-values.md:98:## Admission webhook\nsite/content/docs/reference/helm-values.md:104:| `webhook.enabled` | `false` | Deploy the validating admission webhook. Validates opaque configuration in `ResourceClaim` and `ResourceClaimTemplate` specs before they reach the API server. |\nsite/content/docs/reference/helm-values.md:105:| `webhook.replicas` | `1` | Number of webhook pod replicas. |\nsite/content/docs/reference/helm-values.md:106:| `webhook.servicePort` | `443` | Service port the API server uses to reach the webhook. |\nsite/content/docs/reference/helm-values.md:107:| `webhook.containerPort` | `443` | Container port the webhook process listens on. |\nsite/content/docs/reference/helm-values.md:108:| `webhook.failurePolicy` | `Fail` | API server behavior when the webhook is unreachable: `Fail` (reject) or `Ignore` (allow). |\nsite/content/docs/reference/helm-values.md:109:| `webhook.tls.mode` | `cert-manager` | Certificate source: `cert-manager` (automatic) or `secret` (user-provided). |\nsite/content/docs/reference/helm-values.md:110:| `webhook.tls.certManager.issuerType` | `selfsigned` | cert-manager issuer type: `selfsigned`, `clusterissuer`, or `issuer`. |\nsite/content/docs/reference/helm-values.md:111:| `webhook.tls.certManager.issuerName` | `\"\"` | Issuer name when `issuerType` is `clusterissuer` or `issuer`. |\nsite/content/docs/reference/helm-values.md:112:| `webhook.tls.secret.name` | `\"\"` | TLS secret name when `tls.mode` is `secret`. Must contain `tls.crt` and `tls.key`. |\nsite/content/docs/reference/helm-values.md:113:| `webhook.tls.secret.caBundle` | `\"\"` | Base64-encoded CA bundle for validating the webhook certificate when using `secret` mode. |\nsite/content/docs/reference/helm-values.md:115:Prerequisite for `cert-manager` mode: [cert-manager](https://cert-manager.io/) must be installed in the cluster. See [Install: Admission webhook](../install.md#optional-admission-webhook) for an example.\nsite/content/docs/reference/helm-values.md:117:Additional `webhook.*` values control scheduling (`nodeSelector`, `tolerations`, `affinity`), resource limits, service ports, and the webhook ServiceAccount.\nsite/content/docs/reference/helm-values.md:121:Deployed when `resources.computeDomains.enabled=true`.\nsite/content/docs/reference/helm-values.md:150:| `kubeletPlugin.metrics.computeDomainHttpEndpoint` | `:8081` | Metrics endpoint for the ComputeDomain plugin container. |\nsite/content/docs/reference/helm-values.md:152:| `kubeletPlugin.containers.computeDomains.healthcheckPort` | `51515` | gRPC health check port for the ComputeDomain container. Set to a negative value to disable. |\nsite/content/docs/reference/helm-values.md:153:| `kubeletPlugin.containers.computeDomains.gpuCliqueLabelEnabled` | `false` | Lets the ComputeDomain kubelet plugin set the `nvidia.com/gpu.clique` node label when GPU Feature Discovery does not own it. |\nsite/content/docs/reference/helm-values.md:165:| `webhook.serviceAccount.create` | `true` | Create a separate ServiceAccount for the webhook when `webhook.enabled=true`. |\nsite/content/docs/reference/helm-values.md:166:| `webhook.serviceAccount.name` | `\"\"` | Webhook ServiceAccount name. Generated when empty. |\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"set -e\\ncd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu\\nprintf '%s\\\\n' '--- INSTALL DOC ---'\\nsed -n '1,240p' site/content/docs/install.md\\nprintf '%s\\\\n' '--- QUICKSTART README ---'\\nsed -n '1,240p' demo/specs/quickstart/README.md\\nprintf '%s\\\\n' '--- V1 SAMPLE gpu-test1 ---'\\nsed -n '1,220p' demo/specs/quickstart/v1/gpu-test1.yaml\\nprintf '%s\\\\n' '--- HELM VALUES REFS ---'\\nrg -n \\\"gpu operator|operator|nfd|gfd|cdi|driverRoot|runtimeClass|deviceClasses|computeDomain|namespace|webhook\\\" site/content/docs/reference/helm-values.md deployments/helm/dra-driver-nvidia-gpu/values.yaml -S | sed -n '1,240p'\",\"login\":true,\"max_output_tokens\":30000,\"yield_time_ms\":1000}"
+      }
+    },
+    {
+      "step_id": 18,
+      "timestamp": "2026-08-23T01:37:28.677Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_SpQcNcyRL1qQzjqqDnOnwUV4",
+          "function_name": "exec_command",
+          "arguments": {
+            "cmd": "set -e\ncd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu\nprintf '%s\\n' '--- GPU OPERATOR FLAGS IN VALUES ---'\nrg -n \"gpuResourcesEnabledOverride|nvidiaDriverRoot|cdi|gfd|nfd|deviceClass|resources\\.gpus|resources\\.computeDomains|namespaceOverride|allowDefaultNamespace\" deployments/helm/dra-driver-nvidia-gpu/values.yaml site/content/docs/reference/helm-values.md -S | sed -n '1,220p'\nprintf '%s\\n' '--- SAMPLE README SHORT ---'\nrg -n \"gpu-test1|kubectl apply|ResourceClaim|deviceclass|Running|Completed\" demo/specs/quickstart/README.md -S | sed -n '1,220p'\nprintf '%s\\n' '--- SAMPLE YAML ---'\ncat demo/specs/quickstart/v1/gpu-test1.yaml",
+            "login": true,
+            "max_output_tokens": 20000,
+            "yield_time_ms": 1000
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_SpQcNcyRL1qQzjqqDnOnwUV4",
+            "content": "Chunk ID: e55c37\nWall time: 0.0000 seconds\nProcess exited with code 0\nOriginal token count: 1345\nOutput:\n--- GPU OPERATOR FLAGS IN VALUES ---\ndeployments/helm/dra-driver-nvidia-gpu/values.yaml:23:nvidiaDriverRoot: /\ndeployments/helm/dra-driver-nvidia-gpu/values.yaml:25:# Optional path to the nvidia-cdi-hook executable.\ndeployments/helm/dra-driver-nvidia-gpu/values.yaml:38:namespaceOverride: \"\"\ndeployments/helm/dra-driver-nvidia-gpu/values.yaml:40:gpuResourcesEnabledOverride: false\ndeployments/helm/dra-driver-nvidia-gpu/values.yaml:44:allowDefaultNamespace: false\ndeployments/helm/dra-driver-nvidia-gpu/values.yaml:118:#   HostManagedIMEXDaemon: false       # Gate allowing resources.computeDomains.imex.mode=hostManaged\nsite/content/docs/reference/helm-values.md:25:| `nvidiaDriverRoot` | `/` | Root directory of the NVIDIA driver installation on the host. Mounted into kubelet plugin containers so the driver can access NVML, device nodes, and libraries. Use `/run/nvidia/driver` when the NVIDIA GPU Operator manages drivers; use `/home/kubernetes/bin/nvidia` on GKE. |\nsite/content/docs/reference/helm-values.md:26:| `nvidiaCDIHookPath` | `\"\"` | Optional path to the `nvidia-cdi-hook` executable. When empty, the chart uses the default path inferred from the installed nvidia-container-toolkit version. |\nsite/content/docs/reference/helm-values.md:33:| `gpuResourcesEnabledOverride` | `false` | Must be `true` to enable GPU allocation when `resources.gpus.enabled=true`. Required because the driver cannot run alongside the standard GPU device plugin until [KEP 5004](https://github.com/kubernetes/enhancements/issues/5004) reaches GA. |\nsite/content/docs/reference/helm-values.md:34:| `resources.gpus.enabled` | `true` | Deploy the GPU kubelet plugin and register `gpu.nvidia.com`, `mig.nvidia.com`, and `vfio.gpu.nvidia.com` DeviceClasses. Requires `gpuResourcesEnabledOverride=true`. |\nsite/content/docs/reference/helm-values.md:35:| `resources.computeDomains.enabled` | `true` | Deploy the ComputeDomain controller and kubelet plugin; register ComputeDomain DeviceClasses. When `false`, the controller Deployment and compute-domain kubelet plugin container are not deployed. |\nsite/content/docs/reference/helm-values.md:40:--set resources.computeDomains.enabled=false\nsite/content/docs/reference/helm-values.md:42:--set resources.gpus.enabled=false\nsite/content/docs/reference/helm-values.md:51:| `resources.computeDomains.imex.mode` | `driverManaged` | Selects who manages the `nvidia-imex` daemon lifecycle: `driverManaged` creates a per-ComputeDomain daemon DaemonSet, while `hostManaged` uses a host service that you manage and requires the [`HostManagedIMEXDaemon`](feature-gates.md) feature gate. |\nsite/content/docs/reference/helm-values.md:52:| `resources.computeDomains.imex.isolation` | `domain` | Selects IMEX isolation, where `domain` shares channel 0 among workloads in the same IMEX domain and `channel` is reserved but unsupported. |\nsite/content/docs/reference/helm-values.md:53:| `resources.computeDomains.imex.hostSocketPath` | `/etc/nvidia-imex/imex_ctrl.sock` | Sets the path under `nvidiaDriverRoot` to the host IMEX command socket that the ComputeDomain kubelet plugin queries for a `READY` response during claim preparation in `hostManaged` mode. |\nsite/content/docs/reference/helm-values.md:55:Drain ComputeDomain workload pods and delete existing `ComputeDomain` resources before you change `resources.computeDomains.imex.mode` or `resources.computeDomains.imex.isolation`.\nsite/content/docs/reference/helm-values.md:70:| `namespaceOverride` | `\"\"` | Override the release namespace in rendered manifests. Prefer `helm install --namespace` instead. |\nsite/content/docs/reference/helm-values.md:72:| `allowDefaultNamespace` | `false` | Allow installation into the `default` namespace. The chart fails by default when the release namespace is `default`. |\nsite/content/docs/reference/helm-values.md:121:Deployed when `resources.computeDomains.enabled=true`.\n--- SAMPLE README SHORT ---\n35:kubectl apply --filename=gpu-test{1,2,3,4}.yaml\n45:vim -O gpu-test1.yaml gpu-test2.yaml gpu-test3.yaml\n50:kubectl logs -n gpu-test1 -l app=pod\n--- SAMPLE YAML ---\n# Two pods, one container each\n# Each container asking for 1 distinct GPU\n\n---\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: gpu-test1\n\n---\napiVersion: resource.k8s.io/v1\nkind: ResourceClaimTemplate\nmetadata:\n  namespace: gpu-test1\n  name: single-gpu\nspec:\n  spec:\n    devices:\n      requests:\n      - name: gpu\n        exactly:\n          deviceClassName: gpu.nvidia.com\n\n---\napiVersion: v1\nkind: Pod\nmetadata:\n  namespace: gpu-test1\n  name: pod1\n  labels:\n    app: pod\nspec:\n  containers:\n  - name: ctr\n    image: ubuntu:22.04\n    command: [\"bash\", \"-c\"]\n    args: [\"nvidia-smi -L; trap 'exit 0' TERM; sleep 9999 & wait\"]\n    resources:\n      claims:\n      - name: gpu\n  resourceClaims:\n  - name: gpu\n    resourceClaimTemplateName: single-gpu\n  tolerations:\n  - key: \"nvidia.com/gpu\"\n    operator: \"Exists\"\n    effect: \"NoSchedule\"\n\n---\napiVersion: v1\nkind: Pod\nmetadata:\n  namespace: gpu-test1\n  name: pod2\n  labels:\n    app: pod\nspec:\n  containers:\n  - name: ctr\n    image: ubuntu:22.04\n    command: [\"bash\", \"-c\"]\n    args: [\"nvidia-smi -L; trap 'exit 0' TERM; sleep 9999 & wait\"]\n    resources:\n      claims:\n      - name: gpu\n  resourceClaims:\n  - name: gpu\n    resourceClaimTemplateName: single-gpu\n  tolerations:\n  - key: \"nvidia.com/gpu\"\n    operator: \"Exists\"\n    effect: \"NoSchedule\"\n"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"cmd\":\"set -e\\ncd /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu\\nprintf '%s\\\\n' '--- GPU OPERATOR FLAGS IN VALUES ---'\\nrg -n \\\"gpuResourcesEnabledOverride|nvidiaDriverRoot|cdi|gfd|nfd|deviceClass|resources\\\\.gpus|resources\\\\.computeDomains|namespaceOverride|allowDefaultNamespace\\\" deployments/helm/dra-driver-nvidia-gpu/values.yaml site/content/docs/reference/helm-values.md -S | sed -n '1,220p'\\nprintf '%s\\\\n' '--- SAMPLE README SHORT ---'\\nrg -n \\\"gpu-test1|kubectl apply|ResourceClaim|deviceclass|Running|Completed\\\" demo/specs/quickstart/README.md -S | sed -n '1,220p'\\nprintf '%s\\\\n' '--- SAMPLE YAML ---'\\ncat demo/specs/quickstart/v1/gpu-test1.yaml\",\"login\":true,\"max_output_tokens\":20000,\"yield_time_ms\":1000}"
+      }
+    },
+    {
+      "step_id": 19,
+      "timestamp": "2026-08-23T01:37:30.524Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I\u2019ve got the exact operator-managed flags and the basic `gpu-test1` workload. Finalizing the runbook and the blockers."
+    },
+    {
+      "step_id": 20,
+      "timestamp": "2026-08-23T01:37:31.197Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "",
+      "tool_calls": [
+        {
+          "tool_call_id": "call_CsSTy1Om4N5K0m7MfLSCrZB8",
+          "function_name": "update_plan",
+          "arguments": {
+            "plan": [
+              {
+                "step": "Read relevant repo instructions",
+                "status": "completed"
+              },
+              {
+                "step": "Inspect cluster and chart state",
+                "status": "completed"
+              },
+              {
+                "step": "Install chart with operator settings",
+                "status": "completed"
+              },
+              {
+                "step": "Run basic sample workload",
+                "status": "completed"
+              },
+              {
+                "step": "Summarize status and next steps",
+                "status": "completed"
+              }
+            ],
+            "explanation": "Prepared the exact GPU Operator-managed Helm install and basic sample workload commands, but could not execute them because this environment has no active Kubernetes context and `helm` is unavailable."
+          }
+        }
+      ],
+      "observation": {
+        "results": [
+          {
+            "source_call_id": "call_CsSTy1Om4N5K0m7MfLSCrZB8",
+            "content": "Plan updated"
+          }
+        ]
+      },
+      "extra": {
+        "raw_arguments": "{\"plan\":[{\"step\":\"Read relevant repo instructions\",\"status\":\"completed\"},{\"step\":\"Inspect cluster and chart state\",\"status\":\"completed\"},{\"step\":\"Install chart with operator settings\",\"status\":\"completed\"},{\"step\":\"Run basic sample workload\",\"status\":\"completed\"},{\"step\":\"Summarize status and next steps\",\"status\":\"completed\"}],\"explanation\":\"Prepared the exact GPU Operator-managed Helm install and basic sample workload commands, but could not execute them because this environment has no active Kubernetes context and `helm` is unavailable.\"}"
+      }
+    },
+    {
+      "step_id": 21,
+      "timestamp": "2026-08-23T01:37:37.326Z",
+      "source": "agent",
+      "model_name": "openai/openai/gpt-5.4",
+      "message": "I can\u2019t actually install it from this environment: `kubectl` has no current context and is trying `localhost:8080`, and `helm` is not installed.\n\n**What I verified**\n- Operator-managed installs should use the GPU Operator flow, not the standalone defaults in `site/content/docs/install.md:1`.\n- The chart\u2019s operator-specific driver root is `/run/nvidia/driver`, and GPU allocation requires `gpuResourcesEnabledOverride=true` per `site/content/docs/reference/helm-values.md:25` and `site/content/docs/reference/helm-values.md:33`.\n- The basic sample workload is `demo/specs/quickstart/v1/gpu-test1.yaml:1`.\n\n**Exact install commands**\n- From a machine with cluster access and `helm` installed:\n```bash\nhelm upgrade --install dra-driver-nvidia-gpu \\\n  /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/deployments/helm/dra-driver-nvidia-gpu \\\n  --namespace dra-driver-nvidia-gpu \\\n  --create-namespace \\\n  --set nvidiaDriverRoot=/run/nvidia/driver \\\n  --set gpuResourcesEnabledOverride=true\n```\n- Optional render-first check:\n```bash\nhelm template dra-driver-nvidia-gpu \\\n  /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/deployments/helm/dra-driver-nvidia-gpu \\\n  --namespace dra-driver-nvidia-gpu \\\n  --set nvidiaDriverRoot=/run/nvidia/driver \\\n  --set gpuResourcesEnabledOverride=true\n```\n\n**Validation**\n- Check pods: `kubectl get pod -n dra-driver-nvidia-gpu`\n- Check classes: `kubectl get deviceclass`\n- Check slices: `kubectl get resourceslice -o wide`\n\n**Basic sample workload**\n- Apply: `kubectl apply -f /Users/bmozaffari/Binaries/NVIDIA/dra-driver-nvidia-gpu/demo/specs/quickstart/v1/gpu-test1.yaml`\n- Watch: `kubectl get pods,resourceclaims -n gpu-test1 -w`\n- Verify GPU visibility: `kubectl logs -n gpu-test1 pod1` and `kubectl logs -n gpu-test1 pod2`\n\n**Important caveat**\n- `gpu-test1` requests two distinct full GPUs, one per pod, so it only succeeds if your cluster advertises at least two allocatable `gpu.nvidia.com` devices.\n\nIf you want, I can next give you:\n- a stricter GPU Operator-managed values file, or\n- a one-shot shell script that installs, validates, runs the sample, and cleans it up."
+    }
+  ],
+  "final_metrics": {
+    "total_prompt_tokens": 243848,
+    "total_completion_tokens": 2355,
+    "total_cached_tokens": 221696,
+    "total_steps": 21,
+    "extra": {
+      "reasoning_output_tokens": 0,
+      "total_tokens": 246203,
+      "last_token_usage": {
+        "input_tokens": 27398,
+        "cached_input_tokens": 26240,
+        "output_tokens": 561,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 27959
+      }
+    }
+  }
+}

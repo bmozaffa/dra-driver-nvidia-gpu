@@ -1,0 +1,136 @@
+{
+  "agent": "codex",
+  "model": "openai/openai/gpt-5.4",
+  "model_source": "ACES default",
+  "scores": {
+    "security": 1.0,
+    "skill_execution": 0.9375,
+    "skill_efficiency": 0.8709,
+    "accuracy": 0.85,
+    "goal_accuracy": 1.0,
+    "behavior_check": 0.7834
+  },
+  "custom_scores": {},
+  "metric_set": "aces-default-v2",
+  "metrics": [
+    "security",
+    "skill_execution",
+    "skill_efficiency",
+    "accuracy",
+    "goal_accuracy",
+    "behavior_check"
+  ],
+  "dimensions": {
+    "security": {
+      "score": 1.0,
+      "sources": {
+        "security": 1.0
+      }
+    },
+    "correctness": {
+      "score": 0.85,
+      "sources": {
+        "accuracy": 1.0
+      }
+    },
+    "discoverability": {
+      "score": 0.9375,
+      "sources": {
+        "skill_execution": 1.0
+      }
+    },
+    "effectiveness": {
+      "score": 0.8917,
+      "sources": {
+        "goal_accuracy": 0.5,
+        "behavior_check": 0.5
+      }
+    },
+    "efficiency": {
+      "score": 0.8709,
+      "sources": {
+        "skill_efficiency": 1.0
+      }
+    }
+  },
+  "num_trials": 4,
+  "pass_at_k": {
+    "k": 1,
+    "pass_threshold": 0.5,
+    "stop_on_pass": false,
+    "passed_cases": 4,
+    "failed_cases": 0,
+    "total_cases": 4,
+    "rate": 1.0,
+    "attempts_used": 4,
+    "max_attempts_possible": 4,
+    "avg_attempts_used": 1.0,
+    "extra_cases": [],
+    "cases": {
+      "dra-compute-domain-imex-workflows-explicit-001": {
+        "passed": true,
+        "first_pass_attempt": 1,
+        "attempts_used": 1,
+        "attempts_skipped": 0,
+        "attempts_missing": 0,
+        "best_score": 0.8875,
+        "attempts": [
+          {
+            "attempt": 1,
+            "trial": "dra-compute-domain-imex-workflow__pwfK38f",
+            "score": 0.8875,
+            "passed": true
+          }
+        ]
+      },
+      "dra-compute-domain-imex-workflows-contextual-001": {
+        "passed": true,
+        "first_pass_attempt": 1,
+        "attempts_used": 1,
+        "attempts_skipped": 0,
+        "attempts_missing": 0,
+        "best_score": 0.8514,
+        "attempts": [
+          {
+            "attempt": 1,
+            "trial": "dra-compute-domain-imex-workflow__NPxsxaB",
+            "score": 0.8514,
+            "passed": true
+          }
+        ]
+      },
+      "dra-compute-domain-imex-workflows-adjacent-negative-001": {
+        "passed": true,
+        "first_pass_attempt": 1,
+        "attempts_used": 1,
+        "attempts_skipped": 0,
+        "attempts_missing": 0,
+        "best_score": 0.9444,
+        "attempts": [
+          {
+            "attempt": 1,
+            "trial": "dra-compute-domain-imex-workflow__xUHmEvU",
+            "score": 0.9444,
+            "passed": true
+          }
+        ]
+      },
+      "dra-compute-domain-imex-workflows-boundary-negative-001": {
+        "passed": true,
+        "first_pass_attempt": 1,
+        "attempts_used": 1,
+        "attempts_skipped": 0,
+        "attempts_missing": 0,
+        "best_score": 0.9444,
+        "attempts": [
+          {
+            "attempt": 1,
+            "trial": "dra-compute-domain-imex-workflow__BWEkYtt",
+            "score": 0.9444,
+            "passed": true
+          }
+        ]
+      }
+    }
+  }
+}
