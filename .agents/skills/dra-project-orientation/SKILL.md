@@ -86,7 +86,7 @@ Navigate the project from a user question to the authoritative component, source
 
 - Use read-only inspection by default.
 - Ask for explicit approval before cluster mutation, destructive local actions, or external-service changes.
-- Never request or expose kubeconfigs, tokens, private keys, credentials, or customer-sensitive data.
+- Never request, reveal, or reproduce Kubernetes client configuration files, authentication tokens or credentials, private keys, or customer-sensitive data. Work only from minimal redacted excerpts, and omit sensitive values from examples, quoted logs, commands, and responses.
 
 ## Non-Goals
 

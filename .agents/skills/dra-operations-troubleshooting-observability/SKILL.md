@@ -33,7 +33,7 @@ Localize an operational symptom to the correct Kubernetes, DRA driver, GPU Opera
 ## Workflow
 
 1. Define the scope before collecting data: affected resource family, namespaces, nodes, claims, workloads, time window, versions, deployment mode, and recent upgrade/configuration changes.
-2. Protect sensitive data. Ask for redacted snippets and never request full kubeconfigs, tokens, secrets, private keys, or customer-identifying bundles.
+2. Protect sensitive data. Ask only for the minimum redacted diagnostic excerpts required; never request or reproduce complete Kubernetes client configuration files, authentication tokens, secrets, private keys, or customer-identifying bundles.
 3. Check the installation layer:
    - Helm release/values and enabled components
    - Driver pod/container readiness and restarts

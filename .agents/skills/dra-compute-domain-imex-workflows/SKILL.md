@@ -88,7 +88,7 @@ Trace a ComputeDomain from custom-resource creation through IMEX coordination an
 ## Safety Constraints
 
 - Use read-only inspection first and obtain explicit approval before applying/deleting ComputeDomains, changing host IMEX service state, switching modes, restarting components, or running MNNVL tests.
-- Never expose kubeconfigs, credentials, customer topology, private node addresses, or sensitive logs.
+- - Never request, reveal, or reproduce Kubernetes client configuration files or authentication credentials. Use only the minimum redacted customer-topology and log evidence needed for diagnosis; redact private node addresses and other sensitive values from commands, patches, escalation bundles, and responses.
 - Avoid mode changes while active ComputeDomain workloads exist unless an approved drain and recovery plan is present.
 
 ## Non-Goals

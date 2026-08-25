@@ -76,7 +76,7 @@ Turn a DRA driver idea into a bounded, source-backed design artifact that follow
 
 - Do not modify clusters, external services, issues, PRs, or releases without explicit approval.
 - Preserve internal-only information boundaries in upstream-ready drafts.
-- Never include secrets, credentials, kubeconfigs, customer data, or private cluster identifiers.
+- Never include Kubernetes client configuration files, authentication credentials, secrets, customer data, or private cluster identifiers in proposals or design artifacts. Use only minimal redacted examples, and omit sensitive values from diagrams, commands, logs, patches, and upstream-ready drafts.
 
 ## Non-Goals
 

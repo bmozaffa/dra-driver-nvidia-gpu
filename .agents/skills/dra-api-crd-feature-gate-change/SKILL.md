@@ -90,7 +90,7 @@ Carry a user-visible or persisted contract change through design alignment, auth
 - Inspect the current diff before and after generation; never discard unrelated work.
 - Ask before running live-cluster tests or applying CRDs, charts, or workloads.
 - Do not delete or rewrite checkpoint files as a troubleshooting shortcut without an approved recovery plan.
-- Never expose secrets, kubeconfigs, credentials, or customer data.
+- Never request, collect, reveal, or reproduce Kubernetes client configuration files, authentication credentials, secrets, or customer data. Work only from minimal redacted excerpts, and omit sensitive values from commands, logs, patches, generated artifacts, and responses.
 
 ## Non-Goals
 

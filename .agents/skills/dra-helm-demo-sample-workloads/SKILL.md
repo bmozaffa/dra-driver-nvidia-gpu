@@ -45,7 +45,7 @@ Produce a version-aware, reviewable deployment or demo procedure with an explici
    - Run `helm template` with the exact intended values.
    - Inspect namespaces, images, service accounts, RBAC, host paths, security context, node selectors, feature gates, controller/plugin enablement, and DeviceClasses.
 6. Present the mutation plan, affected cluster objects, rollback/cleanup plan, and verification steps. Obtain explicit approval before creating a cluster or running Helm/kubectl mutations.
-7. Apply only the approved commands. Avoid embedding credentials or kubeconfig contents.
+7. Apply only the approved commands. Keep authentication credentials and Kubernetes client configuration contents out of command lines, shell history, rendered values, manifests, logs, and responses.
 8. Verify in order:
    - Helm release and driver pod readiness
    - Expected plugin/controller/webhook containers
@@ -93,7 +93,7 @@ Produce a version-aware, reviewable deployment or demo procedure with an explici
 
 - Require explicit approval before `helm install/upgrade/uninstall`, mutating `kubectl`, cluster creation/deletion, or invasive tests.
 - Show the current context, namespace, release name, and exact target before mutation.
-- Never request or print kubeconfigs, tokens, registry credentials, or private cluster data.
+- Never request, display, or reproduce Kubernetes client configuration files, authentication tokens, registry credentials, or private cluster data. Use only minimal redacted excerpts, and omit sensitive values from commands, rendered manifests, logs, and responses.
 - Avoid destructive cleanup globs and broad namespace deletion.
 
 ## Non-Goals

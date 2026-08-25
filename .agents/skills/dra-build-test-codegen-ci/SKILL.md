@@ -88,7 +88,7 @@ Map a repository change to the smallest credible validation set, run safe local 
 
 - Ask for explicit approval before BATS, e2e, cluster creation, chart install/upgrade, or any other cluster mutation.
 - Never clean, reset, or overwrite unrelated work to make a check pass.
-- Do not expose kubeconfigs, credentials, cloud project data, or sensitive logs.
+- - Never request, reveal, or reproduce Kubernetes client configuration files or authentication credentials. Use only the minimum redacted cloud-project and log evidence needed for validation, and omit sensitive values from commands, test output, CI artifacts, patches, and responses.
 
 ## Non-Goals
 

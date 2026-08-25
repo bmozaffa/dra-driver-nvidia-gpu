@@ -90,7 +90,7 @@ Trace a GPU request from declared intent through scheduler allocation and node p
 ## Safety Constraints
 
 - Use read-only cluster inspection first and obtain explicit approval before applying claims, restarting plugins, changing MIG/VFIO state, editing host drivers, deleting checkpoints, or running invasive tests.
-- Never expose kubeconfigs, credentials, GPU customer data, or full sensitive logs.
+- Never request, reveal, or reproduce Kubernetes client configuration files or authentication credentials. Use only the minimum redacted GPU customer data and log excerpts needed for diagnosis, and omit sensitive values from commands, patches, diagnostic artifacts, and responses.
 - Preserve active workloads and claims when suggesting recovery.
 
 ## Non-Goals
