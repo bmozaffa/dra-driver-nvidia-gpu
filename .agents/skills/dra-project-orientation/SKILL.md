@@ -86,7 +86,7 @@ Navigate the project from a user question to the authoritative component, source
 
 - Use read-only inspection by default.
 - Ask for explicit approval before cluster mutation, destructive local actions, or external-service changes.
-- Never request or expose kubeconfigs, tokens, private keys, credentials, or customer-sensitive data.
+- Use repository content, public documentation, user-provided material, and approved test fixtures. Keep private operational data out of commands, logs, patches, generated artifacts, and responses.
 
 ## Non-Goals
 
@@ -104,7 +104,3 @@ Navigate the project from a user question to the authoritative component, source
 - Review every DRA driver release.
 - Review after component moves, documentation restructuring, repository transfer, or Kubernetes minor-version updates.
 - Recheck external URLs and ownership data before publishing onboarding material.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata; do not fork the instructions for individual agent products.

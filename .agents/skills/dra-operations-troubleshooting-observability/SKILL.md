@@ -33,7 +33,7 @@ Localize an operational symptom to the correct Kubernetes, DRA driver, GPU Opera
 ## Workflow
 
 1. Define the scope before collecting data: affected resource family, namespaces, nodes, claims, workloads, time window, versions, deployment mode, and recent upgrade/configuration changes.
-2. Protect sensitive data. Ask for redacted snippets and never request full kubeconfigs, tokens, secrets, private keys, or customer-identifying bundles.
+2. Protect sensitive data. Ask for redacted snippets and never request private operational data.
 3. Check the installation layer:
    - Helm release/values and enabled components
    - Driver pod/container readiness and restarts
@@ -111,7 +111,3 @@ Localize an operational symptom to the correct Kubernetes, DRA driver, GPU Opera
 - Review every release and after logging, metrics, health, checkpoint, component, chart, prerequisite, or known-issue changes.
 - Verify online GPU Operator known issues immediately before a support handoff.
 - Refresh escalation fields when support ownership changes.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.

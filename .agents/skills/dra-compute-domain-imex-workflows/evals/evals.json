@@ -15,14 +15,14 @@
         "The agent references `site/content/docs/concepts/compute-domains.md`, `site/content/docs/guides/compute-domain-workloads.md`, and the compute-domain command directories as source anchors.",
         "The agent distinguishes driver-managed and host-managed IMEX lifecycle ownership.",
         "The agent treats `ComputeDomain.status` as informational unless current code or docs define it as a gating contract.",
-        "The agent avoids exposing topology, kubeconfigs, credentials, or private node details."
+        "The agent keeps private operational data out of commands, logs, patches, generated artifacts, and responses."
       ],
       "assertions": [
         "The agent reads the dra-compute-domain-imex-workflows instructions before taking action.",
         "The agent references `site/content/docs/concepts/compute-domains.md`, `site/content/docs/guides/compute-domain-workloads.md`, and the compute-domain command directories as source anchors.",
         "The agent distinguishes driver-managed and host-managed IMEX lifecycle ownership.",
         "The agent treats `ComputeDomain.status` as informational unless current code or docs define it as a gating contract.",
-        "The agent avoids exposing topology, kubeconfigs, credentials, or private node details."
+        "The agent keeps private operational data out of commands, logs, patches, generated artifacts, and responses."
       ]
     },
     {

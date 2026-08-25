@@ -27,8 +27,8 @@ Carry a user-visible or persisted contract change through design alignment, auth
 - Proposed behavior and user-facing example
 - Target release and supported Kubernetes versions
 - Affected resource family and binaries
-- Upgrade/downgrade and stored-state expectations
-- Adjacent feature gates and hardware/runtime constraints
+- Upgrade and downgrade, and stored-state expectations
+- Adjacent feature gates and hardware and runtime constraints
 
 ## Workflow
 
@@ -36,7 +36,7 @@ Carry a user-visible or persisted contract change through design alignment, auth
 2. Read the proposal process. Require design alignment for any user-facing API, gate, Helm value, ResourceSlice attribute, checkpoint, dependency, or significant behavior change.
 3. Identify each contract and its authority:
    - Handwritten API types and validation: `api/nvidia.com/resource/v1beta1/`
-   - Feature definitions/defaults/dependencies: `pkg/featuregates/featuregates.go`
+   - Feature definitions, defaults, and dependencies: `pkg/featuregates/featuregates.go`
    - Generated deepcopy, clients, listers, informers, and CRDs: generated outputs under `api/`, `pkg/nvidia.com/`, and `deployments/helm/dra-driver-nvidia-gpu/crds/`
    - Helm defaults and rendering: `deployments/helm/dra-driver-nvidia-gpu/values.yaml` and `templates/`
    - Admission validation: `cmd/webhook/`
@@ -45,17 +45,17 @@ Carry a user-visible or persisted contract change through design alignment, auth
 4. Search all readers, writers, defaults, validators, serializers, tests, templates, examples, and docs before editing. Identify the single authoritative state owner.
 5. Define compatibility:
    - Preserve wire names and semantics unless a reviewed migration exists.
-   - Use optional fields and safe zero values for additive checkpoint changes; document old/new binary behavior.
+   - Use optional fields and safe zero values for additive checkpoint changes; document old and new binary behavior.
    - Account for the Kubernetes DRA API level used by each supported Kubernetes minor.
    - Treat ResourceSlice attribute names and CEL access paths as public contracts.
    - State CRD update ordering and Helm's CRD upgrade limitations.
 6. For a feature gate, define stage, default, introduction version, dependencies, mutual exclusions, composition with adjacent gates, graduation evidence, and removal plan. Compare the code registry with the feature-gate docs and report drift.
 7. Implement handwritten sources first. Never hand-edit generated files as the source of truth.
 8. Regenerate with the repository workflow. Review the generated diff for unintended schema, default, required-field, RBAC, or client changes.
-9. Update Helm values/templates, webhook validation, DeviceClasses, examples, API/feature-gate/Helm/ResourceSlice docs, upgrade guidance, and PR release notes as applicable.
+9. Update Helm values and templates, webhook validation, DeviceClasses, examples, API/feature-gate/Helm/ResourceSlice docs, upgrade guidance, and PR release notes as applicable.
 10. Run the change-appropriate validation from `$dra-build-test-codegen-ci`, including focused unit tests, `make generate`, `make check-generate`, `make test`, `make check`, and `make helm-lint` where relevant.
-11. Add upgrade/downgrade and negative tests. Include real-cluster coverage only after explicit approval.
-12. Return a contract-change summary, compatibility matrix, generated-file list, validation evidence, docs/release impact, and open risks.
+11. Add upgrade and downgrade and negative tests. Include real-cluster coverage only after explicit approval.
+12. Return a contract-change summary, compatibility matrix, generated-file list, validation evidence, docs and release impact, and open risks.
 
 ## Expected Outputs
 
@@ -90,7 +90,7 @@ Carry a user-visible or persisted contract change through design alignment, auth
 - Inspect the current diff before and after generation; never discard unrelated work.
 - Ask before running live-cluster tests or applying CRDs, charts, or workloads.
 - Do not delete or rewrite checkpoint files as a troubleshooting shortcut without an approved recovery plan.
-- Never expose secrets, kubeconfigs, credentials, or customer data.
+- Limit work to repository content and approved test fixtures. Keep private operational data out of commands, logs, patches, generated artifacts, and responses.
 
 ## Non-Goals
 
@@ -108,7 +108,3 @@ Carry a user-visible or persisted contract change through design alignment, auth
 - Review every DRA driver release and Kubernetes dependency minor bump.
 - Review after CRD/codegen tool changes, feature-gate lifecycle changes, checkpoint format changes, or GPU Operator compatibility updates.
 - Reconcile code and public reference docs before relying on a gate list or default.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.

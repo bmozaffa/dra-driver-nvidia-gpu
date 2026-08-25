@@ -39,14 +39,14 @@
         "The agent reads or references GPU allocation docs, API types, ResourceSlice attributes, feature gates, and `cmd/gpu-kubelet-plugin/`.",
         "The agent separates DRA driver behavior from scheduler, GPU Operator, NVIDIA driver, runtime/CDI, and hardware configuration.",
         "The agent preserves active workloads and claims when suggesting recovery.",
-        "The agent does not leak kubeconfigs, credentials, or sensitive workload details."
+        "The agent keeps private operational data out of commands, logs, patches, generated artifacts, and responses."
       ],
       "assertions": [
         "The agent infers that the request concerns GPU sharing, ResourceClaims, prepare, CDI, and container-visible devices.",
         "The agent reads or references GPU allocation docs, API types, ResourceSlice attributes, feature gates, and `cmd/gpu-kubelet-plugin/`.",
         "The agent separates DRA driver behavior from scheduler, GPU Operator, NVIDIA driver, runtime/CDI, and hardware configuration.",
         "The agent preserves active workloads and claims when suggesting recovery.",
-        "The agent does not leak kubeconfigs, credentials, or sensitive workload details."
+        "The agent keeps private operational data out of commands, logs, patches, generated artifacts, and responses."
       ]
     },
     {

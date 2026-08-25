@@ -88,7 +88,7 @@ Produce a release-scoped readiness record that aligns code, generated artifacts,
 ## Safety Constraints
 
 - Require explicit approval before tagging, branching, pushing, publishing, promoting images/charts, opening or updating issues/PRs, sending announcements, or changing external services.
-- Never expose registry credentials, tokens, private support data, or embargoed security information.
+- Use repository content, public documentation, user-provided material, and approved test fixtures. Keep private operational data out of commands, logs, patches, generated artifacts, and responses.
 - Preserve release evidence and avoid destructive local cleanup.
 
 ## Non-Goals
@@ -109,7 +109,3 @@ Produce a release-scoped readiness record that aligns code, generated artifacts,
 - Review every DRA driver release.
 - Refresh after release automation, registry/promotion, versioning, docs structure, Kubernetes support, or GPU Operator lifecycle changes.
 - Verify all external support and known-issue sources on the date of each release handoff.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.

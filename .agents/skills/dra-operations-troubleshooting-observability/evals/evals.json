@@ -36,14 +36,14 @@
       "expected_output": "The agent prepares a redacted support evidence bundle covering deployment mode, versions, topology, clique labels, ComputeDomain and clique objects, daemon or host service readiness, channel claim allocation, kubelet prepare evidence, injected mounts and devices, events, logs, metrics, hypotheses, and remaining unknowns.",
       "expected_behavior": [
         "The agent infers that the request is an operations and support escalation involving ComputeDomain and IMEX evidence.",
-        "The agent asks for redacted snippets and avoids collecting kubeconfigs, tokens, secrets, private keys, or customer-identifying bundles.",
+        "The agent asks for redacted snippets and avoids collecting private operational data.",
         "The agent includes ComputeDomain-specific boundaries such as clique labels, controller objects, daemon or host readiness, channel claim, and injection evidence.",
         "The agent marks confirmed facts, hypotheses, attempted mutations, and remaining unknowns separately.",
         "The agent does not prescribe a generic restart as root-cause analysis."
       ],
       "assertions": [
         "The agent infers that the request is an operations and support escalation involving ComputeDomain and IMEX evidence.",
-        "The agent asks for redacted snippets and avoids collecting kubeconfigs, tokens, secrets, private keys, or customer-identifying bundles.",
+        "The agent asks for redacted snippets and avoids collecting private operational data.",
         "The agent includes ComputeDomain-specific boundaries such as clique labels, controller objects, daemon or host readiness, channel claim, and injection evidence.",
         "The agent marks confirmed facts, hypotheses, attempted mutations, and remaining unknowns separately.",
         "The agent does not prescribe a generic restart as root-cause analysis."

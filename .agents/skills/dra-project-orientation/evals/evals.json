@@ -15,14 +15,14 @@
         "The agent checks `git status`, current branch, `VERSION`, `go.mod`, and Helm `Chart.yaml` for checkout context.",
         "The agent reads `README.md` and `site/content/docs/concepts/architecture.md` before describing the project.",
         "The agent verifies named paths exist and separates handwritten APIs, generated clients, and CRDs.",
-        "The agent uses read-only inspection and avoids exposing secrets, tokens, kubeconfigs, or customer-sensitive data."
+        "The agent uses read-only inspection and avoids collecting private operational data."
       ],
       "assertions": [
         "The agent reads the dra-project-orientation instructions before taking action.",
         "The agent checks `git status`, current branch, `VERSION`, `go.mod`, and Helm `Chart.yaml` for checkout context.",
         "The agent reads `README.md` and `site/content/docs/concepts/architecture.md` before describing the project.",
         "The agent verifies named paths exist and separates handwritten APIs, generated clients, and CRDs.",
-        "The agent uses read-only inspection and avoids exposing secrets, tokens, kubeconfigs, or customer-sensitive data."
+        "The agent uses read-only inspection and avoids collecting private operational data."
       ]
     },
     {

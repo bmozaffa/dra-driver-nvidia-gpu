@@ -39,14 +39,14 @@
         "The agent confirms selected commands exist in the current checkout before recommending or running them.",
         "The agent names every skipped gate and explains why it is skipped.",
         "The agent does not claim unit or mock-NVML success as real GPU or MNNVL coverage.",
-        "The agent protects secrets, kubeconfigs, and unrelated worktree changes."
+        "The agent keeps private operational data out of commands, logs, patches, generated artifacts, and responses."
       ],
       "assertions": [
         "The agent infers that the request is about selecting DRA build, module, Helm, and CI validation.",
         "The agent confirms selected commands exist in the current checkout before recommending or running them.",
         "The agent names every skipped gate and explains why it is skipped.",
         "The agent does not claim unit or mock-NVML success as real GPU or MNNVL coverage.",
-        "The agent protects secrets, kubeconfigs, and unrelated worktree changes."
+        "The agent keeps private operational data out of commands, logs, patches, generated artifacts, and responses."
       ]
     },
     {

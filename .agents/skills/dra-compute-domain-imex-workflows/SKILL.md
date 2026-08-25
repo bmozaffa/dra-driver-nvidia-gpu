@@ -88,7 +88,7 @@ Trace a ComputeDomain from custom-resource creation through IMEX coordination an
 ## Safety Constraints
 
 - Use read-only inspection first and obtain explicit approval before applying/deleting ComputeDomains, changing host IMEX service state, switching modes, restarting components, or running MNNVL tests.
-- Never expose kubeconfigs, credentials, customer topology, private node addresses, or sensitive logs.
+- Use repository content, public documentation, user-provided material, and approved test fixtures. Keep private operational data out of commands, logs, patches, generated artifacts, and responses.
 - Avoid mode changes while active ComputeDomain workloads exist unless an approved drain and recovery plan is present.
 
 ## Non-Goals
@@ -107,7 +107,3 @@ Trace a ComputeDomain from custom-resource creation through IMEX coordination an
 - Review every DRA driver and GPU Operator release.
 - Review after ComputeDomain CRD, clique, DNS, IMEX mode/isolation, driver prerequisite, MNNVL platform, or checkpoint changes.
 - Verify current online prerequisites before operator-facing guidance.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.

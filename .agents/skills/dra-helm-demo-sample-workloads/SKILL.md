@@ -45,7 +45,7 @@ Produce a version-aware, reviewable deployment or demo procedure with an explici
    - Run `helm template` with the exact intended values.
    - Inspect namespaces, images, service accounts, RBAC, host paths, security context, node selectors, feature gates, controller/plugin enablement, and DeviceClasses.
 6. Present the mutation plan, affected cluster objects, rollback/cleanup plan, and verification steps. Obtain explicit approval before creating a cluster or running Helm/kubectl mutations.
-7. Apply only the approved commands. Avoid embedding credentials or kubeconfig contents.
+7. Apply only the approved commands. Avoid embedding private operational data.
 8. Verify in order:
    - Helm release and driver pod readiness
    - Expected plugin/controller/webhook containers
@@ -93,7 +93,7 @@ Produce a version-aware, reviewable deployment or demo procedure with an explici
 
 - Require explicit approval before `helm install/upgrade/uninstall`, mutating `kubectl`, cluster creation/deletion, or invasive tests.
 - Show the current context, namespace, release name, and exact target before mutation.
-- Never request or print kubeconfigs, tokens, registry credentials, or private cluster data.
+- Use repository content, public documentation, user-provided material, and approved test fixtures. Keep private operational data out of commands, logs, patches, generated artifacts, and responses.
 - Avoid destructive cleanup globs and broad namespace deletion.
 
 ## Non-Goals
@@ -113,7 +113,3 @@ Produce a version-aware, reviewable deployment or demo procedure with an explici
 - Review every DRA driver and GPU Operator release.
 - Review after Helm value, prerequisite, Kubernetes DRA API, runtime/CDI, demo-script, or known-issue changes.
 - Verify official online sources immediately before a productized install or upgrade.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.

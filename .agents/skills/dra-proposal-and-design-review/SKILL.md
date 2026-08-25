@@ -76,7 +76,7 @@ Turn a DRA driver idea into a bounded, source-backed design artifact that follow
 
 - Do not modify clusters, external services, issues, PRs, or releases without explicit approval.
 - Preserve internal-only information boundaries in upstream-ready drafts.
-- Never include secrets, credentials, kubeconfigs, customer data, or private cluster identifiers.
+- Use repository content, public documentation, user-provided material, and approved test fixtures. Keep private operational data out of commands, logs, patches, generated artifacts, and responses.
 
 ## Non-Goals
 
@@ -94,7 +94,3 @@ Turn a DRA driver idea into a bounded, source-backed design artifact that follow
 - Review whenever the proposal template or lifecycle changes.
 - Review each DRA driver release and after major Kubernetes DRA or GPU Operator changes.
 - Revalidate external links and feature-gate conventions before drafting a release-bound proposal.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.

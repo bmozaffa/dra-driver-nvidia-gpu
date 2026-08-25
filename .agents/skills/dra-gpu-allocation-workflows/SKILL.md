@@ -90,7 +90,7 @@ Trace a GPU request from declared intent through scheduler allocation and node p
 ## Safety Constraints
 
 - Use read-only cluster inspection first and obtain explicit approval before applying claims, restarting plugins, changing MIG/VFIO state, editing host drivers, deleting checkpoints, or running invasive tests.
-- Never expose kubeconfigs, credentials, GPU customer data, or full sensitive logs.
+- Use repository content, public documentation, user-provided material, and approved test fixtures. Keep private operational data out of commands, logs, patches, generated artifacts, and responses.
 - Preserve active workloads and claims when suggesting recovery.
 
 ## Non-Goals
@@ -109,7 +109,3 @@ Trace a GPU request from declared intent through scheduler allocation and node p
 - Review every DRA driver release and Kubernetes minor bump.
 - Review after GPU API, ResourceSlice attribute, feature-gate, MIG, VFIO, checkpoint, CDI, or GPU Operator changes.
 - Verify current public prerequisites and known issues before operator-facing guidance.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.

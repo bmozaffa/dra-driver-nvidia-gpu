@@ -88,7 +88,7 @@ Map a repository change to the smallest credible validation set, run safe local 
 
 - Ask for explicit approval before BATS, e2e, cluster creation, chart install/upgrade, or any other cluster mutation.
 - Never clean, reset, or overwrite unrelated work to make a check pass.
-- Do not expose kubeconfigs, credentials, cloud project data, or sensitive logs.
+- Use repository content, public documentation, user-provided material, and approved test fixtures. Keep private operational data out of commands, logs, patches, generated artifacts, and responses.
 
 ## Non-Goals
 
@@ -106,7 +106,3 @@ Map a repository change to the smallest credible validation set, run safe local 
 - Review after Make target, codegen, test-suite, CI-provider, Go, or Kubernetes dependency changes.
 - Review every DRA driver release.
 - Recheck the PR template and workflows before publishing a readiness checklist.
-
-## Registration Notes
-
-Keep this `SKILL.md` as the shared source of truth. Use `agents/openai.yaml` only as registration metadata.
