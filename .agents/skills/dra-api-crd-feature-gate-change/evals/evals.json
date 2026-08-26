@@ -1,0 +1,53 @@
+{
+  "skill_name": "dra-api-crd-feature-gate-change",
+  "evals": [
+    {
+      "id": "dra-api-crd-feature-gate-change-001",
+      "prompt": "Use dra-api-crd-feature-gate-change to guide compatible api, crd, opaque device configuration, resourceslice contract, helm value, kubelet-plugin checkpoint schema, and feature-gate changes in the dra driver for nvidia gpus. use when a user mentions crds, api fields, resourceslice attributes or capacity, helm values, checkpoint schemas, feature gates, api evolution, or upgrade and downgrade compatibility",
+      "expected_output": "The agent used the dra-api-crd-feature-gate-change skill and provided a response showing guide compatible api, crd, opaque device configuration, resourceslice contract, helm value, kubelet-plugin checkpoint schema, and feature-gate changes in the dra driver for nvidia gpus. use when a user mentions crds, api fields, resourceslice attributes or capacity, helm values, checkpoint schemas, feature gates, api evolution, or upgrade and downgrade compatibility",
+      "assertions": [
+        "The agent read the dra-api-crd-feature-gate-change SKILL.md before taking action",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_script": null
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change-002",
+      "prompt": "I need to guide compatible api, crd, opaque device configuration, resourceslice contract, helm value, kubelet-plugin checkpoint schema, and feature-gate changes in the dra driver for nvidia gpus. use when a user mentions crds, api fields, resourceslice attributes or capacity, helm values, checkpoint schemas, feature gates, api evolution, or upgrade and downgrade compatibility",
+      "expected_output": "The agent identified dra-api-crd-feature-gate-change as the correct skill and provided results for guide compatible api, crd, opaque device configuration, resourceslice contract, helm value, kubelet-plugin checkpoint schema, and feature-gate changes in the dra driver for nvidia gpus. use when a user mentions crds, api fields, resourceslice attributes or capacity, helm values, checkpoint schemas, feature gates, api evolution, or upgrade and downgrade compatibility",
+      "assertions": [
+        "The agent identified dra-api-crd-feature-gate-change as the appropriate skill without being told explicitly",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_script": null
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change-003",
+      "prompt": "I'm working on a project and need help with guide compatible api, crd, opaque device configuration, resourceslice contract, helm value, kubelet-plugin checkpoint schema, and feature-gate changes in the dra driver for nvidia gpus. use when a user mentions crds, api fields, resourceslice attributes or capacity, helm values, checkpoint schemas, feature gates, api evolution, or upgrade and downgrade compatibility. Can you assist?",
+      "expected_output": "The agent used dra-api-crd-feature-gate-change in a project context and provided actionable results for guide compatible api, crd, opaque device configuration, resourceslice contract, helm value, kubelet-plugin checkpoint schema, and feature-gate changes in the dra driver for nvidia gpus. use when a user mentions crds, api fields, resourceslice attributes or capacity, helm values, checkpoint schemas, feature gates, api evolution, or upgrade and downgrade compatibility",
+      "assertions": [
+        "The agent read the dra-api-crd-feature-gate-change SKILL.md before taking action",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-api-crd-feature-gate-change",
+      "expected_script": null
+    },
+    {
+      "id": "dra-api-crd-feature-gate-change-neg-001",
+      "prompt": "What does the dra-api-crd-feature-gate-change skill do and what are its capabilities?",
+      "expected_output": "The agent explained the dra-api-crd-feature-gate-change skill's capabilities and when to use it, without executing any scripts",
+      "assertions": [
+        "The agent responded conversationally without executing tools or scripts",
+        "The agent's response accurately describes what dra-api-crd-feature-gate-change does",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": null,
+      "expected_script": null
+    }
+  ]
+}
