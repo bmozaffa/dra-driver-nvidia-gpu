@@ -1,0 +1,53 @@
+{
+  "skill_name": "dra-compute-domain-imex-workflows",
+  "evals": [
+    {
+      "id": "dra-compute-domain-imex-workflows-001",
+      "prompt": "Use dra-compute-domain-imex-workflows to explain, design, and troubleshoot nvidia computedomain and imex workflows across mnnvl topology, daemon lifecycle, clique readiness, dra channel allocation, and workload injection. use when asked about computedomains, imex, mnnvl, gb200 or gb300 systems, clique readiness, or channel injection",
+      "expected_output": "The agent used the dra-compute-domain-imex-workflows skill and provided a response showing explain, design, and troubleshoot nvidia computedomain and imex workflows across mnnvl topology, daemon lifecycle, clique readiness, dra channel allocation, and workload injection. use when asked about computedomains, imex, mnnvl, gb200 or gb300 systems, clique readiness, or channel injection",
+      "assertions": [
+        "The agent read the dra-compute-domain-imex-workflows SKILL.md before taking action",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_script": null
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows-002",
+      "prompt": "I need to explain, design, and troubleshoot nvidia computedomain and imex workflows across mnnvl topology, daemon lifecycle, clique readiness, dra channel allocation, and workload injection. use when asked about computedomains, imex, mnnvl, gb200 or gb300 systems, clique readiness, or channel injection",
+      "expected_output": "The agent identified dra-compute-domain-imex-workflows as the correct skill and provided results for explain, design, and troubleshoot nvidia computedomain and imex workflows across mnnvl topology, daemon lifecycle, clique readiness, dra channel allocation, and workload injection. use when asked about computedomains, imex, mnnvl, gb200 or gb300 systems, clique readiness, or channel injection",
+      "assertions": [
+        "The agent identified dra-compute-domain-imex-workflows as the appropriate skill without being told explicitly",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_script": null
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows-003",
+      "prompt": "I'm working on a project and need help with explain, design, and troubleshoot nvidia computedomain and imex workflows across mnnvl topology, daemon lifecycle, clique readiness, dra channel allocation, and workload injection. use when asked about computedomains, imex, mnnvl, gb200 or gb300 systems, clique readiness, or channel injection. Can you assist?",
+      "expected_output": "The agent used dra-compute-domain-imex-workflows in a project context and provided actionable results for explain, design, and troubleshoot nvidia computedomain and imex workflows across mnnvl topology, daemon lifecycle, clique readiness, dra channel allocation, and workload injection. use when asked about computedomains, imex, mnnvl, gb200 or gb300 systems, clique readiness, or channel injection",
+      "assertions": [
+        "The agent read the dra-compute-domain-imex-workflows SKILL.md before taking action",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-compute-domain-imex-workflows",
+      "expected_script": null
+    },
+    {
+      "id": "dra-compute-domain-imex-workflows-neg-001",
+      "prompt": "What does the dra-compute-domain-imex-workflows skill do and what are its capabilities?",
+      "expected_output": "The agent explained the dra-compute-domain-imex-workflows skill's capabilities and when to use it, without executing any scripts",
+      "assertions": [
+        "The agent responded conversationally without executing tools or scripts",
+        "The agent's response accurately describes what dra-compute-domain-imex-workflows does",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": null,
+      "expected_script": null
+    }
+  ]
+}

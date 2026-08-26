@@ -1,0 +1,53 @@
+{
+  "skill_name": "dra-proposal-and-design-review",
+  "evals": [
+    {
+      "id": "dra-proposal-and-design-review-001",
+      "prompt": "Use dra-proposal-and-design-review to draft or review maintainer-ready design proposals, architecture decision records, implementation plans, feature-gate plans, and scope analyses for the dra driver for nvidia gpus. use when a user asks for a proposal, design review, adr, feature gate plan, scope analysis, or maintainer-ready technical writeup",
+      "expected_output": "The agent used the dra-proposal-and-design-review skill and provided a response showing draft or review maintainer-ready design proposals, architecture decision records, implementation plans, feature-gate plans, and scope analyses for the dra driver for nvidia gpus. use when a user asks for a proposal, design review, adr, feature gate plan, scope analysis, or maintainer-ready technical writeup",
+      "assertions": [
+        "The agent read the dra-proposal-and-design-review SKILL.md before taking action",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-proposal-and-design-review",
+      "expected_script": null
+    },
+    {
+      "id": "dra-proposal-and-design-review-002",
+      "prompt": "I need to draft or review maintainer-ready design proposals, architecture decision records, implementation plans, feature-gate plans, and scope analyses for the dra driver for nvidia gpus. use when a user asks for a proposal, design review, adr, feature gate plan, scope analysis, or maintainer-ready technical writeup",
+      "expected_output": "The agent identified dra-proposal-and-design-review as the correct skill and provided results for draft or review maintainer-ready design proposals, architecture decision records, implementation plans, feature-gate plans, and scope analyses for the dra driver for nvidia gpus. use when a user asks for a proposal, design review, adr, feature gate plan, scope analysis, or maintainer-ready technical writeup",
+      "assertions": [
+        "The agent identified dra-proposal-and-design-review as the appropriate skill without being told explicitly",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-proposal-and-design-review",
+      "expected_script": null
+    },
+    {
+      "id": "dra-proposal-and-design-review-003",
+      "prompt": "I'm working on a project and need help with draft or review maintainer-ready design proposals, architecture decision records, implementation plans, feature-gate plans, and scope analyses for the dra driver for nvidia gpus. use when a user asks for a proposal, design review, adr, feature gate plan, scope analysis, or maintainer-ready technical writeup. Can you assist?",
+      "expected_output": "The agent used dra-proposal-and-design-review in a project context and provided actionable results for draft or review maintainer-ready design proposals, architecture decision records, implementation plans, feature-gate plans, and scope analyses for the dra driver for nvidia gpus. use when a user asks for a proposal, design review, adr, feature gate plan, scope analysis, or maintainer-ready technical writeup",
+      "assertions": [
+        "The agent read the dra-proposal-and-design-review SKILL.md before taking action",
+        "The agent's final response directly addresses the user's request",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "dra-proposal-and-design-review",
+      "expected_script": null
+    },
+    {
+      "id": "dra-proposal-and-design-review-neg-001",
+      "prompt": "What does the dra-proposal-and-design-review skill do and what are its capabilities?",
+      "expected_output": "The agent explained the dra-proposal-and-design-review skill's capabilities and when to use it, without executing any scripts",
+      "assertions": [
+        "The agent responded conversationally without executing tools or scripts",
+        "The agent's response accurately describes what dra-proposal-and-design-review does",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": null,
+      "expected_script": null
+    }
+  ]
+}
