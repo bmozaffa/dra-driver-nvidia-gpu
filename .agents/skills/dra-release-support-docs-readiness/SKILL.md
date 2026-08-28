@@ -180,7 +180,7 @@ For release-note text, state the user-visible outcome, affected configurations, 
 Use these paths to verify the current release contract:
 
 - `VERSION`, `RELEASE.md`, and `.github/workflows/release-automation.yml`: version trigger, tag, branch, and release process.
-- `deployments/helm/dra-driver-nvidia-gpu/Chart.yaml`, `values.yaml`, `templates/`, and `crds/`: chart/app versions, defaults, validation, Kubernetes compatibility, generated resources, and packaged CRDs.
+- `deployments/helm/dra-driver-nvidia-gpu/Chart.yaml`, `values.yaml`, `deployments/helm/dra-driver-nvidia-gpu/templates/`, and `crds/`: chart/app versions, defaults, validation, Kubernetes compatibility, generated resources, and packaged CRDs.
 - `hack/build-and-publish-image.sh`, `hack/build-and-publish-chart.sh`, and Makefile manifest targets: artifact construction and registry inputs.
 - `.github/PULL_REQUEST_TEMPLATE.md`, commit history, and changed tests: candidate release notes and intended user-facing impact.
 - `site/hugo.toml`, `site/content/contribute/docs.md`, and `site/content/docs/`: published release variables, site workflow, prerequisites, install, upgrade, reference, concept, and guide content.

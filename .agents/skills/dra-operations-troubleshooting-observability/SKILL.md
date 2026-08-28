@@ -187,7 +187,7 @@ Do not call a defect, regression, race, or flaky test from one symptom. Compare 
 
 Verify current behavior in these locations:
 
-- `deployments/helm/dra-driver-nvidia-gpu/values.yaml` and `templates/`: defaults, probes, metrics endpoints, labels, mounts, RBAC, rollout strategy, and validation.
+- `deployments/helm/dra-driver-nvidia-gpu/values.yaml` and `deployments/helm/dra-driver-nvidia-gpu/templates/`: defaults, probes, metrics endpoints, labels, mounts, RBAC, rollout strategy, and validation.
 - `cmd/gpu-kubelet-plugin/main.go`, `driver.go`, `health.go`, `device_state.go`, `cleanup.go`, and `checkpoint*.go`: startup, registration, ResourceSlices, Prepare/Unprepare, recovery, and cleanup.
 - `cmd/compute-domain-kubelet-plugin/main.go`, `driver.go`, `health.go`, `device_state.go`, `computedomain.go`, `cleanup.go`, and `checkpoint*.go`: channel publication, registration, readiness, CDI, and recovery.
 - `cmd/compute-domain-controller/`: reconciliation, generated resources, status, labels, finalizers, and controller diagnostics.

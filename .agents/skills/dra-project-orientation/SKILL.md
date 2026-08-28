@@ -51,7 +51,7 @@ Keep these relationships explicit when explaining how components fit:
 - `pkg/nvidia.com/` is generated clientset, informer, and lister code. `api/**/zz_generated.deepcopy.go` and Helm CRDs are also generated outputs. Change the API source rather than generated artifacts, then use `make generate` and `make check-generate` as appropriate.
 - `pkg/featuregates/`, `pkg/flags/`, and `pkg/metrics/` hold cross-component feature gates, CLI/Kubernetes configuration, and metrics. `pkg/imex/` and `pkg/fabricmanager/` own shared domain-specific integrations; `pkg/flock/` and `pkg/workqueue/` provide reusable coordination primitives.
 - `internal/common/` contains implementation shared only within this module; `internal/info/` contains build/version metadata.
-- `deployments/helm/dra-driver-nvidia-gpu/` is the installation source of truth. Read `values.yaml`, `templates/kubeletplugin.yaml`, `templates/controller.yaml`, and the relevant RBAC, DeviceClass, CRD, or webhook template to learn whether and how code is enabled and wired.
+- `deployments/helm/dra-driver-nvidia-gpu/` is the installation source of truth. Read `values.yaml`, `deployments/helm/dra-driver-nvidia-gpu/templates/kubeletplugin.yaml`, `deployments/helm/dra-driver-nvidia-gpu/templates/controller.yaml`, and the relevant RBAC, DeviceClass, CRD, or webhook template to learn whether and how code is enabled and wired.
 - `templates/` contains manifests and configuration rendered dynamically by running components, including per-ComputeDomain and MPS resources. Do not confuse these with the install-time Helm templates.
 - `deployments/container/` builds the runtime image. `deployments/devel/` defines the development-tooling image and code-generation tools.
 
