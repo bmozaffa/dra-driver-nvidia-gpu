@@ -3,11 +3,12 @@
   "evals": [
     {
       "id": "dra-gpu-allocation-workflows-001",
-      "prompt": "Use dra-gpu-allocation-workflows to explain, design, and troubleshoot nvidia gpu allocation through kubernetes dra, including resourceclaims, resourceslices, scheduler selection, kubelet prepare, cdi injection, mig, and vfio. use when asked about gpu claims, mig allocation, vfio passthrough, cdi injection, scheduling, or nvidia gpu resource attributes",
-      "expected_output": "The agent used the dra-gpu-allocation-workflows skill and provided a response showing explain, design, and troubleshoot nvidia gpu allocation through kubernetes dra, including resourceclaims, resourceslices, scheduler selection, kubelet prepare, cdi injection, mig, and vfio. use when asked about gpu claims, mig allocation, vfio passthrough, cdi injection, scheduling, or nvidia gpu resource attributes",
+      "prompt": "Use dra-gpu-allocation-workflows if it is available in your environment. If it is unavailable, answer directly; do not search for or install skills. Diagnose this without changing the cluster: a pod has a generated ResourceClaim whose status.allocation selects a dynamic-MIG device on node-a, but the pod reports FailedPrepareDynamicResources and never starts. Explain which boundary has already succeeded, what identities and evidence to correlate next, and how dynamic MIG preparation and recovery differ from static MIG.",
+      "expected_output": "A boundary-first diagnosis that recognizes scheduler allocation already succeeded, reads the exact result driver, pool, device, and request, correlates claim UID with node-a plugin events/logs and checkpoint state, explains abstract dynamic-MIG publication followed by GI/CI creation during Prepare and destruction during Unprepare, contrasts static pre-created devices, and avoids manual MIG or checkpoint mutation.",
       "assertions": [
         "The agent read the dra-gpu-allocation-workflows SKILL.md before taking action",
-        "The agent's final response directly addresses the user's request",
+        "The response identifies allocation as successful and localizes the failure to kubelet-to-plugin Prepare on the selected node using claim, request, pool, device, node, and checkpoint evidence",
+        "The response distinguishes dynamic MIG's abstract scheduling and on-demand creation from static MIG discovery and does not recommend manual MIG or checkpoint changes during diagnosis",
         "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
       ],
       "expected_skill": "dra-gpu-allocation-workflows",
@@ -15,11 +16,12 @@
     },
     {
       "id": "dra-gpu-allocation-workflows-002",
-      "prompt": "I need to explain, design, and troubleshoot nvidia gpu allocation through kubernetes dra, including resourceclaims, resourceslices, scheduler selection, kubelet prepare, cdi injection, mig, and vfio. use when asked about gpu claims, mig allocation, vfio passthrough, cdi injection, scheduling, or nvidia gpu resource attributes",
-      "expected_output": "The agent identified dra-gpu-allocation-workflows as the correct skill and provided results for explain, design, and troubleshoot nvidia gpu allocation through kubernetes dra, including resourceclaims, resourceslices, scheduler selection, kubelet prepare, cdi injection, mig, and vfio. use when asked about gpu claims, mig allocation, vfio passthrough, cdi injection, scheduling, or nvidia gpu resource attributes",
+      "prompt": "Use dra-gpu-allocation-workflows if it is available in your environment. If it is unavailable, answer directly; do not search for or install skills. With PassthroughSupport enabled, one node advertises both GPU and VFIO representations of the same physical card. Two pods with independent claims were scheduled nearly together, one for each representation; the VFIO pod is timing out in Prepare. Explain the race and a safe diagnosis and prevention plan. Do not restart plugins, rebind devices, or stop services.",
+      "expected_output": "An explanation that GPU and VFIO entries can be sibling representations of one physical device rather than independent capacity, that concurrent allocations can conflict before publication removes the sibling, and that the first successful preparation wins. The diagnosis checks both allocations, PCI/IOMMU identity, open handles, current driver, node plugin events, and checkpoint; prevention serializes work or dedicates and constrains node sets without disruptive remediation.",
       "assertions": [
-        "The agent identified dra-gpu-allocation-workflows as the appropriate skill without being told explicitly",
-        "The agent's final response directly addresses the user's request",
+        "The agent read the dra-gpu-allocation-workflows SKILL.md before taking action",
+        "The response explains the GPU/VFIO sibling-representation race and that the first completed Prepare suppresses the competing representation in later ResourceSlice publication",
+        "The response gathers allocation, PCI, IOMMU, open-handle, kernel-driver, plugin, and checkpoint evidence and recommends serialization or dedicated constrained nodes without disruptive rebinding",
         "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
       ],
       "expected_skill": "dra-gpu-allocation-workflows",
@@ -27,11 +29,12 @@
     },
     {
       "id": "dra-gpu-allocation-workflows-003",
-      "prompt": "I'm working on a project and need help with explain, design, and troubleshoot nvidia gpu allocation through kubernetes dra, including resourceclaims, resourceslices, scheduler selection, kubelet prepare, cdi injection, mig, and vfio. use when asked about gpu claims, mig allocation, vfio passthrough, cdi injection, scheduling, or nvidia gpu resource attributes. Can you assist?",
-      "expected_output": "The agent used dra-gpu-allocation-workflows in a project context and provided actionable results for explain, design, and troubleshoot nvidia gpu allocation through kubernetes dra, including resourceclaims, resourceslices, scheduler selection, kubelet prepare, cdi injection, mig, and vfio. use when asked about gpu claims, mig allocation, vfio passthrough, cdi injection, scheduling, or nvidia gpu resource attributes",
+      "prompt": "Use dra-gpu-allocation-workflows if it is available in your environment. If it is unavailable, answer directly; do not search for or install skills. Review this symptom without editing manifests: two containers in one pod are intended to share one DRA GPU claim. The claim is allocated and Prepare returned a claim-scoped CDI ID, but only container-a sees the GPU; container-b omitted resources.claims. Explain the object-name mapping, the failed boundary, and the minimal manifest correction and verification.",
+      "expected_output": "A clear distinction among the pod-local resourceClaims handle, each container's resources.claims reference, claim request name, allocation result, and CDI ID. It locates the failure after allocation and Prepare at container selection/runtime injection, says container-b must reference the same pod-local claim handle, distinguishes this from independent-claim sharing or MPS/time slicing, and verifies both containers see the same device.",
       "assertions": [
         "The agent read the dra-gpu-allocation-workflows SKILL.md before taking action",
-        "The agent's final response directly addresses the user's request",
+        "The response correctly maps Pod resourceClaims, container resources.claims, claim device requests, allocation results, and claim-scoped CDI identifiers without conflating their names",
+        "The response localizes the issue after successful allocation and Prepare, prescribes adding the same pod-local claim handle to container-b, and distinguishes shared claim access from sharing between independent claims",
         "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
       ],
       "expected_skill": "dra-gpu-allocation-workflows",
@@ -39,11 +42,11 @@
     },
     {
       "id": "dra-gpu-allocation-workflows-neg-001",
-      "prompt": "What does the dra-gpu-allocation-workflows skill do and what are its capabilities?",
-      "expected_output": "The agent explained the dra-gpu-allocation-workflows skill's capabilities and when to use it, without executing any scripts",
+      "prompt": "Without using tools or inspecting files, explain when CSS Grid is a better layout choice than Flexbox and give one small example.",
+      "expected_output": "A concise web-layout answer distinguishing two-dimensional Grid from one-dimensional Flexbox and showing a small relevant example, without invoking dra-gpu-allocation-workflows.",
       "assertions": [
-        "The agent responded conversationally without executing tools or scripts",
-        "The agent's response accurately describes what dra-gpu-allocation-workflows does",
+        "The agent did not read or invoke dra-gpu-allocation-workflows",
+        "The response stays focused on CSS layout rather than Kubernetes GPU allocation",
         "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
       ],
       "expected_skill": null,
