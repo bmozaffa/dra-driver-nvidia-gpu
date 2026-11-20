@@ -119,16 +119,25 @@ Read-only discovery for a directly managed Helm release can include:
 ```bash
 helm --kube-context <context> status <release> --namespace <namespace>
 helm --kube-context <context> history <release> --namespace <namespace>
-helm --kube-context <context> get values <release> --namespace <namespace> -o yaml
-helm --kube-context <context> get values <release> --namespace <namespace> --all -o yaml
-helm --kube-context <context> get manifest <release> --namespace <namespace>
 kubectl --context <context> get pods -n <namespace> -o wide
 kubectl --context <context> get deviceclasses
 kubectl --context <context> get resourceslices -o wide
 kubectl --context <context> get resourceclaims -A -o yaml
 ```
 
-Save the release revision, user-supplied values, computed values, and installed manifest before changing anything. Record which workloads and claims are healthy, their allocations and selected nodes, and the current ComputeDomain/IMEX mode when enabled. Use computed values as diagnostic evidence rather than blindly carrying every old default into a new chart.
+Identify the latest attempted revision and the last successful revision in Helm history.
+For each distinct revision, save its user-supplied values, computed values, and manifest in a protected location:
+
+```bash
+helm --kube-context <context> get values <release> -n <namespace> --revision <revision> -o yaml
+helm --kube-context <context> get values <release> -n <namespace> --revision <revision> --all -o yaml
+helm --kube-context <context> get manifest <release> -n <namespace> --revision <revision>
+```
+
+After a failed upgrade, compare both revisions with the live Deployments, DaemonSets, and pods before choosing values such as `nvidiaDriverRoot`.
+If no successful revision is available, record that gap and verify the baseline from the live installation.
+Use computed values to diagnose differences. Carry forward only the user overrides that still apply.
+Record healthy workloads and claims, their allocations and selected nodes, and the current ComputeDomain/IMEX mode when enabled.
 
 ### Review the source-to-target transition
 
@@ -136,28 +145,39 @@ Read `site/content/docs/upgrade.md` and the source and target release notes for 
 
 Check Kubernetes and served DRA API compatibility, NVIDIA driver/Container Toolkit requirements, feature gates, enabled plugins, Helm value changes, and checkpoint/API downgrade restrictions. Determine any required intermediate releases or workload maintenance steps. Preserve existing release/resource names and overrides where the transition requires them; do not substitute the new-install names.
 
-Apply CRD updates only when required by the applicable upgrade procedure, using that release's CRDs and the documented ordering. Helm does not update existing CRDs from the chart's `crds/` directory on upgrade. Do not assume every transition needs CRD changes or that a Helm rollback reverses them. If changing ComputeDomain IMEX mode or isolation, follow the guide's workload-drain and ComputeDomain-removal requirements rather than combining that change with an ordinary rolling upgrade.
+When the transition requires CRD updates, inspect the exact target chart's definitions with `helm show crds <chart> --version <target-chart-version>` (omit `--version` for a local chart).
+For each definition, compare its `spec` with `kubectl --context <context> get crd <name> -o yaml`, including schema and served or storage version changes. Record any missing definition.
+Review these separately from the release manifest. Helm does not upgrade existing CRDs from `crds/`, and Helm rollback does not revert a separately applied CRD.
+If changing ComputeDomain IMEX mode or isolation, include the guide's workload-drain and ComputeDomain-removal steps in the plan.
 
-Build a reviewed values file from the existing user-supplied configuration and intentional target-version changes. Retain required settings such as driver root, resource enablement, image overrides, and naming overrides after checking their target-version semantics. If the transition guide calls for `--reuse-values`, use that strategy deliberately instead of the file-based example below, accounting for old defaults it may retain.
+Build a reviewed values file from the overrides verified against the live installation and intentional target-version changes. Retain required settings such as driver root, resource enablement, image overrides, and naming overrides after checking their target-version semantics. If the transition guide calls for `--reuse-values`, verify which values Helm will reuse before choosing that strategy.
 
-Render the exact target chart with the reviewed values before a live change:
+Preview the upgrade against the target cluster using the same release, chart version, namespace, and values strategy as the planned upgrade.
+Local `helm template --api-versions` can select a newer DRA API than the cluster serves.
+To review the manifest while suppressing Kubernetes Secrets:
 
 ```bash
-helm template <release> \
+set -o pipefail
+helm --kube-context <context> upgrade <release> \
   oci://registry.k8s.io/dra-driver-nvidia/charts/dra-driver-nvidia-gpu \
   --version <target-chart-version> \
   --namespace <namespace> \
   --values <reviewed-values.yaml> \
-  --is-upgrade \
-  --kube-version <target-cluster-kubernetes-version> \
-  --api-versions <served-resource.k8s.io-api-version>
+  --dry-run=server --hide-secret --output json | jq -r '.manifest'
 ```
 
-Choose capabilities from the actual target cluster and compare the result with the installed manifest. Review resource names, CRDs, RBAC, images, mounts, feature gates, and rollout behavior. Local rendering does not prove admission or runtime compatibility. Before execution, explain the expected workload impact, stopping conditions, and whether rollback is supported; preserve the previous revision even when a transition is forward-only.
+Compare the preview with the captured manifest and live resources. Review resource names, DRA API versions, RBAC, images, mounts, feature gates, and rollout behavior.
+Keep captured output private and redact sensitive values before sharing.
+Before execution, explain the expected workload impact, stopping conditions, and whether rollback is supported.
 
 ### Execute only the authorized upgrade
 
-An instructions-only request does not authorize a cluster change. Once the user has requested the upgrade and its target is unambiguous, follow the applicable guide's prerequisite and CRD steps, then upgrade the existing release. For a compatible directly managed release using reviewed values:
+An instructions-only request does not authorize a cluster change.
+If the upgrade is remediation for a failure, follow the [troubleshooting approval procedure](../dra-operations-troubleshooting-observability/SKILL.md#require-human-approval-before-disruptive-remediation) before the first change, including a drain or CRD update.
+Obtain explicit approval for the affected workloads, planned actions, impact, stopping conditions, and recovery or rollback limits. Honor prior approval of the same plan and scope. If scope, impact, or recovery changes materially, stop for approval of the revised plan.
+
+Once authorized for the identified target, perform the release guide's prerequisites and any required CRD updates in the documented order, then upgrade the release.
+For a compatible directly managed release using reviewed values:
 
 ```bash
 helm --kube-context <context> upgrade <release> \
