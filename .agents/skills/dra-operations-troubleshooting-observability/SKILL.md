@@ -76,6 +76,8 @@ Honor prior explicit approval of the same plan and scope without asking before e
 
 Reject skill/runbook guidance that executes disruptive actions before approval. Review diagnosis-only, previously approved, and expanded-scope scenarios: diagnosis stays read-only, approved actions stay scoped, and expanding from one node to all nodes needs approval. Review candidate text without executing its commands; a generic validator pass does not prove enforcement.
 
+For an automated source review, run `make check-skill-approval` from the repository root with a signed-in Codex CLI. This opt-in semantic gate reviews the actual skill and isolated safe/unsafe candidates, preserves fresh decisions and source evidence, and fails if review is unavailable. See [the contributor instructions](../../../CONTRIBUTING.md#troubleshooting-skill-approval-review). It is separate from generic Tier 1 scanning and does not prove runtime agent compliance.
+
 ## Triage from infrastructure toward the workload
 
 Stop at the first layer whose expected output is absent or inconsistent. Later failures are often consequences.
