@@ -7,15 +7,15 @@ metadata:
 
 # Helm, demos, and sample workloads
 
-Help users deploy the driver deliberately, choose a sample that matches the cluster, and prove GPU allocation from the Kubernetes objects down to the container. Keep rendered-manifest work separate from changes to a live cluster.
+Match the sample to the cluster and verify GPU allocation from Kubernetes objects to containers. Keep rendering separate from live changes.
 
 ## Start by establishing the target
 
-Determine these facts from the repository and the target environment before choosing commands:
+Check the repository and target environment for:
 
 - Whether the user wants instructions, rendered YAML, a released-chart install, an existing-release upgrade, a local-chart install, or a disposable kind demo.
 - The exact kube context, cluster, release name, namespace, chart version, and values file.
-- Whether GPU Operator manages or will manage the node stack and DRA driver. Treat this as a separate installation path and follow the GPU Operator project's DRA integration guidance instead of layering a standalone install over it.
+- Current or planned GPU Operator ownership of the node stack and DRA driver (see Operator guidance below).
 - The Kubernetes version and served `resource.k8s.io` API versions. Prefer the highest served version in this order: `v1`, `v1beta2`, `v1beta1`.
 - NVIDIA driver, Container Toolkit, CDI, NFD/GFD, node labels, GPU hardware, and relevant feature-gate readiness.
 - The driver root: normally `/` for a host-installed driver, `/run/nvidia/driver` for a GPU Operator driver container, and the current documented GKE path for GKE. Verify rather than copying an older demo script.
@@ -50,11 +50,11 @@ Do not run `helm install` or `upgrade`, `kubectl apply`, label changes, kind cre
 
 ## Route GPU Operator-managed deployments
 
-The NVIDIA GPU Operator can install and manage the DRA driver as part of the NVIDIA software stack on a cluster. Treat the Operator-managed route as a first-class alternative to installing this repository's chart directly.
+GPU Operator can install and manage the DRA driver.
 
-For Operator-specific enablement, configuration, component compatibility, upgrades, and lifecycle troubleshooting, defer to the [GPU Operator DRA installation guide](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/dra-intro-install.html) and the [NVIDIA GPU Operator project](https://github.com/NVIDIA/gpu-operator). If the GPU Operator project provides repository-local agent skills, load and follow the relevant skills because that project owns the Operator integration details. Continue using this skill for choosing sample workloads and validating DRA allocation after installation.
+For Operator enablement, configuration, compatibility, upgrades, and troubleshooting, follow the [GPU Operator DRA installation guide](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/dra-intro-install.html) and the [NVIDIA GPU Operator project](https://github.com/NVIDIA/gpu-operator). Follow relevant skills in the Operator repository when available. Use this skill for samples and allocation checks.
 
-Do not mix direct Helm lifecycle commands from this repository with an Operator-managed deployment unless the GPU Operator documentation explicitly calls for that action. Establish which system owns the DRA release and related NVIDIA components before proposing installation, upgrade, rollback, or cleanup commands.
+Confirm ownership of the DRA release and related components before proposing install, upgrade, rollback, or cleanup. Use direct Helm commands on Operator-managed deployments only when Operator documentation explicitly requires them.
 
 ## Work with the Helm chart
 
@@ -108,13 +108,13 @@ kubectl apply --dry-run=server -f <manifest>
 
 ## Upgrade an existing release
 
-Use this workflow when a DRA release already exists. Establish whether direct Helm or GPU Operator owns it before choosing commands. For an Operator-managed release, follow the Operator upgrade guidance above; do not upgrade its DRA chart independently.
+Confirm release ownership. Upgrade Operator-managed releases through the Operator. For direct Helm releases, follow the steps below.
 
 ### Capture the current state
 
-Confirm the exact kube context, release name, namespace, installed chart and image versions, and intended target chart version. Preserve the existing release identity; an older installation may use different names from the new-install example.
+Confirm context, release name, namespace, installed chart and image versions, and target chart version. Keep the existing release identity.
 
-Read-only discovery for a directly managed Helm release can include:
+Inspect the Helm release and cluster:
 
 ```bash
 helm --kube-context <context> status <release> --namespace <namespace>
@@ -141,7 +141,7 @@ Record healthy workloads and claims, their allocations and selected nodes, and t
 
 ### Review the source-to-target transition
 
-Read `site/content/docs/upgrade.md` and the source and target release notes for the exact transition. Use documentation and chart sources matching the target release rather than assuming the development branch describes an older released artifact. If the transition is undocumented or compatibility is unresolved, report the gap before executing an upgrade.
+Read `site/content/docs/upgrade.md` and both releases' notes for the exact transition. Use the target release's docs and chart sources. Report undocumented transitions or unresolved compatibility before upgrading.
 
 Check Kubernetes and served DRA API compatibility, NVIDIA driver/Container Toolkit requirements, feature gates, enabled plugins, Helm value changes, and checkpoint/API downgrade restrictions. Determine any required intermediate releases or workload maintenance steps. Preserve existing release/resource names and overrides where the transition requires them; do not substitute the new-install names.
 
@@ -246,7 +246,7 @@ Keep sample changes close to the existing versioned quickstarts and follow their
 
 ## Validate from installation to container
 
-Use a staged validation ladder so failures are localized.
+Check each stage in order.
 
 1. Confirm driver components are ready:
 
